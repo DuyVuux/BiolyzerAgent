@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "dataset_snapshot_id": "ds-scan_degraded",
+  "subject_ref": "unknown-subject",
+  "created_at": "2026-09-14T06:00:00Z",
+  "verification_status": "unverified",
+  "source_documents": [
+    {
+      "schema_version": "1.0",
+      "document_id": "doc-scan_degraded",
+      "media_type": "application/pdf",
+      "integrity": {
+        "sha256": "dc089ee1eda6c762e68f62a3002d9058288274d81a06694f7958df92ef2566c3"
+      },
+      "provenance": {
+        "source_system_label": "stage-03-synthetic-corpus",
+        "received_at": "2026-09-14T05:59:00Z"
+      },
+      "retention_class": "ephemeral_development"
+    }
+  ],
+  "reports": [
+    {
+      "schema_version": "1.0",
+      "report_id": "report-scan_degraded",
+      "subject_ref": "unknown-subject",
+      "source_document_id": "doc-scan_degraded",
+      "report_type": {
+        "local_name": "Synthetic Urinalysis Panel"
+      },
+      "status": "unknown",
+      "diagnostic_service_label": "Synthetic Laboratory",
+      "specimen": {
+        "source_text": "Unknown"
+      },
+      "observation_ids": []
+    }
+  ],
+  "observations": []
+}

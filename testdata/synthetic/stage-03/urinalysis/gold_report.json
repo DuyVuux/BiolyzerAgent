@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "subject": "subject-synthetic-stage03-001",
+    "specimen": "Urine",
+    "collected": "2026-09-13T23:30:00Z",
+    "issued": "2026-09-14T00:00:00Z",
+    "status": "final"
+  },
+  "rows": [
+    {
+      "test_name": "SYNTH_PH",
+      "result_text": "6.0",
+      "unit": null,
+      "reference": "SYNTH_RANGE",
+      "flag": null
+    },
+    {
+      "test_name": "SYNTH_PROTEIN",
+      "result_text": "Negative",
+      "unit": null,
+      "reference": "Negative",
+      "flag": null
+    },
+    {
+      "test_name": "SYNTH_LE",
+      "result_text": "1+",
+      "unit": null,
+      "reference": "Negative",
+      "flag": "ABN"
+    },
+    {
+      "test_name": "SYNTH_RBC",
+      "result_text": "0-2",
+      "unit": "/HPF",
+      "reference": "SYNTH_RANGE",
+      "flag": null
+    },
+    {
+      "test_name": "SYNTH_WBC",
+      "result_text": "<5",
+      "unit": "/HPF",
+      "reference": "SYNTH_RANGE",
+      "flag": null
+    },
+    {
+      "test_name": "SYNTH_COLOR",
+      "result_text": "Yellow",
+      "unit": null,
+      "reference": null,
+      "flag": null
+    },
+    {
+      "test_name": "SYNTH_CLARITY",
+      "result_text": "Clear",
+      "unit": null,
+      "reference": null,
+      "flag": null
+    },
+    {
+      "test_name": "SYNTH_NITRITE",
+      "result_text": "Negative",
+      "unit": null,
+      "reference": "Negative",
+      "flag": null
+    }
+  ]
+}

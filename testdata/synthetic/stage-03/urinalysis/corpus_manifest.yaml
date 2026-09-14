@@ -1,0 +1,14 @@
+synthetic_only: true
+cases:
+- id: digital_pipe
+  file: digital_pipe.pdf
+  kind: digital
+- id: digital_fixed
+  file: digital_fixed.pdf
+  kind: digital
+- id: scan_clean
+  file: scan_clean.pdf
+  kind: image_only
+- id: scan_degraded
+  file: scan_degraded.pdf
+  kind: image_only_degraded

@@ -1,0 +1,401 @@
+{
+  "schema_version": "1.0",
+  "dataset_snapshot_id": "ds-digital_pipe",
+  "subject_ref": "subject-synthetic-stage03-001",
+  "created_at": "2026-09-14T06:00:00Z",
+  "verification_status": "unverified",
+  "source_documents": [
+    {
+      "schema_version": "1.0",
+      "document_id": "doc-digital_pipe",
+      "media_type": "application/pdf",
+      "integrity": {
+        "sha256": "15b4027dde0f9fcb95fae38b068065be44dcf4128166d8d1b51144907ba98b94"
+      },
+      "provenance": {
+        "source_system_label": "stage-03-synthetic-corpus",
+        "received_at": "2026-09-14T05:59:00Z"
+      },
+      "retention_class": "ephemeral_development"
+    }
+  ],
+  "reports": [
+    {
+      "schema_version": "1.0",
+      "report_id": "report-digital_pipe",
+      "subject_ref": "subject-synthetic-stage03-001",
+      "source_document_id": "doc-digital_pipe",
+      "report_type": {
+        "local_name": "Synthetic Urinalysis Panel"
+      },
+      "status": "final",
+      "diagnostic_service_label": "Synthetic Laboratory",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "observation_ids": [
+        "obs-digital_pipe-01",
+        "obs-digital_pipe-02",
+        "obs-digital_pipe-03",
+        "obs-digital_pipe-04",
+        "obs-digital_pipe-05",
+        "obs-digital_pipe-06",
+        "obs-digital_pipe-07",
+        "obs-digital_pipe-08"
+      ],
+      "effective_at": "2026-09-13T23:30:00Z",
+      "issued_at": "2026-09-14T00:00:00Z"
+    }
+  ],
+  "observations": [
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-digital_pipe-01",
+      "report_id": "report-digital_pipe",
+      "subject_ref": "subject-synthetic-stage03-001",
+      "local_test_name": "SYNTH_PH",
+      "status": "unknown",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "result": {
+        "kind": "quantity",
+        "value": 6.0,
+        "source_text": "6.0"
+      },
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "issues": []
+      },
+      "provenance": {
+        "source_document_id": "doc-digital_pipe",
+        "source_locator": {
+          "page": 1,
+          "row_label": "SYNTH_PH",
+          "field_label": "Result row",
+          "raw_text": "SYNTH_PH | 6.0 | - | SYNTH_RANGE |"
+        },
+        "extraction_method": "parser"
+      },
+      "source_reference_ranges": [
+        {
+          "range_id": "range-digital_pipe-01",
+          "origin": "source_report",
+          "raw_text": "SYNTH_RANGE",
+          "parsed": {
+            "kind": "textual",
+            "text": "SYNTH_RANGE"
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-digital_pipe-02",
+      "report_id": "report-digital_pipe",
+      "subject_ref": "subject-synthetic-stage03-001",
+      "local_test_name": "SYNTH_PROTEIN",
+      "status": "unknown",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "result": {
+        "kind": "categorical",
+        "source_text": "Negative",
+        "normalized_code": "negative"
+      },
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "issues": []
+      },
+      "provenance": {
+        "source_document_id": "doc-digital_pipe",
+        "source_locator": {
+          "page": 1,
+          "row_label": "SYNTH_PROTEIN",
+          "field_label": "Result row",
+          "raw_text": "SYNTH_PROTEIN | Negative | - | Negative |"
+        },
+        "extraction_method": "parser"
+      },
+      "source_reference_ranges": [
+        {
+          "range_id": "range-digital_pipe-02",
+          "origin": "source_report",
+          "raw_text": "Negative",
+          "parsed": {
+            "kind": "categorical_expected",
+            "expected_source_values": [
+              "Negative"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-digital_pipe-03",
+      "report_id": "report-digital_pipe",
+      "subject_ref": "subject-synthetic-stage03-001",
+      "local_test_name": "SYNTH_LE",
+      "status": "unknown",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "result": {
+        "kind": "ordinal",
+        "source_text": "1+",
+        "normalized_code": "1_plus",
+        "rank": 2
+      },
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "issues": []
+      },
+      "provenance": {
+        "source_document_id": "doc-digital_pipe",
+        "source_locator": {
+          "page": 1,
+          "row_label": "SYNTH_LE",
+          "field_label": "Result row",
+          "raw_text": "SYNTH_LE | 1+ | - | Negative | ABN"
+        },
+        "extraction_method": "parser"
+      },
+      "source_reference_ranges": [
+        {
+          "range_id": "range-digital_pipe-03",
+          "origin": "source_report",
+          "raw_text": "Negative",
+          "parsed": {
+            "kind": "categorical_expected",
+            "expected_source_values": [
+              "Negative"
+            ]
+          }
+        }
+      ],
+      "source_interpretations": [
+        {
+          "raw_text": "ABN",
+          "normalized_code": "abnormal"
+        }
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-digital_pipe-04",
+      "report_id": "report-digital_pipe",
+      "subject_ref": "subject-synthetic-stage03-001",
+      "local_test_name": "SYNTH_RBC",
+      "status": "unknown",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "result": {
+        "kind": "interval",
+        "low": 0.0,
+        "high": 2.0,
+        "source_text": "0-2",
+        "unit_source": "/HPF",
+        "unit_ucum": "/[HPF]"
+      },
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "issues": []
+      },
+      "provenance": {
+        "source_document_id": "doc-digital_pipe",
+        "source_locator": {
+          "page": 1,
+          "row_label": "SYNTH_RBC",
+          "field_label": "Result row",
+          "raw_text": "SYNTH_RBC | 0-2 | /HPF | SYNTH_RANGE |"
+        },
+        "extraction_method": "parser"
+      },
+      "source_reference_ranges": [
+        {
+          "range_id": "range-digital_pipe-04",
+          "origin": "source_report",
+          "raw_text": "SYNTH_RANGE",
+          "parsed": {
+            "kind": "textual",
+            "text": "SYNTH_RANGE"
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-digital_pipe-05",
+      "report_id": "report-digital_pipe",
+      "subject_ref": "subject-synthetic-stage03-001",
+      "local_test_name": "SYNTH_WBC",
+      "status": "unknown",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "result": {
+        "kind": "quantity",
+        "value": 5.0,
+        "comparator": "<",
+        "source_text": "<5",
+        "unit_source": "/HPF",
+        "unit_ucum": "/[HPF]"
+      },
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "issues": []
+      },
+      "provenance": {
+        "source_document_id": "doc-digital_pipe",
+        "source_locator": {
+          "page": 1,
+          "row_label": "SYNTH_WBC",
+          "field_label": "Result row",
+          "raw_text": "SYNTH_WBC | <5 | /HPF | SYNTH_RANGE |"
+        },
+        "extraction_method": "parser"
+      },
+      "source_reference_ranges": [
+        {
+          "range_id": "range-digital_pipe-05",
+          "origin": "source_report",
+          "raw_text": "SYNTH_RANGE",
+          "parsed": {
+            "kind": "textual",
+            "text": "SYNTH_RANGE"
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-digital_pipe-06",
+      "report_id": "report-digital_pipe",
+      "subject_ref": "subject-synthetic-stage03-001",
+      "local_test_name": "SYNTH_COLOR",
+      "status": "unknown",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "result": {
+        "kind": "categorical",
+        "source_text": "Yellow",
+        "normalized_code": "yellow"
+      },
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "issues": []
+      },
+      "provenance": {
+        "source_document_id": "doc-digital_pipe",
+        "source_locator": {
+          "page": 1,
+          "row_label": "SYNTH_COLOR",
+          "field_label": "Result row",
+          "raw_text": "SYNTH_COLOR | Yellow | - | - |"
+        },
+        "extraction_method": "parser"
+      }
+    },
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-digital_pipe-07",
+      "report_id": "report-digital_pipe",
+      "subject_ref": "subject-synthetic-stage03-001",
+      "local_test_name": "SYNTH_CLARITY",
+      "status": "unknown",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "result": {
+        "kind": "categorical",
+        "source_text": "Clear",
+        "normalized_code": "clear"
+      },
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "issues": []
+      },
+      "provenance": {
+        "source_document_id": "doc-digital_pipe",
+        "source_locator": {
+          "page": 1,
+          "row_label": "SYNTH_CLARITY",
+          "field_label": "Result row",
+          "raw_text": "SYNTH_CLARITY | Clear | - | - |"
+        },
+        "extraction_method": "parser"
+      }
+    },
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-digital_pipe-08",
+      "report_id": "report-digital_pipe",
+      "subject_ref": "subject-synthetic-stage03-001",
+      "local_test_name": "SYNTH_NITRITE",
+      "status": "unknown",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "result": {
+        "kind": "categorical",
+        "source_text": "Negative",
+        "normalized_code": "negative"
+      },
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "issues": []
+      },
+      "provenance": {
+        "source_document_id": "doc-digital_pipe",
+        "source_locator": {
+          "page": 1,
+          "row_label": "SYNTH_NITRITE",
+          "field_label": "Result row",
+          "raw_text": "SYNTH_NITRITE | Negative | - | Negative |"
+        },
+        "extraction_method": "parser"
+      },
+      "source_reference_ranges": [
+        {
+          "range_id": "range-digital_pipe-08",
+          "origin": "source_report",
+          "raw_text": "Negative",
+          "parsed": {
+            "kind": "categorical_expected",
+            "expected_source_values": [
+              "Negative"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

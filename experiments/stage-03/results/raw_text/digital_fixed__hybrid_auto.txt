@@ -1,0 +1,15 @@
+SYNTHETIC URINALYSIS REPORT
+SUBJECT=subject-synthetic-stage03-001
+SPECIMEN=Urine
+COLLECTED=2026-09-13T23:30:00Z
+ISSUED=2026-09-14T00:00:00Z
+STATUS=final
+TEST                RESULT        UNIT      REFERENCE         FLAG  
+SYNTH_PH            6.0           -         SYNTH_RANGE             
+SYNTH_PROTEIN       Negative      -         Negative                
+SYNTH_LE            1+            -         Negative          ABN   
+SYNTH_RBC           0-2           /HPF      SYNTH_RANGE             
+SYNTH_WBC           <5            /HPF      SYNTH_RANGE             
+SYNTH_COLOR         Yellow        -         -                       
+SYNTH_CLARITY       Clear         -         -                       
+SYNTH_NITRITE       Negative      -         Negative                
