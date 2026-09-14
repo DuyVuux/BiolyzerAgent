@@ -1,38 +1,267 @@
-# BioMarker Agent — Master Roadmap (16 Stages)
+# 12 — Master Roadmap: 16 Stages
 
-> **Document Type:** Governance Specification  
-> **Source:** [BIOMARKER_PROJECT_SKELETON_V0.1.md](../../BIOMARKER_PROJECT_SKELETON_V0.1.md)  
-> **Rule:** Folders and runtime dependencies are only materialized when the corresponding Stage is active.
+Roadmap này phục vụ **build + learning**, không thay thế product delivery roadmap.
 
 ---
 
-## 1. 16-Stage Evolution Matrix
+# Chặng A — Problem & Domain Foundation
 
-| Stage | Stage Name | Focus Area | Deliverables & Artifacts | Status |
-|---|---|---|---|---|
-| **0** | **Root Governance & Tooling** | Workspace baseline, governance, toolchain | Root config, `docs/00-governance/`, `experiments/`, `evals/`, `testdata/` | **IN PROGRESS** |
-| **1** | **Product Context & Safety Envelope** | Clinical problem definition, boundaries | `docs/01-product/` (Use cases, intended use, non-goals, risk bounds) | Queued |
-| **2** | **Domain Modeling & Schemas** | Clinical concepts, observations, reports | `docs/02-domain/`, first `contracts/schemas/` | Queued |
-| **3** | **Ingestion Proof-of-Concept** | Parsing lab documents (PDF, text, OCR) | `experiments/stage-03-ingestion/`, synthetic fixtures in `testdata/` | Queued |
-| **4** | **Normalization & Terminology** | Units, reference intervals, LOINC/SNOMED | `experiments/stage-04-normalization/`, normalization contracts | Queued |
-| **5** | **Longitudinal Timeline** | Tracking patient biomarker trends across time | Timeline domain specs, state model | Queued |
-| **6** | **Evidence Retrieval & Provenance** | Grounded medical claims, citation retrieval | `experiments/stage-06-evidence/`, evidence contracts | Queued |
-| **7** | **Clinical Reasoning & Safety Gates** | Deterministic safety checking, guardrails | `experiments/stage-07-reasoning-safety/`, safety specifications | Queued |
-| **8** | **Executable Clinical Evaluations** | AI and clinical quality measurement | `evals/datasets/`, `evals/scorers/`, `evals/harness/` | Queued |
-| **9** | **Go Production Runtime & API** | Minimum backend service, Eino evaluation | `go.mod`, `apps/api/`, `internal/` bounded contexts | Queued |
-| **10** | **Persistence & State Store** | Database adapter, migrations | Relational / document storage (only if needed), `infra/local/` | Queued |
-| **11** | **Failure Modes & Recovery** | Circuit breakers, retries, degradation | `experiments/stage-11-failure-recovery/`, integration tests | Queued |
-| **12** | **Durability & Async Workers** | Long-running tasks, durable execution | `apps/worker/` (only if background orchestration is justified) | Queued |
-| **13** | **Reproducibility & Attestation** | Execution provenance, audit logs | Versioning contracts, execution hashes | Queued |
-| **14** | **User Interface & API Client** | Frontend application & typed client | `apps/web/` (React/Vite), `packages/api-client/`, OpenAPI spec | Queued |
-| **15** | **Mia Platform Integration** | Controlled integration with Mia ecosystem | Mia adapter, deployment manifests, operational runbooks | Queued |
+## Stage 0 — Architecture Discovery Foundation
+
+**Question:** Chúng ta reasoning, dùng Sources và đối chiếu Mia như thế nào?
+
+**Output:** package hiện tại.
+
+**Mia exposure:** source discipline + high-level skeleton only.
 
 ---
 
-## 2. Stage Quality Gates
+## Stage 1 — Product & Clinical Domain Discovery
 
-Before advancing from Stage $N$ to Stage $N+1$, the following criteria must be satisfied:
-1. All stage-specific documentation is reviewed and committed.
-2. If code was written, tests pass and verify all required behavior.
-3. No speculative architecture for future stages was introduced.
-4. An ADR is recorded if an architectural trade-off was made.
+**Question:** BioMarker giải bài toán gì, cho ai, được phép làm gì?
+
+**Key outputs:**
+
+- product context;
+- intended use;
+- users/actors;
+- use cases;
+- non-goals;
+- safety envelope;
+- clinical/regulatory open questions.
+
+**Mia exposure:** minimal. Không để generic platform định nghĩa clinical product.
+
+---
+
+## Stage 2 — Canonical Biomarker Domain Model
+
+**Question:** Dữ liệu lõi là gì trước khi có LLM/runtime?
+
+**Key outputs:**
+
+- Diagnostic/Lab Report concepts;
+- Observation/Biomarker;
+- Reference Range;
+- Dataset & provenance;
+- Claim/Evidence/Report relationship.
+
+**Mia exposure:** compare only generic artifact/state modeling after first-principles model.
+
+---
+
+# Chặng B — Domain Capability Characterization
+
+## Stage 3 — Lab Ingestion Characterization
+
+**Question:** Làm sao từ PDF/image/structured input ra observations đúng?
+
+**Experiment:** extraction corpus + metrics.
+
+**Mia exposure:** object store/artifact patterns only after ingestion needs appear.
+
+---
+
+## Stage 4 — Normalization & Clinical Terminology
+
+**Question:** test name, unit, specimen, range được chuẩn hóa thế nào?
+
+**Outputs:** mapping/validation policy and benchmark.
+
+**Mia exposure:** schema/registry concepts only as reference.
+
+---
+
+## Stage 5 — Longitudinal Biomarker Model
+
+**Question:** nhiều kết quả theo thời gian tạo dataset/timeline thế nào?
+
+**Outputs:** dataset version, timeline, duplicate/change semantics.
+
+**Mia exposure:** canonical state/version concepts.
+
+---
+
+## Stage 6 — Scientific Evidence Engine
+
+**Question:** claim có evidence traceable thế nào?
+
+**Outputs:** query/retrieval/ranking/evidence bundle/claim linkage.
+
+**Mia exposure:** Knowledge/tool boundary only after domain pipeline derived.
+
+---
+
+## Stage 7 — Reasoning & Clinical Safety
+
+**Question:** LLM được làm gì? deterministic gates ở đâu?
+
+**Outputs:** bounded reasoning workflow, safety checks, unsupported claim policy.
+
+**Mia exposure:** durable tool/model boundary, policies, structured pipeline concept.
+
+---
+
+## Stage 8 — Evaluation & Quality Architecture
+
+**Question:** chứng minh đúng bằng metrics/golden cases nào?
+
+**Outputs:** eval harness design, gold datasets, error taxonomy, safety/red-team cases.
+
+**Mia exposure:** exit gates/golden eval principles.
+
+---
+
+# Chặng C — Runtime & Platform Discovery
+
+## Stage 9 — Single-Process Runtime
+
+**Question:** runtime đơn giản nhất chạy domain pipeline là gì?
+
+**Rule:** chưa queue/distributed nếu không có evidence.
+
+**Mia exposure:** Eino adapter + patterns after local candidate exists.
+
+---
+
+## Stage 10 — State & Persistence Architecture
+
+**Question:** state gì cần persist, owner là ai, transaction boundary là gì?
+
+**Outputs:** state inventory, ownership, storage criteria.
+
+**Mia exposure:** PostgreSQL store/objectstore as alternatives/reference.
+
+---
+
+## Stage 11 — Failure, Retry & Recovery Characterization
+
+**Question:** crash/timeout/retry/unknown outcome phá hệ thống thế nào?
+
+**Experiments:** kill process, duplicate request, partial external call, lost response.
+
+**Mia exposure:** durable invokers/tool effects/recovery tests after failures are observed.
+
+---
+
+## Stage 12 — Durable / Distributed Runtime Decision
+
+**Question:** có cần worker/queue/lease/fencing không?
+
+**Outputs:** measured decision matrix + ADR.
+
+**Mia exposure:** deep dive DBOS, worker, Harness, lease, fencing.
+
+---
+
+## Stage 13 — Configuration, Versioning & Reproducibility
+
+**Question:** exact behavior/config/evidence nào tạo report?
+
+**Outputs:** config lifecycle, pinning, immutable artifact decision, attestation decision.
+
+**Mia exposure:** compiler, canonical JSON, manifest, SHA-256, Ed25519, registry snapshots.
+
+---
+
+# Chặng D — Productization & Integration
+
+## Stage 14 — Security, Privacy, API & Product Surfaces
+
+**Question:** protected clinical product được expose thế nào?
+
+**Outputs:**
+
+- identity/authorization/tenant or patient-resource rules;
+- privacy/retention handling;
+- API;
+- upload/report/chat UX;
+- security negative tests.
+
+**Mia exposure:** Gateway/Auth/RBAC/API/SSE/UI patterns.
+
+---
+
+## Stage 15 — Mia Integration & Production Architecture Closure
+
+**Question:** final relationship giữa BioMarker và Mia là gì?
+
+Evaluate:
+
+- standalone;
+- Mia capability;
+- domain service + Mia orchestration;
+- hybrid.
+
+**Outputs:**
+
+- final architecture;
+- compatibility matrix;
+- accepted/deferred ADRs;
+- production gaps;
+- NFR plan;
+- integration sequence.
+
+**Mia exposure:** full-system comparison.
+
+---
+
+# Dependency Graph
+
+```text
+0
+↓
+1
+↓
+2
+↓
+3 → 4 → 5
+      ↓
+      6
+      ↓
+      7
+      ↓
+      8
+      ↓
+      9
+      ↓
+     10
+      ↓
+     11
+      ↓
+     12
+      ↓
+     13
+      ↓
+     14
+      ↓
+     15
+```
+
+Một số research có thể overlap, nhưng **decision freeze phải tôn trọng dependency**.
+
+---
+
+# Complexity unlock principle
+
+Feature chỉ được unlock khi Stage chứng minh pressure.
+
+```text
+queue
+← Stage 11/12 evidence
+
+fencing
+← multi-worker reclaim/split-brain evidence
+
+signed manifest
+← Stage 13 integrity/approval requirement
+
+Redis SSE
+← Stage 14 realtime product requirement
+
+generic registry
+← actual multiplicity/governance requirement
+
+multi-agent
+← confirmed use case
+```
