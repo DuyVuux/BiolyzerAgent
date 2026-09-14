@@ -45,3 +45,6 @@ docs/**/*.scratch.md
 
 # Local Agent environment skills, workflows & IDE tools
 .agents/
+
+# AI zip generation rules (internal AI prompt reference, excluded from public repo)
+docs/00-governance/AI_ZIP_GENERATION_RULES.md
