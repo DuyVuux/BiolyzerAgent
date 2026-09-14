@@ -6,8 +6,8 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![Monorepo](https://img.shields.io/badge/Monorepo-pnpm%20%7C%20Turbo-orange.svg)](./pnpm-workspace.yaml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](./package.json)
-[![Python Tests](https://img.shields.io/badge/Pytest-43%20passed-brightgreen.svg)](./experiments/)
-[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2006%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
+[![Python Tests](https://img.shields.io/badge/Pytest-82%20passed-brightgreen.svg)](./evals/)
+[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2008%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
 
 **English** | [Tiếng Việt](./README.vi.md)
 
@@ -19,7 +19,7 @@
 2. [Clinical Problem & Safety Envelope](#2-clinical-problem--safety-envelope)
 3. [End-to-End Clinical Processing Pipeline](#3-end-to-end-clinical-processing-pipeline)
 4. [The 16-Stage Architectural Discipline](#4-the-16-stage-architectural-discipline)
-5. [Deep Dive into Completed Stages (00–06)](#5-deep-dive-into-completed-stages-0006)
+5. [Deep Dive into Completed Stages (00–08)](#5-deep-dive-into-completed-stages-0008)
    - [Stage 00: Architecture Foundation & Governance](#stage-00-architecture-foundation--governance)
    - [Stage 01: Product Context & Safety Envelope](#stage-01-product-context--safety-envelope)
    - [Stage 02: Canonical Biomarker Domain Model](#stage-02-canonical-biomarker-domain-model)
@@ -27,6 +27,8 @@
    - [Stage 04: Normalization & Clinical Terminology](#stage-04-normalization--clinical-terminology)
    - [Stage 05: Longitudinal Biomarker Model](#stage-05-longitudinal-biomarker-model)
    - [Stage 06: Scientific Evidence Engine](#stage-06-scientific-evidence-engine)
+   - [Stage 07: Reasoning & Deterministic Clinical Safety Engine](#stage-07-reasoning--deterministic-clinical-safety-engine)
+   - [Stage 08: Evaluation & Quality Architecture](#stage-08-evaluation--quality-architecture)
 6. [Core Domain Invariants & Safety Guardrails](#6-core-domain-invariants--safety-guardrails)
 7. [Repository Layout & Navigation Map](#7-repository-layout--navigation-map)
 8. [Getting Started & Verification](#8-getting-started--verification)
@@ -99,9 +101,10 @@ flowchart LR
     PDF["Lab Document<br/>(Digital PDF / Scan)"]:::step -->|Stage 03 Ingestion| EXT["Canonical Observations<br/>(Local names, values, raw units)"]:::step
     EXT -->|Stage 04 Normalization| NORM["Normalized Observations<br/>(LOINC v2.83, UCUM units, Comparability)"]:::step
     NORM -->|Stage 05 Longitudinal| TIME["Patient Timelines<br/>(Lineage resolution, 3 clocks, snapshots)"]:::step
-    TIME -->|Stage 06 Evidence| EVID["Evidence Grounding<br/>(PubMed/Crossref, Claims & Frozen Bundle)"]:::currentStep
-    EVID -->|Stage 07 Safety| SAFE["Deterministic Safety Gates<br/>(Bounded reasoning, claim rejection)"]:::futureStep
-    SAFE -->|Stage 08–09 Runtime| API["Go Backend Core<br/>(Clean Architecture, Native API)"]:::futureStep
+    TIME -->|Stage 06 Evidence| EVID["Evidence Grounding<br/>(PubMed/Crossref, Claims & Frozen Bundle)"]:::step
+    EVID -->|Stage 07 Safety| SAFE["Deterministic Safety Gates<br/>(9 Deterministic Gates, Zero-Trust LLM)"]:::step
+    SAFE -->|Stage 08 Eval| EVAL["Evaluation & Quality Architecture<br/>(5-Layer Eval, Metamorphic, Wilson CI)"]:::step
+    EVAL -->|Stage 09 Runtime| API["Go Backend Core<br/>(Clean Architecture, Native API)"]:::currentStep
     API -->|Stage 14 UI| WEB["Physician Web Portal<br/>(React / TypeScript Interactive UI)"]:::futureStep
 ```
 
@@ -127,12 +130,12 @@ flowchart TD
         S3 --> S4["Stage 04: Normalization & Clinical Terminology<br/><b>[COMPLETED]</b>"]:::done
         S4 --> S5["Stage 05: Longitudinal Biomarker Model<br/><b>[COMPLETED]</b>"]:::done
         S5 --> S6["Stage 06: Scientific Evidence Engine<br/><b>[COMPLETED]</b>"]:::done
-        S6 --> S7["Stage 07: Reasoning & Clinical Safety<br/><b>[NEXT / READY]</b>"]:::current
-        S7 --> S8["Stage 08: Evaluation & Quality Architecture<br/><i>Clinical Benchmarks & Red-Teaming</i>"]:::queued
+        S6 --> S7["Stage 07: Reasoning & Clinical Safety<br/><b>[COMPLETED]</b>"]:::done
+        S7 --> S8["Stage 08: Evaluation & Quality Architecture<br/><b>[COMPLETED]</b>"]:::done
     end
 
     subgraph PhaseC["PHASE C: Runtime & Platform Discovery (Stages 9–13)"]
-        S8 --> S9["Stage 09: Single-Process Go Runtime<br/><code>internal/</code>, Clean Architecture"]:::queued
+        S8 --> S9["Stage 09: Single-Process Go Runtime<br/><code>internal/</code>, Clean Architecture<br/><b>[NEXT / READY]</b>"]:::current
         S9 --> S10["Stage 10: State & Persistence Architecture<br/>PostgreSQL, Immutability, Transactions"]:::queued
         S10 --> S11["Stage 11: Failure, Retry & Idempotency"]:::queued
         S11 --> S12["Stage 12: Distributed Execution Decision (ADR)"]:::queued
@@ -307,8 +310,62 @@ flowchart TD
     EntailCheck -->|Context only| Ctx["context_only"]
     EntailCheck -->|Unrelated| NotEnt["not_entailed\n(Unsupported claims rejected)"]
     Sup & Con & Ctx --> Bundle["EvidenceBundleSnapshot\n(Deterministic SHA-256 freeze, profile closure, no ambient retrieval)"]
-    Bundle --> Stg7["Stage 07 Reasoning & Clinical Safety"]
+    Bundle --> Stg7["Stage 07 Reasoning & Clinical Safety Engine"]
 ```
+
+### Stage 07: Reasoning & Deterministic Clinical Safety Engine
+Establishes a 9-gate deterministic safety architecture decoupling safety decisions from the LLM:
+- **Zero-Trust Safety Postulate:**
+  $$\text{LLM / Model} \neq \text{Safety Authority}$$
+  $$\text{LLM / Model} \neq \text{Clinical Authority}$$
+  Model candidate generations are treated as `UNTRUSTED_CANDIDATE`. Approval authority resides solely in deterministic code and contract-bound gates.
+- **Closed Input Universe & Zero Ambient Retrieval:**
+  The model reasons exclusively within an immutable, frozen snapshot (`clinical_snapshot_id`, `timeline_snapshot_id`, `evidence_bundle` digest, and policy digests). Free web searching and out-of-band tool calling are strictly blocked.
+- **Statement-Level Grounding Decomposition:**
+  Prose text is banned. Candidate reasoning decomposes into individual typed statements:
+  - *Allowed types:* `measured_fact`, `derived_fact`, `evidence_context`, `bounded_interpretation`, `limitation`, `physician_question`.
+  - *Prohibited types (Hard Blockers):* `diagnosis`, `treatment_recommendation`, `medication_change`, `dosage_change`, `emergency_triage`.
+- **The 9 Deterministic Gates (G0–G8):**
+  1. `G0: Input Closure Gate` (Validates snapshot and policy digests).
+  2. `G1: Clinical Eligibility Gate` (Enforces verified clinical refs, blocks unverified/unmapped facts).
+  3. `G2: Evidence Eligibility Gate` (Validates claim grounding, blocks retracted or conflicted-identity claims).
+  4. `G3: Capability Scope Gate` (Blocks ambient action/tool execution requests).
+  5. `G4: Prohibited Clinical Behavior Gate` (Blocks diagnosis, treatment advice, dose changes, triage).
+  6. `G5: Statement Grounding Gate` (Enforces claim-to-source and fact-to-observation linkage).
+  7. `G6: Conflict & Uncertainty Gate` (Requires disclosure of medical conflicts and missing patient context).
+  8. `G7: Reviewability Gate` (Ensures complete `review_basis` for physician auditability).
+  9. `G8: Payload Schema Gate` (Validates final `SafeReasoningOutput` JSON Schema).
+- **Fail-Closed & Whole-Candidate Rejection:**
+  Any prohibited statement triggers a whole-candidate `reject` verdict. Unsafe outputs serve as immutable evaluation evidence.
+- **Benchmark Results:** 24/24 clinical scenarios passed (`SC-0701` to `SC-0724`, 0 observed escapes, 100% decision determinism).
+
+### Stage 08: Evaluation & Quality Architecture
+Establishes an independent, multi-layered clinical quality and safety evaluation harness grounded in NIST AI RMF, WHO Generative AI, and DECIDE-AI:
+- **Core Evaluation Axioms:**
+  ```text
+  policy compliance ≠ clinical correctness
+  model quality ≠ safety-gate quality
+  zero observed failure ≠ zero true risk
+  LLM judge ≠ clinical gold
+  offline metrics ≠ clinical usefulness
+  ```
+- **5-Layer Independent Evaluation:**
+  - `L1 — Upstream Data Quality`: Extraction, normalization, LOINC/UCUM fidelity.
+  - `L2 — Evidence Quality`: Claim entailment, citation integrity, conflict preservation.
+  - `L3 — Model Reasoning Quality`: Pre-gate candidate behavior (grounding, leakage, overclaim).
+  - `L4 — Safety-Gate Quality`: Gate performance scored against independent gold labels.
+  - `L5 — Human Clinical Usefulness`: Real-world physician review burden, trust calibration, override rates.
+- **Anti-Circularity & Oracle Hierarchy:**
+  Stage 07 decisions are not treated as truth. Independent gold labels in [`testdata/synthetic/stage-08/evaluation_cases.json`](./testdata/synthetic/stage-08/evaluation_cases.json) establish expected verdicts across risk severities (`S0_INFORMATIONAL` to `S4_CRITICAL_SAFETY`).
+  $$\text{Model Judge} < \text{Deterministic / Source-Grounded Oracle} < \text{Clinician Adjudication}$$
+- **Mandatory Statistical Uncertainty:**
+  - Wilson 95% confidence intervals on all proportions.
+  - Exact zero-failure upper bound: $\text{upper}_{95} = 1 - 0.05^{1/n}$ (0/16 unsafe escapes yields a 17.07% upper bound, mathematically refuting naive "100% safe" claims).
+  - Sample-size planning: $n \ge \frac{\ln(\alpha)}{\ln(1-p)}$ ($n \ge 59$ for $<5\%$, $n \ge 299$ for $<1\%$).
+- **Safety Confusion Matrix:** Measures True Positives (blocks), False Negatives (unsafe escapes), False Positives (safe false rejects), and True Negatives.
+- **Metamorphic Testing (MR-01 to MR-05):** Validates invariants under controlled perturbations (statement reordering, tool addition, conflict disclosure, context acknowledgment, fact verification).
+- **Machine Contracts:** Immutable versioned schemas for `EvaluationCase`, `EvaluationRun`, `ModelEvaluationManifest`, and `ClinicalAdjudication`.
+- **Measured Results:** 24/24 evaluation cases passed, 0 observed escapes, 100% metamorphic pass rate, 9/9 unit tests passed.
 
 ---
 
@@ -354,6 +411,36 @@ The system enforces deterministic domain rules across all processing layers:
 | **EVID-018** | Late retrieval after bundle closure cannot enter snapshot. | Attempts or sources completing after `frozen_at` fail-closed and cannot mutate a frozen bundle. |
 | **EVID-019** | Claim identity conflict fails closed. | Multiple extractions producing the same claim ID with conflicting propositions fail-closed (`claim_identity_conflict`). |
 | **EVID-020** | Processing profile closure. | Policy descriptors, schema descriptors, and engine version are pinned inside the immutable bundle manifest. |
+| **SAFE-001** | AI output is not clinical authority. | The physician is the sole ultimate authority; every output mandates `physician_review_required: true`. |
+| **SAFE-002** | Model candidate reasoning is untrusted until verified by deterministic gates. | Prevents confusing the LLM with a safety authority. |
+| **SAFE-003** | Stage 07 prohibits ambient out-of-band retrieval. | Eliminates evidence drift and preserves reproducible auditability. |
+| **SAFE-004** | Unresolved clinical or evidence references fail closed. | Rejects statements referencing non-existent ref or claim IDs. |
+| **SAFE-005** | Unsupported evidence cannot ground clinical assertions. | Eliminates reliance on ungrounded or fabricated literature. |
+| **SAFE-006** | Literature conflict must be explicitly disclosed. | Prevents one-sided bias when scientific evidence is contradictory. |
+| **SAFE-007** | Claim identity conflicts fail closed. | Protects reasoning from corrupted claim propositions. |
+| **SAFE-008** | Data requiring reconciliation defers patient-specific reasoning. | Defers until human clinicians reconcile ambiguous records. |
+| **SAFE-009** | Candidate or unmapped terminology cannot be upgraded by the model. | Prevents the model from guessing standardized terminology codes. |
+| **SAFE-010** | Disease diagnosis is strictly prohibited in the current MVP. | Complies with CDS regulatory boundaries and protects patient safety. |
+| **SAFE-011** | Treatment, prescription, drug change, and dosage changes are prohibited. | CDS provides contextual clinical information without dictating therapy. |
+| **SAFE-012** | Automatic emergency triage is prohibited without approved medical protocols. | AI cannot fabricate panic thresholds without clinical committee signoff. |
+| **SAFE-013** | Measured fact statements require clinical observation references. | Guarantees 100% provenance back to source laboratory data. |
+| **SAFE-014** | Derived fact statements require derivation rules and clinical refs. | Enables auditability of reference interval flags and trend deltas. |
+| **SAFE-015** | Evidence context statements require EvidenceClaim references. | Prevents vague, ungrounded medical generalities. |
+| **SAFE-016** | Bounded interpretations require both clinical and evidence grounding. | Ensures clinical interpretations are anchored in data and literature. |
+| **SAFE-017** | Missing clinical context must be explicitly acknowledged. | Alerts the physician to absent tests or patient history. |
+| **SAFE-018** | Conflicting evidence usage requires explicit conflict disclosure. | Forces transparency regarding ongoing scientific debates. |
+| **SAFE-019** | Final output payload must strictly validate against JSON Schema. | Guarantees downstream reliability for interfaces and consumers. |
+| **SAFE-020** | Final output must render complete review basis (`review_basis`). | Supplies snapshot IDs, refs, and digests for physician audit. |
+| **SAFE-021** | Input text and sources are data, never instructions. | Complete immunity against prompt injections within lab records. |
+| **SAFE-022** | Safety policy versions and digests must be pinned. | Ensures immutability and retrospective auditability of decisions. |
+| **EVAL-001** | Policy compliance does not equal clinical correctness. | Prevents assuming safety gate approval equals medical truth. |
+| **EVAL-002** | Model reasoning quality is evaluated separately from safety-gate quality. | Evaluates candidate quality directly without masking behind filters. |
+| **EVAL-003** | Zero observed sample failures does not prove zero population risk. | Mandates Wilson confidence intervals and exact zero-failure upper bounds. |
+| **EVAL-004** | LLM-as-a-judge is never the clinical gold standard. | Avoids circular bias; clinical gold requires physician adjudication. |
+| **EVAL-005** | Offline metrics do not prove clinical usefulness. | Follows DECIDE-AI; requires human-AI workflow and review burden measurement. |
+| **EVAL-006** | Safety and style must never be collapsed into a single composite score. | Style cannot compensate for catastrophic clinical diagnostic leakage. |
+| **EVAL-007** | Model comparisons must be paired on frozen snapshots and policy digests. | Ensures scientific fairness and prevents evaluation dataset drift. |
+| **EVAL-008** | Production clinical release requires physician-adjudicated evaluation. | Synthetic tests prove architecture mechanics; live clinical gates remain separate. |
 
 ---
 
@@ -364,9 +451,11 @@ The system enforces deterministic domain rules across all processing layers:
 ├── apps/                        # Deployable applications (Stage 14+)
 │   └── web/                     # Physician-facing React / TypeScript web app
 ├── contracts/                   # Canonical Machine Contracts
-│   ├── schemas/                 # JSON Schemas (biomarker observation, reports, timelines, evidence)
+│   ├── schemas/                 # JSON Schemas (biomarker, timeline, evidence, analysis, evaluation)
 │   │   ├── clinical/            # Lab report, observation, timeline schemas
-│   │   └── evidence/            # Evidence bundle, claim, source, and retrieval attempt schemas
+│   │   ├── evidence/            # Evidence bundle, claim, source, and retrieval schemas
+│   │   ├── analysis/            # Reasoning candidate, safety decision, output schemas
+│   │   └── evaluation/          # EvaluationCase, EvaluationRun, ModelManifest schemas
 │   └── openapi/                 # OpenAPI 3.1 REST specifications
 ├── docs/                        # Human & Clinical Architectural Documentation
 │   ├── 00-governance/           # Architecture rules, roadmap, stage handoffs, conflict protocols
@@ -375,15 +464,24 @@ The system enforces deterministic domain rules across all processing layers:
 │   ├── 03-ingestion/            # Ingestion characterization, failure taxonomy, parser benchmark
 │   ├── 04-normalization/        # LOINC mapping catalog, UCUM conversion, comparability rules
 │   ├── 05-longitudinal/         # Timeline models, deduplication policies, chronology, snapshot hashing
-│   └── 06-evidence/             # Evidence engine, retrieval policies, retraction, entailment, ranking
+│   ├── 06-evidence/             # Evidence engine, retrieval policies, retraction, entailment, ranking
+│   ├── 07-reasoning-safety/     # Bounded reasoning, 9 deterministic safety gates, statement model
+│   └── 08-evaluation/           # Evaluation architecture, statistical policy, metamorphic tests
 ├── evals/                       # Top-Level Evaluation & Quality Harness
-│   ├── benchmarks/              # Golden clinical test datasets & evaluation rubrics
-│   └── harnesses/               # Automated scoring engines & clinical red-teaming scripts
+│   └── stage-08/                # Materialized Stage 08 evaluation suite, metrics, metamorphic engine
+│       ├── results/             # Benchmark artifacts, slices, EvaluationRun JSON payloads
+│       ├── tests/               # Unit tests for statistical helpers, AST boundaries, and metamorphic evaluator
+│       ├── canonical.py         # RFC 8785 JCS canonicalization and SHA-256 attestation engine
+│       ├── metrics.py           # Multi-dimensional metric catalog & safety confusion matrix
+│       ├── stats.py             # Wilson CI, exact zero-failure upper bound, Cohen's kappa
+│       ├── metamorphic.py       # Metamorphic relation transformations (MR-01 to MR-07)
+│       └── run_evaluation.py    # Evaluation runner replaying Stage-07 fixtures against gold labels
 ├── experiments/                 # Disposable Proof-of-Concept & Characterization Code
 │   ├── stage-03/                # Ingestion extraction benchmarks & synthetic parser tests
 │   ├── stage-04/                # LOINC normalization & UCUM conversion test suite
 │   ├── stage-05/                # Longitudinal lineage, chronology, and snapshot tests
-│   └── stage-06/                # Scientific evidence registry, claim ledger, and bundle tests
+│   ├── stage-06/                # Scientific evidence registry, claim ledger, and bundle tests
+│   └── stage-07/                # 9 deterministic safety gates, candidate evaluation & benchmark
 ├── internal/                    # Core Go Domain Implementations (Stage 09+)
 │   ├── domain/                  # Pure business models and invariant checks (Zero 3rd-party dependencies)
 │   ├── ports/                   # Inbound/outbound interfaces (Clean Architecture)
@@ -395,7 +493,9 @@ The system enforces deterministic domain rules across all processing layers:
 │       ├── stage-03/            # Multi-format PDF and scanner degraded test files
 │       ├── stage-04/            # Normalization and unit conversion test cases
 │       ├── stage-05/            # Longitudinal chronology and duplicate test cases
-│       └── stage-06/            # Evidence retrieval, retraction, and collision cases
+│       ├── stage-06/            # Evidence retrieval, retraction, and collision cases
+│       ├── stage-07/            # Reasoning candidate fixtures & safety benchmark cases
+│       └── stage-08/            # Independent evaluation cases & metamorphic cases
 ├── AGENTS.md                    # Strict operational guidelines for AI coding agents
 ├── BIOMARKER_PROJECT_SKELETON_V0.1.md # Master architecture blueprint
 └── package.json                 # Monorepo workspace configuration (pnpm 11 + Turbo)
@@ -408,7 +508,7 @@ The system enforces deterministic domain rules across all processing layers:
 ### Prerequisites
 - **Node.js**: `>=22.0.0` (Pinned in `.node-version`)
 - **pnpm**: `11.10.0`
-- **Python**: `>=3.11` (for stage characterization benchmarks)
+- **Python**: `>=3.11` (for stage characterization benchmarks and evaluation harness)
 - **Go**: `1.27+` (required from Stage 9)
 
 ### Installation & Workspace Verification
@@ -424,19 +524,29 @@ pnpm install
 pnpm check
 ```
 
-### Running Stage-Gated Domain Tests
+### Running All Domain & Evaluation Test Suites
 ```bash
-# Execute Python domain characterization test suites (Stages 03, 04, 05, 06)
-pytest experiments/
+# Execute Python domain and evaluation test suites (Stages 03 to 08)
+pytest experiments/ evals/
 ```
 
-All 43 stage-gated domain tests execute in `<0.1s`:
+All 82 stage-gated tests execute in `<0.15s`:
 ```text
-experiments/stage-03/tests/test_parser.py ......                         [ 13%]
-experiments/stage-04/tests/test_normalization.py .........               [ 34%]
-experiments/stage-05/tests/test_longitudinal.py ..............           [ 67%]
-experiments/stage-06/tests/test_evidence.py ..............               [100%]
-============================== 43 passed in 0.08s ==============================
+experiments/stage-03/tests/test_parser.py ......                         [  7%]
+experiments/stage-04/tests/test_normalization.py .........               [ 18%]
+experiments/stage-05/tests/test_longitudinal.py ..............           [ 35%]
+experiments/stage-06/tests/test_evidence.py ..............               [ 52%]
+experiments/stage-07/tests/test_safety.py ......................         [ 79%]
+evals/stage-08/tests/test_ast_boundaries.py ....                         [ 84%]
+evals/stage-08/tests/test_evaluator.py .........                         [ 95%]
+evals/stage-08/tests/test_stats.py ....                                  [100%]
+============================== 82 passed in 0.14s ==============================
+```
+
+### Running Stage 08 Evaluation Replay Runner
+```bash
+# Replay Stage-07 fixtures against independent gold labels and generate benchmark artifacts
+python3 evals/stage-08/run_evaluation.py --repo-root .
 ```
 
 ---

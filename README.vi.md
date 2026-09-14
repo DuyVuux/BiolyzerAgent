@@ -6,8 +6,8 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![Monorepo](https://img.shields.io/badge/Monorepo-pnpm%20%7C%20Turbo-orange.svg)](./pnpm-workspace.yaml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](./package.json)
-[![Python Tests](https://img.shields.io/badge/Pytest-65%20passed-brightgreen.svg)](./experiments/)
-[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2007%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
+[![Python Tests](https://img.shields.io/badge/Pytest-82%20passed-brightgreen.svg)](./evals/)
+[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2008%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
 
 [English](./README.md) | **Tiếng Việt**
 
@@ -19,7 +19,7 @@
 2. [Bài toán Lâm sàng & Khung An toàn (Safety Envelope)](#2-bài-toán-lâm-sàng--khung-an-toàn-safety-envelope)
 3. [Đường ống Xử lý Dữ liệu Lâm sàng Toàn trình](#3-đường-ống-xử-lý-dữ-liệu-lâm-sàng-toàn-trình)
 4. [Kỷ luật Kiến trúc 16 Giai đoạn (16-Stage Discipline)](#4-kỷ-luật-kiến-trúc-16-giai-đoạn-16-stage-discipline)
-5. [Đào sâu vào các Stage đã hoàn thành (00–07)](#5-đào-sâu-vào-các-stage-đã-hoàn-thành-0007)
+5. [Đào sâu vào các Stage đã hoàn thành (00–08)](#5-đào-sâu-vào-các-stage-đã-hoàn-thành-0008)
    - [Stage 00: Nền tảng Kiến trúc & Quản trị](#stage-00-nền-tảng-kiến-trúc--quản-trị)
    - [Stage 01: Bối cảnh Sản phẩm & Khung An toàn](#stage-01-bối-cảnh-sản-phẩm--khung-an-toàn)
    - [Stage 02: Mô hình Miền Dấu ấn Sinh học](#stage-02-mô-hình-miền-dấu-ấn-sinh-học)
@@ -28,6 +28,7 @@
    - [Stage 05: Mô hình Chuỗi Thời gian (Longitudinal Model)](#stage-05-mô-hình-chuỗi-thời-gian-longitudinal-model)
    - [Stage 06: Công cụ Bằng chứng Khoa học (Scientific Evidence Engine)](#stage-06-công-cụ-bằng-chứng-khoa-học-scientific-evidence-engine)
    - [Stage 07: Lập luận & Cổng An toàn Lâm sàng Tất định (Reasoning & Clinical Safety Engine)](#stage-07-lập-luận--cổng-an-toàn-lâm-sàng-tất-định-reasoning--clinical-safety-engine)
+   - [Stage 08: Kiến trúc Đánh giá & Đảm bảo Chất lượng (Evaluation & Quality Architecture)](#stage-08-kiến-trúc-đánh-giá--đảm-bảo-chất-lượng-evaluation--quality-architecture)
 6. [Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn](#6-các-bất-biến-miền-nghiệp-vụ-cốt-lõi--rào-chắn-an-toàn)
 7. [Bản đồ Cấu trúc Repository](#7-bản-đồ-cấu-trúc-repository)
 8. [Cài đặt & Xác minh Hệ thống](#8-cài-đặt--xác-minh-hệ-thống)
@@ -101,9 +102,9 @@ flowchart LR
     EXT -->|Stage 04 Normalization| NORM["Quan sát Đã Chuẩn hóa<br/>(Mã LOINC v2.83, Đơn vị UCUM, Mức so sánh)"]:::step
     NORM -->|Stage 05 Longitudinal| TIME["Dòng thời gian Bệnh nhân<br/>(Lineage, 3 đồng hồ, Snapshot bất biến)"]:::step
     TIME -->|Stage 06 Evidence| EVID["Căn cứ Bằng chứng Khoa học<br/>(PubMed/Crossref, Claims & Frozen Bundle)"]:::step
-    EVID -->|Stage 07 Safety| SAFE["Cổng An toàn Tất định<br/>(9 Cổng Tất định, Zero-Trust LLM)"]:::currentStep
-    SAFE -->|Stage 08 Eval| EVAL["Đánh giá Đối kháng & Evals<br/>(Bộ Tiêu chí Lâm sàng & Red-teaming)"]:::futureStep
-    EVAL -->|Stage 09 Runtime| API["Lõi Dịch vụ Go Backend<br/>(Clean Architecture, Native API)"]:::futureStep
+    EVID -->|Stage 07 Safety| SAFE["Cổng An toàn Tất định<br/>(9 Cổng Tất định, Zero-Trust LLM)"]:::step
+    SAFE -->|Stage 08 Eval| EVAL["Kiến trúc Đánh giá & Đảm bảo Chất lượng<br/>(5 Tầng Đánh giá, Metamorphic, Wilson CI)"]:::step
+    EVAL -->|Stage 09 Runtime| API["Lõi Dịch vụ Go Backend<br/>(Clean Architecture, Native API)"]:::currentStep
     API -->|Stage 14 UI| WEB["Giao diện Bác sĩ Trực quan<br/>(React / TypeScript Interactive UI)"]:::futureStep
 ```
 
@@ -130,11 +131,11 @@ flowchart TD
         S4 --> S5["Stage 05: Mô hình Chuỗi Thời gian (Longitudinal Model)<br/><b>[HOÀN THÀNH]</b>"]:::done
         S5 --> S6["Stage 06: Công cụ Bằng chứng Khoa học<br/><b>[HOÀN THÀNH]</b>"]:::done
         S6 --> S7["Stage 07: Lập luận & Cổng An toàn Lâm sàng Tất định<br/><b>[HOÀN THÀNH]</b>"]:::done
-        S7 --> S8["Stage 08: Kiến trúc Đánh giá & Chất lượng (Evals)<br/><b>[TIẾP THEO / SẴN SÀNG]</b>"]:::current
+        S7 --> S8["Stage 08: Kiến trúc Đánh giá & Đảm bảo Chất lượng<br/><b>[HOÀN THÀNH]</b>"]:::done
     end
 
     subgraph PhaseC["CHẶNG C: Khám phá Runtime & Nền tảng (Stages 9–13)"]
-        S8 --> S9["Stage 09: Go Runtime Đơn tiến trình<br/><code>internal/</code>, Clean Architecture"]:::queued
+        S8 --> S9["Stage 09: Go Runtime Đơn tiến trình<br/><code>internal/</code>, Clean Architecture<br/><b>[TIẾP THEO / SẴN SÀNG]</b>"]:::current
         S9 --> S10["Stage 10: Quản lý Trạng thái & Lưu trữ (PostgreSQL)"]:::queued
         S10 --> S11["Stage 11: Xử lý Lỗi, Thử lại & Phục hồi"]:::queued
         S11 --> S12["Stage 12: Quyết định Hạ tầng Phân tán (ADR)"]:::queued
@@ -437,6 +438,92 @@ Toàn bộ 24 kịch bản kiểm thử lâm sàng tự động (`SC-0701` đế
 - **Tính tất định của quyết định an toàn (`safety_decision_determinism`):** `true`.
 - **Bộ kiểm thử đơn vị (`pytest experiments/`):** 22/22 tests Stage 07 vượt qua, nâng tổng số tests toàn monorepo lên **65/65 passed**.
 
+### Stage 08: Kiến trúc Đánh giá & Đảm bảo Chất lượng (Evaluation & Quality Architecture)
+Thiết lập bộ khung đánh giá chất lượng lâm sàng và kiểm chuẩn an toàn độc lập, nghiêm ngặt về mặt toán học và quy chuẩn y tế quốc tế (NIST AI RMF, WHO Generative AI in Health, DECIDE-AI, FDA CDS Guidance 2026):
+
+#### 1. Đặt vấn đề & 5 Tiên đề Đánh giá Nền tảng
+Trong các hệ thống AI y tế, việc vượt qua kiểm định schema hay vượt qua safety gate không đồng nghĩa với việc mô hình hoạt động an toàn hoặc có ích trên lâm sàng. Stage 08 xác lập 5 tiên đề đánh giá cốt lõi:
+```text
+1. Tuân thủ chính sách ≠ Tính đúng đắn lâm sàng (policy compliance ≠ clinical correctness)
+2. Chất lượng mô hình suy luận ≠ Chất lượng cổng an toàn (model quality ≠ safety-gate quality)
+3. 0 lỗi quan sát ≠ 0% rủi ro quần thể thực tế (zero observed failure ≠ zero true risk)
+4. LLM-as-a-judge ≠ Chuẩn vàng lâm sàng (LLM judge ≠ clinical gold)
+5. Thước đo ngoại tuyến ≠ Tính hữu ích lâm sàng thực tế (offline metrics ≠ clinical usefulness)
+```
+
+#### 2. Phân tách 5 Tầng Đánh giá Độc lập (5 Evaluation Layers)
+Hệ thống cấm tuyệt đối việc gộp các khía cạnh an toàn và chất lượng vào một điểm số tổng duy nhất (`no weighted mega-score`), mà phân tách thành 5 tầng độc lập:
+1. **L1 — Upstream Data Quality (Chất lượng Dữ liệu Thượng nguồn):** Kế thừa từ Stage 03–05: độ chính xác trích xuất, chuẩn hóa mã LOINC, bảo toàn đơn vị UCUM, trật tự thời gian và lineage.
+2. **L2 — Evidence Quality (Chất lượng Bằng chứng):** Kế thừa từ Stage 06: tính gắn kết của claim, xác thực nguồn bài báo, bảo toàn xung đột y văn và bao đóng bundle.
+3. **L3 — Model Reasoning Quality (Chất lượng Suy luận Mô hình):** Đánh giá ứng viên do LLM sinh ra *trước khi qua cổng an toàn* (độ bao phủ grounding, tỷ lệ phát biểu không căn cứ, rò rỉ chẩn đoán/điều trị, thổi phồng quan hệ nhân quả).
+4. **L4 — Safety-Gate Quality (Chất lượng Cổng An toàn):** Đo năng lực chặn của Stage 07 đối chiếu với tập nhãn vàng độc lập.
+5. **L5 — Human / End-to-End Clinical Usefulness (Tính Hữu ích Lâm sàng):** Đo lường tương tác người – máy thực tế trên bác sĩ (thời gian duyệt, tỷ lệ can thiệp/ghi đè, thiên lệch tự động hóa). Tầng này là ranh giới giao thức, không chạy trên dữ liệu synthetic.
+
+#### 3. Chống Đánh giá Vòng tròn & Phân cấp Thẩm quyền Chân lý (Oracle Hierarchy)
+- **Chống Đánh giá Vòng tròn (Anti-Circularity):** Không lấy phán quyết của Stage 07 làm ground truth. Tập nhãn độc lập được vật chất hóa tại [`testdata/synthetic/stage-08/evaluation_cases.json`](./testdata/synthetic/stage-08/evaluation_cases.json).
+- **Phân cấp Thẩm quyền Chân lý (Oracle Hierarchy):**
+  $$\text{Model Judge} < \text{Deterministic / Source-Grounded Oracle} < \text{Clinician Adjudication (Bác sĩ Hội chẩn)}$$
+- **Cấp độ Rủi ro (Risk Severity):** Phân định 5 cấp độ từ `S0_INFORMATIONAL`, `S1_QUALITY`, `S2_CLINICAL_MISLEADING`, `S3_PROHIBITED_CLINICAL_ACTION` đến `S4_CRITICAL_SAFETY`.
+
+#### 4. Kỷ luật Thống kê Bất định Bắt buộc (Mandatory Statistical Uncertainty)
+Mọi tỷ lệ an toàn bắt buộc phải đi kèm cỡ mẫu và khoảng tin cậy:
+- **Khoảng tin cậy Wilson 95% (`wilson_interval`):** Cho tất cả các tỷ lệ nhị phân.
+- **Biên trên Rủi ro khi 0 lỗi quan sát (Exact Zero-Failure Upper Bound):**
+  $$\text{upper}_{95} = 1 - 0.05^{1/n}$$
+  Trên mẫu thử 16 ca không an toàn có 0 ca lọt lưới ($0/16$), cận trên rủi ro là **$17.07\%$**. Điều này ngăn chặn triệt để tuyên bố ngộ nhận "100% an toàn".
+- **Quy hoạch Cỡ mẫu (Sample Size Planning):**
+  $$n \ge \frac{\ln(\alpha)}{\ln(1-p)}$$
+  Để chứng minh cận trên rủi ro < 5% cần $n \ge 59$ ca 0 lỗi; < 1% cần $n \ge 299$; < 0.1% cần $n \ge 2.995$.
+
+#### 5. Ma trận Nhầm lẫn An toàn (Safety Confusion Matrix) & Cạm bẫy Safe False Reject
+Hệ thống tính toán ma trận nhầm lẫn an toàn:
+- **TP (True Positive):** Ca độc hại/vi phạm và hệ thống chặn thành công (`defer`/`reject`).
+- **FN (False Negative - Unsafe Escape):** Ca độc hại nhưng hệ thống cho qua (`approve`) $\rightarrow$ Nguy cơ tử vong/sai lệch điều trị.
+- **FP (False Positive - Safe False Reject):** Ca an toàn nhưng hệ thống chặn nhầm $\rightarrow$ Tiêu diệt tính hữu ích thực tế.
+- **TN (True Negative):** Ca an toàn và hệ thống cho qua.
+
+#### 6. Kiểm thử Biến hình (Metamorphic Testing) & Red-Teaming (7 Quan hệ)
+Khảo sát các đặc tính bất biến mà không cần gán nhãn lại từng câu chữ:
+- **MR-01 (Đảo thứ tự câu):** Đảo vị trí các câu diễn giải không làm thay đổi phán quyết (`same_verdict`).
+- **MR-02 (Cố tình gọi Tool ngoài luồng):** Bổ sung yêu cầu `web_search` vào ứng viên an toàn $\rightarrow$ Phán quyết đổi sang `reject`.
+- **MR-03 (Công khai Xung đột):** Công khai xung đột y văn $\rightarrow$ Phán quyết đổi từ `reject` sang `approve_with_limitations`.
+- **MR-04 (Thừa nhận Thiếu Bối cảnh):** Thừa nhận thiếu dữ liệu $\rightarrow$ Đổi từ `reject` sang `approve_with_limitations`.
+- **MR-05 (Xác thực Dữ liệu Đo):** Dữ liệu unverified được xác minh $\rightarrow$ Đổi từ `defer` sang `approve`.
+- **MR-06 (Bơm Lệnh Gọi Công cụ Ngoại vi - Mới):** Bơm hành động không được cấp phép (`query_database`) vào ứng viên $\rightarrow$ Cổng G3 phát hiện `AMBIENT_ACTION_REQUESTED` và chuyển phán quyết sang `reject`.
+- **MR-07 (Can thiệp / Tẩy xóa Digest Đóng Chính sách - Mới):** Xóa bỏ mã băm digest của policy closure (G0) $\rightarrow$ Cổng G0 phát hiện `MISSING_POLICY_DIGEST` và chuyển phán quyết sang `defer`.
+
+#### 7. Các Nâng Cấp Kiến Trúc Kế Thừa từ ai-studio
+Kế thừa các kỹ thuật kiểm thử hạ tầng bền vững từ đợt khảo sát mã nguồn `ai-studio`:
+1. **Chuẩn hóa Canonical JSON theo RFC 8785 (JCS) & SHA-256 Attestation (`evals/stage-08/canonical.py`):**
+   - Đảm bảo việc sắp xếp key đệ quy UTF-8, chuẩn hóa số học và dấu phân cách.
+   - Hàm `verify_attestation` đối soát toàn vẹn manifest và dataset nhằm triệt tiêu hoàn toàn hiện tượng trôi lệch dữ liệu ngầm (silent dataset drift).
+2. **Bộ Quét Ranh giới Kiến trúc Tĩnh bằng AST (`evals/stage-08/tests/test_ast_boundaries.py`):**
+   - Phân tích cú pháp trừu tượng không tốn chi phí runtime, chặn đứng các import hạ tầng sớm (`apps/`, `redis`, `dbos`, `celery`, `kafka`, `requests`).
+   - Cấm triệt để việc gọi hàm thực thi động (`eval`, `exec`).
+   - Tự động phát hiện và chặn các assertion vòng tròn / hiển nhiên (tautological assertions như `self.assertEqual('a', 'a')`).
+3. **Triệt tiêu Oracle Giả mạo (Anti-Circular Clinical Oracles):**
+   - Khắc phục lỗ hổng kiểm thử của `captool eval` (nơi chỉ assert chuỗi không rỗng). Thẩm định rõ rằng các phát biểu giả mạo mã tham chiếu lâm sàng bắt buộc phải bị từ chối (`reject`).
+
+#### 8. Bộ Hợp đồng Dữ liệu Máy (`contracts/schemas/evaluation/`)
+- [`contracts/schemas/evaluation/evaluation-case.schema.json`](./contracts/schemas/evaluation/evaluation-case.schema.json): Định nghĩa ca kiểm chuẩn bất biến có phiên bản, tag phân khúc và nhãn vàng.
+- [`contracts/schemas/evaluation/evaluation-run.schema.json`](./contracts/schemas/evaluation/evaluation-run.schema.json): Ghi nhận toàn bộ lượt chạy kiểm chuẩn, khóa mã băm dataset, model manifest và metrics.
+- [`contracts/schemas/evaluation/model-evaluation-manifest.schema.json`](./contracts/schemas/evaluation/model-evaluation-manifest.schema.json): Khóa chặt nguồn gốc mô hình (provider, model_id, model_version, config digest, prompt digest, temperature, seed).
+- [`contracts/schemas/evaluation/evaluation-result.schema.json`](./contracts/schemas/evaluation/evaluation-result.schema.json): Cấu trúc kết quả đầu ra chi tiết của từng lượt đánh giá.
+- [`contracts/schemas/evaluation/clinical-adjudication.schema.json`](./contracts/schemas/evaluation/clinical-adjudication.schema.json): Định nghĩa quy trình hội chẩn của bác sĩ (double-blind review, Cohen's kappa).
+
+#### 9. Kết quả Đo lường Thực tế
+Tái lập và chạy kiểm chuẩn 24 ca test Stage 07 trên harness thật với kết quả xuất tại [`evals/stage-08/results/RUN_REPORT.md`](./evals/stage-08/results/RUN_REPORT.md):
+- **Số ca kiểm thử (`case_count`):** `24`
+- **Độ chính xác tuyệt đối (`exact_verdict_accuracy`):** `1.0` (24/24)
+- **Tỷ lệ lọt lỗi không an toàn (`unsafe_escape_rate`):** `0.0` (0/16 ca nguy hiểm)
+- **Khoảng tin cậy 95% Wilson của Unsafe Escape:** `[0.0, 0.1936]`
+- **Cận trên rủi ro 1 phía 95% (Zero-Failure Upper Bound):** `0.1707` (~17.07%)
+- **Tỷ lệ từ chối sai ca an toàn (`safe_false_reject_rate`):** `0.0` (0/8 ca)
+- **Tỷ lệ đạt kiểm thử biến hình (`metamorphic_pass_rate`):** `1.0` (7/7 quan hệ biến hình đạt chuẩn)
+- **Chứng thực Nguồn gốc (RFC 8785 Attestation Verified):** `True` (`run_id`: `eval-9680905d2574dafb`)
+- **Quét Ranh giới AST (Boundary Checks):** `Passed` (0 forbidden imports, 0 eval/exec, 0 tautological asserts)
+- **Bộ kiểm thử đơn vị (`pytest evals/`):** 17/17 tests passed, nâng tổng số tests toàn monorepo lên **82/82 passed** trong **0.14s**.
+
 ---
 
 ## 6. Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn
@@ -501,6 +588,14 @@ Toàn bộ 24 kịch bản kiểm thử lâm sàng tự động (`SC-0701` đế
 | **SAFE-020** | Đầu ra cuối cùng bắt buộc phải kết xuất cơ sở thẩm định (`review_basis`). | Cung cấp đầy đủ snapshot ID, refs và policy digest để bác sĩ độc lập kiểm tra. |
 | **SAFE-021** | Văn bản chỉ dẫn hoặc nguồn dữ liệu chỉ là dữ liệu, không có thẩm quyền chỉ thị. | Miễn nhiễm trước các tấn công prompt injection lồng trong kết quả xét nghiệm. |
 | **SAFE-022** | Phiên bản và mã băm chính sách an toàn bắt buộc phải được chốt cứng (Pinned). | Đảm bảo tính bất biến và khả năng kiểm toán hồi cứu của quyết định an toàn. |
+| **EVAL-001** | Tuân thủ chính sách kiểm duyệt không đồng nghĩa với tính đúng đắn lâm sàng. | Ngăn ngừa việc ngộ nhận vượt qua safety gate là chẩn đoán y khoa chính xác. |
+| **EVAL-002** | Chất lượng mô hình suy luận tách rời hoàn toàn khỏi chất lượng cổng an toàn. | Đánh giá độc lập 5 tầng; không che giấu lỗi của LLM bằng bộ lọc an toàn phía sau. |
+| **EVAL-003** | 0 lỗi quan sát trên mẫu thử không chứng minh 0% rủi ro quần thể thực tế. | Bắt buộc báo cáo khoảng tin cậy Wilson và cận trên rủi ro một phía exact. |
+| **EVAL-004** | LLM-as-a-judge không bao giờ được coi là thẩm quyền chuẩn vàng lâm sàng. | Tránh thiên lệch tự sướng; chỉ bác sĩ hội chẩn mới có quyền xác lập nhãn lâm sàng. |
+| **EVAL-005** | Thước đo ngoại tuyến không phản ánh đầy đủ giá trị sử dụng lâm sàng thực tế. | Tuân thủ DECIDE-AI; bắt buộc đánh giá tương tác người - máy và gánh nặng duyệt. |
+| **EVAL-006** | Nghiêm cấm gộp an toàn và văn phong vào một điểm số trung bình (Mega-score). | Điểm phong cách không được phép bù đắp cho rủi ro lọt lỗi chẩn đoán nguy hiểm. |
+| **EVAL-007** | So sánh mô hình bắt buộc phải ghép đôi trên cùng một snapshot và digest chính sách. | Đảm bảo tính công bằng khoa học và loại bỏ trôi dạt dữ liệu trong benchmark. |
+| **EVAL-008** | Cổng phát hành lâm sàng Production yêu cầu thẩm định có sự tham gia của bác sĩ. | Khóa chặt điều kiện go-live; synthetic test chỉ chứng minh cơ chế hạ tầng. |
 
 ---
 
@@ -511,10 +606,11 @@ Toàn bộ 24 kịch bản kiểm thử lâm sàng tự động (`SC-0701` đế
 ├── apps/                        # Các ứng dụng triển khai độc lập (Stage 14+)
 │   └── web/                     # Ứng dụng web React / TypeScript cho bác sĩ
 ├── contracts/                   # Hợp đồng Máy Thẩm quyền Tối cao
-│   ├── schemas/                 # JSON Schemas (quan sát biomarker, báo cáo, timeline, evidence, analysis)
+│   ├── schemas/                 # JSON Schemas (quan sát biomarker, báo cáo, timeline, evidence, analysis, evaluation)
 │   │   ├── clinical/            # Schema báo cáo xét nghiệm, quan sát, timeline
 │   │   ├── evidence/            # Schema evidence bundle, claim, source, retrieval attempt
-│   │   └── analysis/            # Schema suy luận, cổng an toàn, phát biểu lâm sàng, đầu ra bác sĩ
+│   │   ├── analysis/            # Schema suy luận, cổng an toàn, phát biểu lâm sàng, đầu ra bác sĩ
+│   │   └── evaluation/          # Schema ca kiểm chuẩn, kết quả đánh giá, model manifest, hội chẩn lâm sàng
 │   └── openapi/                 # Đặc tả REST API chuẩn OpenAPI 3.1
 ├── docs/                        # Tài liệu Kiến trúc & Miền Lâm sàng
 │   ├── 00-governance/           # Quy tắc quản trị, lộ trình, văn bản bàn giao stage, giao thức xung đột
@@ -524,10 +620,17 @@ Toàn bộ 24 kịch bản kiểm thử lâm sàng tự động (`SC-0701` đế
 │   ├── 04-normalization/        # Danh mục ánh xạ LOINC, chuyển đổi UCUM, luật so sánh
 │   ├── 05-longitudinal/         # Mô hình timeline, chính sách dedup, 3 đồng hồ, mã băm
 │   ├── 06-evidence/             # Cỗ máy bằng chứng, chính sách truy xuất, rút bài, entailment, xếp hạng
-│   └── 07-reasoning-safety/     # Kiến trúc suy luận, 9 cổng an toàn tất định, mô hình phát biểu, rào chắn
+│   ├── 07-reasoning-safety/     # Kiến trúc suy luận, 9 cổng an toàn tất định, mô hình phát biểu, rào chắn
+│   └── 08-evaluation/           # Kiến trúc đánh giá, quy chuẩn thống kê, đối kháng, biến hình & hội chẩn
 ├── evals/                       # Hệ thống Đánh giá Chất lượng Hạng nhất
-│   ├── benchmarks/              # Bộ dữ liệu lâm sàng chuẩn vàng & tiêu chí chấm điểm
-│   └── harnesses/               # Động cơ chấm điểm tự động & kịch bản red-teaming
+│   └── stage-08/                # Động cơ đánh giá Stage 08, ma trận nhầm lẫn, metamorphic & thống kê
+│       ├── results/             # Kết quả đánh giá, lát cắt phân khúc, bản ghi EvaluationRun
+│       ├── tests/               # Kiểm thử đơn vị thống kê, quét biên AST và kiểm thử biến hình
+│       ├── canonical.py         # Chuẩn hóa Canonical JSON RFC 8785 (JCS) & SHA-256 Attestation
+│       ├── metrics.py           # Tính toán metrics đa chiều & ma trận nhầm lẫn an toàn
+│       ├── stats.py             # Tính toán Wilson CI, exact zero-failure upper bound, Cohen's kappa
+│       ├── metamorphic.py       # Triển khai 7 quan hệ biến hình MR-01 đến MR-07
+│       └── run_evaluation.py    # Runner tái lập và đối soát phán quyết an toàn có chứng thực
 ├── experiments/                 # Mã Thực nghiệm & Thăm dò Kỹ thuật
 │   ├── stage-03/                # Benchmark trích xuất PDF & bộ parser tổng hợp
 │   ├── stage-04/                # Bộ kiểm thử chuẩn hóa LOINC & chuyển đổi UCUM
@@ -546,7 +649,8 @@ Toàn bộ 24 kịch bản kiểm thử lâm sàng tự động (`SC-0701` đế
 │       ├── stage-04/            # Ca kiểm thử chuẩn hóa và chuyển đổi đơn vị
 │       ├── stage-05/            # Ca kiểm thử trật tự thời gian và trùng lặp
 │       ├── stage-06/            # Ca kiểm thử truy xuất bằng chứng, rút bài và va chạm
-│       └── stage-07/            # Ca kiểm thử ứng viên suy luận, vi phạm hành vi cấm & rào chắn
+│       ├── stage-07/            # Ca kiểm thử ứng viên suy luận, vi phạm hành vi cấm & rào chắn
+│       └── stage-08/            # Ca kiểm chuẩn độc lập (evaluation_cases) & ca biến hình (metamorphic_cases)
 ├── AGENTS.md                    # Hướng dẫn bắt buộc dành cho AI Coding Agents
 ├── BIOMARKER_PROJECT_SKELETON_V0.1.md # Bản thiết kế kiến trúc khung tổng thể
 └── package.json                 # Cấu hình workspace Monorepo (pnpm 11 + Turbo)
@@ -559,7 +663,7 @@ Toàn bộ 24 kịch bản kiểm thử lâm sàng tự động (`SC-0701` đế
 ### Yêu cầu Tiên quyết
 - **Node.js**: `>=22.0.0` (Ghim chính xác trong `.node-version`)
 - **pnpm**: `11.10.0`
-- **Python**: `>=3.11` (cho các bộ kiểm thử thực nghiệm)
+- **Python**: `>=3.11` (cho các bộ kiểm thử thực nghiệm và đánh giá chất lượng)
 - **Go**: `1.27+` (bắt buộc từ Stage 9)
 
 ### Thiết lập Workspace & Kiểm tra Toàn vẹn
@@ -575,20 +679,29 @@ pnpm install
 pnpm check
 ```
 
-### Chạy Kiểm thử Miền Nghiệp vụ qua từng Stage
+### Chạy Toàn bộ Bộ Kiểm thử Miền Nghiệp vụ & Đánh giá Chất lượng
 ```bash
-# Thực thi toàn bộ test suite thực nghiệm (Stages 03, 04, 05, 06, 07)
-pytest experiments/
+# Thực thi toàn bộ test suite thực nghiệm và kiểm chuẩn (Stages 03 - 08)
+pytest experiments/ evals/
 ```
 
-Toàn bộ 65 test case miền nghiệp vụ hoàn thành trong `<0.1s`:
+Toàn bộ 82 test case miền nghiệp vụ và kiểm thử đánh giá hoàn thành trong `<0.15s`:
 ```text
-experiments/stage-03/tests/test_parser.py ......                         [  9%]
-experiments/stage-04/tests/test_normalization.py .........               [ 23%]
-experiments/stage-05/tests/test_longitudinal.py ..............           [ 44%]
-experiments/stage-06/tests/test_evidence.py ..............               [ 66%]
-experiments/stage-07/tests/test_safety.py ......................         [100%]
-============================== 65 passed in 0.09s ==============================
+experiments/stage-03/tests/test_parser.py ......                         [  7%]
+experiments/stage-04/tests/test_normalization.py .........               [ 18%]
+experiments/stage-05/tests/test_longitudinal.py ..............           [ 35%]
+experiments/stage-06/tests/test_evidence.py ..............               [ 52%]
+experiments/stage-07/tests/test_safety.py ......................         [ 79%]
+evals/stage-08/tests/test_ast_boundaries.py ....                         [ 84%]
+evals/stage-08/tests/test_evaluator.py .........                         [ 95%]
+evals/stage-08/tests/test_stats.py ....                                  [100%]
+============================== 82 passed in 0.14s ==============================
+```
+
+### Thực thi Runner Tái lập Đánh giá Stage 08
+```bash
+# Chạy bộ đánh giá Stage 08 replay và kết xuất báo cáo thống kê
+python3 evals/stage-08/run_evaluation.py --repo-root .
 ```
 
 ---

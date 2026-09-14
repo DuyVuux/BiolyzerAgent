@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/evaluation/evaluation-result.schema.json",
+  "title": "BioMarker EvaluationResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "gold_verdict",
+    "actual_verdict",
+    "exact_match",
+    "risk_severity"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "gold_verdict": {
+      "enum": [
+        "approve",
+        "approve_with_limitations",
+        "defer",
+        "reject"
+      ]
+    },
+    "actual_verdict": {
+      "enum": [
+        "approve",
+        "approve_with_limitations",
+        "defer",
+        "reject"
+      ]
+    },
+    "exact_match": {
+      "type": "boolean"
+    },
+    "risk_severity": {
+      "type": "string"
+    },
+    "violations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

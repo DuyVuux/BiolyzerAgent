@@ -23,7 +23,8 @@ testdata/
     ├── stage-04/      # Normalization & terminology test cases
     ├── stage-05/      # Longitudinal timeline & ordering test cases
     ├── stage-06/      # Evidence retrieval & citation collision test cases
-    └── stage-07/      # Reasoning candidates & clinical safety benchmark fixtures
+    ├── stage-07/      # Reasoning candidates & clinical safety benchmark fixtures
+    └── stage-08/      # Independent evaluation cases, metamorphic relations & gold labels
 ```
 
 ---

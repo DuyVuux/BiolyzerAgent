@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/evaluation/clinical-adjudication.schema.json",
+  "title": "BioMarker ClinicalAdjudication",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "status",
+    "reviews"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "double_reviewed",
+        "adjudicated",
+        "frozen"
+      ]
+    },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "reviewer_role",
+          "verdict"
+        ],
+        "properties": {
+          "reviewer_role": {
+            "type": "string"
+          },
+          "verdict": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "adjudicated_verdict": {
+      "type": "string"
+    }
+  }
+}

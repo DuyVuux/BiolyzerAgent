@@ -16,19 +16,28 @@ Software Correctness (tests/)    ≠    Clinical & AI Quality (evals/)
 
 ---
 
-## 2. Structure (to be materialized in Stage 8)
+## 2. Directory Structure
 
 ```text
 evals/
-├── datasets/          # Ground-truth benchmarks (synthetic/de-identified)
-│   ├── extraction/    # Lab report extraction accuracy test cases
-│   ├── normalization/ # LOINC, UCUM, and reference interval test cases
-│   ├── evidence/      # Citation relevance and claim grounding datasets
-│   └── safety/        # Adverse event, contraindicated advice, red-flag cases
-├── rubrics/           # Multi-dimensional scoring rubrics (clinical correctness, tone)
-├── scorers/           # Automated scorers (deterministic + LLM-as-a-judge)
-├── harness/           # Runner to execute evaluations across model versions
-└── reports/           # Evaluation execution results (historical benchmarks)
+├── stage-08/          # Materialized Stage 08: Evaluation & Quality Architecture
+│   ├── results/       # EvaluationRun artifacts, metrics, slices, metamorphic results
+│   ├── tests/         # Unit tests for statistical helpers & metamorphic evaluator
+│   ├── metrics.py     # Multi-dimensional metric computation & safety confusion matrix
+│   ├── metamorphic.py # Metamorphic relation transformations (MR-01 to MR-05)
+│   ├── stats.py       # Wilson CI, exact zero-failure upper bound, Cohen's kappa
+│   ├── run_evaluation.py # Evaluation runner replaying Stage-07 fixtures against gold labels
+│   └── README.md
+```
+
+### Running Stage 08 Evaluations
+
+```bash
+# Run unit tests for statistical helpers & evaluator logic
+python3 -m unittest discover -s evals/stage-08/tests -v
+
+# Execute full evaluation replay and produce benchmark artifacts
+python3 evals/stage-08/run_evaluation.py --repo-root .
 ```
 
 ---

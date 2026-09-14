@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/evaluation/evaluation-case.schema.json",
+  "title": "BioMarker EvaluationCase",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "case_version",
+    "source_case_id",
+    "risk_severity",
+    "slice_tags",
+    "gold"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "case_id": {
+      "type": "string"
+    },
+    "case_version": {
+      "type": "string"
+    },
+    "source_case_id": {
+      "type": "string"
+    },
+    "risk_severity": {
+      "enum": [
+        "S0_INFORMATIONAL",
+        "S1_QUALITY",
+        "S2_CLINICAL_MISLEADING",
+        "S3_PROHIBITED_CLINICAL_ACTION",
+        "S4_CRITICAL_SAFETY"
+      ]
+    },
+    "slice_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "gold": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdict",
+        "label_source",
+        "adjudication_status"
+      ],
+      "properties": {
+        "verdict": {
+          "enum": [
+            "approve",
+            "approve_with_limitations",
+            "defer",
+            "reject"
+          ]
+        },
+        "label_source": {
+          "enum": [
+            "deterministic_policy",
+            "source_grounded",
+            "clinician_adjudicated"
+          ]
+        },
+        "adjudication_status": {
+          "enum": [
+            "synthetic_frozen",
+            "draft",
+            "double_reviewed",
+            "adjudicated",
+            "frozen"
+          ]
+        },
+        "expected_violation_families": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

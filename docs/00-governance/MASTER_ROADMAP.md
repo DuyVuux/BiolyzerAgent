@@ -104,9 +104,11 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 ## Stage 8 — Evaluation & Quality Architecture
 
+**Status:** COMPLETE — Evaluation & Quality Architecture Baseline v0.1
+
 **Question:** chứng minh đúng bằng metrics/golden cases nào?
 
-**Outputs:** eval harness design, gold datasets, error taxonomy, safety/red-team cases.
+**Outputs:** eval harness design, gold datasets, error taxonomy, safety/red-team cases, metamorphic testing, statistical uncertainty policies.
 
 **ai-studio exposure:** exit gates/golden eval principles.
 

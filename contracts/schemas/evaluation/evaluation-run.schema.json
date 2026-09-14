@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/evaluation/evaluation-run.schema.json",
+  "title": "BioMarker EvaluationRun",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evaluation_run_id",
+    "evaluator_version",
+    "dataset_digest",
+    "model_manifest",
+    "metrics",
+    "results"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "evaluation_run_id": {
+      "type": "string",
+      "pattern": "^eval-[a-f0-9]{16}$"
+    },
+    "evaluator_version": {
+      "type": "string"
+    },
+    "dataset_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "model_manifest": {
+      "$ref": "model-evaluation-manifest.schema.json"
+    },
+    "metrics": {
+      "type": "object"
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "evaluation-result.schema.json"
+      }
+    }
+  }
+}

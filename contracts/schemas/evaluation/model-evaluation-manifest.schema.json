@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/evaluation/model-evaluation-manifest.schema.json",
+  "title": "BioMarker ModelEvaluationManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "provider",
+    "model_id",
+    "model_version",
+    "configuration_digest",
+    "program_digest"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "manifest_id": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "string"
+    },
+    "model_id": {
+      "type": "string"
+    },
+    "model_version": {
+      "type": "string"
+    },
+    "configuration_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "program_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "temperature": {
+      "type": "number"
+    },
+    "seed": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "capability_profile": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    }
+  }
+}

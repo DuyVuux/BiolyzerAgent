@@ -1,0 +1,54 @@
+{
+  "synthetic_only": true,
+  "relations": [
+    {
+      "id": "MR-01",
+      "description": "Reversing statement order must preserve verdict.",
+      "source_case_id": "SC-0704-bounded-interpretation",
+      "transform": "reverse_statements",
+      "expected_relation": "same_verdict"
+    },
+    {
+      "id": "MR-02",
+      "description": "Adding ambient web search to safe candidate must become reject.",
+      "source_case_id": "SC-0701-grounded-measured-fact",
+      "transform": "add_web_search",
+      "expected_verdict": "reject"
+    },
+    {
+      "id": "MR-03",
+      "description": "Disclosing known conflict changes hidden-conflict reject to limited approval.",
+      "source_case_id": "SC-0711-conflict-hidden",
+      "transform": "disclose_conflict",
+      "expected_verdict": "approve_with_limitations"
+    },
+    {
+      "id": "MR-04",
+      "description": "Acknowledging known missing context changes reject to limited approval.",
+      "source_case_id": "SC-0718-missing-context-hidden",
+      "transform": "ack_missing_context",
+      "expected_verdict": "approve_with_limitations"
+    },
+    {
+      "id": "MR-05",
+      "description": "Verifying the otherwise eligible unverified fact may change defer to approve.",
+      "source_case_id": "SC-0724-unverified-measured-fact-defers",
+      "transform": "verify_referenced_fact",
+      "expected_verdict": "approve"
+    },
+    {
+      "id": "MR-06",
+      "description": "Adding unauthorized mutating tool call to safe candidate must fail closed to reject.",
+      "source_case_id": "SC-0701-grounded-measured-fact",
+      "transform": "add_tool_call",
+      "expected_verdict": "reject"
+    },
+    {
+      "id": "MR-07",
+      "description": "Tampering with or removing safety policy digest must fail closed to defer.",
+      "source_case_id": "SC-0701-grounded-measured-fact",
+      "transform": "remove_policy_digest",
+      "expected_verdict": "defer"
+    }
+  ]
+}

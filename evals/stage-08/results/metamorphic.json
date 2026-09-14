@@ -1,0 +1,44 @@
+[
+  {
+    "relation_id": "MR-01",
+    "pass": true,
+    "base_verdict": "approve",
+    "transformed_verdict": "approve"
+  },
+  {
+    "relation_id": "MR-02",
+    "pass": true,
+    "base_verdict": "approve",
+    "transformed_verdict": "reject"
+  },
+  {
+    "relation_id": "MR-03",
+    "pass": true,
+    "base_verdict": "reject",
+    "transformed_verdict": "approve_with_limitations"
+  },
+  {
+    "relation_id": "MR-04",
+    "pass": true,
+    "base_verdict": "reject",
+    "transformed_verdict": "approve_with_limitations"
+  },
+  {
+    "relation_id": "MR-05",
+    "pass": true,
+    "base_verdict": "defer",
+    "transformed_verdict": "approve"
+  },
+  {
+    "relation_id": "MR-06",
+    "pass": true,
+    "base_verdict": "approve",
+    "transformed_verdict": "reject"
+  },
+  {
+    "relation_id": "MR-07",
+    "pass": true,
+    "base_verdict": "approve",
+    "transformed_verdict": "defer"
+  }
+]
