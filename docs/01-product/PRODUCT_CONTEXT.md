@@ -373,9 +373,24 @@ Stage 01 được xem là đạt product-discovery baseline khi team có thể t
 | **TD-01B** | Initial Rollout Strategy | **Internal Clinical Pilot → Physician UAT (30/11: Nước tiểu) → Limited Go-live Khoa Nội tổng hợp (31/12)** | **APPROVED (2026-09-14)** |
 | **TD-02** | Geography & Jurisdiction | **Vinmec - Việt Nam** (Tuân thủ Luật Khám bệnh, chữa bệnh 2023 & quy chuẩn BYT) | **APPROVED (2026-09-14)** |
 | **TD-03** | Clinical Owner / Sign-off | **Vinmec Clinical Reviewer / Laboratory Specialist** phụ trách duyệt safety wording | **APPROVED (2026-09-14)** |
-| **TD-04** | Follow-up & Recommendation | Hỗ trợ tóm tắt, gắn cờ, giải thích ngắn gọn cho bác sĩ; CẤM tự chẩn đoán, kê đơn, điều trị | **APPROVED (2026-09-14)** |
-| **TD-05** | Raw PDF Retention Policy | **Tiered Policy:** Dev/Stage 1-8: Ephemeral/Synthetic only (`var/uploads/`); Prod: Delegated storage to Vinmec EMR/Encrypted ObjectStore | **APPROVED (2026-09-14)** |
+| **TD-04** | Follow-up & Recommendation | **Capability Classes:** ALLOWED (Level A Data, Level B Evidence); CONTROLLED (Abnormal flags + physician summary - rules-based); RESTRICTED (Recommendations - out of MVP); PROHIBITED (Diagnosis/Treatment) | **APPROVED (2026-09-14)** |
+| **TD-05** | Raw PDF Retention Policy | **Semantic Policy (RFC-2119):** Not an authoritative record store; source files remain in hospital system; BioMarker stores only derived observations + provenance; Dev uses synthetic/ephemeral; Physical DB/Crypto deferred to Stage 10/14/15 | **APPROVED (2026-09-14)** |
 | **TD-06** | Clinical System Integration | Defer đến Stage 10/15 khi pipeline cốt lõi hoàn tất | **DEFERRED (Stage 15)** |
+
+### 12.1 Chi tiết quyết định TD-04 — Capability Classes & Clinical Boundary
+
+- **ALLOWED (Level A & Level B):** Trích xuất, chuẩn hóa, bảo toàn giá trị/đơn vị/ngưỡng tham chiếu gốc; giải thích định nghĩa y khoa và trích dẫn bằng chứng y văn có căn cứ (claim grounding).
+- **CONTROLLED (Clinician Interpretation):** Năng lực gắn cờ bất thường (abnormal flags) và tóm tắt súc tích báo cáo cho bác sĩ. **Ranh giới:** Bắt buộc tuân theo quy tắc xác định (deterministic rules), phục vụ workflow của bác sĩ (Physician View), bác sĩ toàn quyền thẩm định độc lập.
+- **RESTRICTED (Person-Specific Recommendation):** Khuyến nghị can thiệp lối sống, chỉ định thêm xét nghiệm chuyên sâu $\rightarrow$ **OUT OF MVP SCOPE**.
+- **PROHIBITED (Autonomous Diagnosis & Treatment):** Chẩn đoán bệnh, kê đơn thuốc, thay đổi liều, quyết định điều trị, phân loại cấp cứu $\rightarrow$ **TUYỆT ĐỐI CẤM ở mọi giai đoạn**.
+
+### 12.2 Chi tiết quyết định TD-05 — Semantic Data Retention Policy (RFC-2119)
+
+1. **Authoritative Record Boundary:** BioMarker Agent **SHALL NOT** đóng vai trò là kho lưu trữ hồ sơ bệnh án pháp lý (authoritative clinical document repository).
+2. **Document Custody:** BioMarker Agent **SHALL NOT** sở hữu hay nhân bản tài liệu gốc (raw reports). Toàn bộ tệp báo cáo gốc **SHALL** thuộc quyền quản lý của hệ thống quản lý tài liệu lâm sàng được Vinmec phê duyệt.
+3. **Retained Data Scope:** BioMarker Agent **SHALL** chỉ lưu trữ dữ liệu quan sát phái sinh có cấu trúc tối thiểu (derived structured observations) và thông tin nguồn gốc tối thiểu (provenance metadata) phục vụ đối chiếu xu hướng và y văn.
+4. **Development Lifecycle:** Trong Stage 01–08, hệ thống **SHALL** tuân thủ nguyên tắc Zero-PHI (chỉ dùng synthetic fixtures). Tệp upload thử nghiệm cục bộ **SHALL** chỉ tồn tại tạm thời (ephemeral) trong `var/uploads/` và **SHALL** bị xóa ngay sau khi xử lý.
+5. **Deferred Technical Scope:** Các quyết định kỹ thuật về cơ sở dữ liệu vật lý, định dạng lưu trữ (relational/JSONB), thuật toán mã hóa tại chỗ và giao thức tích hợp hệ thống bệnh viện **SHALL BE DEFERRED** đến Stage 10, Stage 14 và Stage 15.
 
 ---
 

@@ -74,54 +74,72 @@ Nguồn:
 
 ---
 
-## 4. Safety levels
+## 4. Capability classes & Safety envelope
 
-Để tránh scope trượt dần, capability được phân thành bốn level.
+Để tránh scope trượt dần và loại trừ triệt để hiện tượng trôi dạt ngữ nghĩa (semantic drift), các năng lực của BioMarker Agent được phân loại thành các Capability Classes rõ ràng:
 
-### Level A — Data explanation
+### LEVEL A — DATA PRESENTATION (ALLOWED)
 
-Ví dụ:
-
-- chỉ ra giá trị được report;
-- hiển thị source reference range;
-- giải thích thuật ngữ;
-- nêu data limitation.
-
-**Baseline:** IN SCOPE candidate.
-
-### Level B — Evidence-linked contextualization
+Năng lực trích xuất, chuẩn hóa và bảo toàn dữ liệu quan sát gốc.
 
 Ví dụ:
+- Chỉ ra giá trị biomarker được ghi nhận trong báo cáo;
+- Hiển thị khoảng tham chiếu gốc (source reference range) và đơn vị gốc;
+- Bảo toàn tính toàn vẹn và nguồn gốc dữ liệu (data provenance);
+- Nêu rõ các giới hạn dữ liệu (data limitations).
 
-- liên kết biomarker với evidence có liên quan;
-- nêu hypothesis có điều kiện;
-- phân biệt correlation và causation;
-- trình bày known/unknown context.
+**Status:** ALLOWED / IN SCOPE FOR MVP.
 
-**Baseline:** IN SCOPE candidate, nhưng phải có provenance và grounding.
+### LEVEL B — EVIDENCE-LINKED EXPLANATION (ALLOWED)
 
-### Level C — Person-specific recommendation
-
-Ví dụ:
-
-- đề xuất một hành động sức khỏe cụ thể;
-- đề xuất xét nghiệm follow-up;
-- ưu tiên option dựa trên dữ liệu cá nhân.
-
-**Baseline:** RESTRICTED / TEAM + CLINICAL + REGULATORY REVIEW REQUIRED.
-
-Reference product có capability tương tự không tạo authority cho BioMarker.
-
-### Level D — Diagnosis / treatment direction
+Năng lực giải thích ngữ cảnh khoa học gắn liền với bằng chứng y văn.
 
 Ví dụ:
+- Giải thích định nghĩa thuật ngữ xét nghiệm và ý nghĩa sinh học;
+- Liên kết biomarker với y văn/hướng dẫn chuyên môn (evidence/guidelines) đã được công nhận;
+- Phân biệt rõ mối tương quan (correlation) và quan hệ nhân quả (causation);
+- Trình bày ngữ cảnh đã biết và chưa biết (known/unknown context).
 
-- xác định disease như output cuối;
-- chỉ định/ngừng/thay đổi thuốc;
-- quyết định treatment;
-- điều khiển urgent care theo automation.
+**Status:** ALLOWED / IN SCOPE FOR MVP (Bắt buộc có evidence provenance và claim grounding).
 
-**Baseline:** OUT OF SCOPE cho candidate MVP.
+### CONTROLLED — CLINICIAN INTERPRETATION (APPROVED FOR MVP)
+
+Năng lực hỗ trợ bác sĩ nhận diện nhanh bất thường và tóm tắt tổng quan trong quy trình chuyên môn.
+
+Ví dụ:
+- Gắn cờ bất thường (abnormal flags) dựa trên so sánh trực tiếp với khoảng tham chiếu của phòng xét nghiệm;
+- Tóm tắt súc tích báo cáo xét nghiệm phục vụ bác sĩ tiết kiệm thời gian đọc kết quả;
+- Cung cấp gợi ý giải thích kỹ thuật để bác sĩ tham khảo trong quá trình đánh giá chuyên môn.
+
+**Điều kiện kiểm soát bắt buộc (Strict Governance):**
+1. **Deterministic / Rules-based only:** Các cờ bất thường và phát hiện lệch ngưỡng bắt buộc phải dựa trên quy tắc logic xác định (deterministic rules), tuyệt đối không suy diễn tự do;
+2. **Human-in-the-loop:** Đầu ra chỉ hiển thị trong giao diện chuyên môn của bác sĩ (Physician View). Bác sĩ giữ quyền quyết định chuyên môn tối cao và kiểm chứng độc lập;
+3. Không đưa ra chẩn đoán xác định hay chỉ định điều trị.
+
+**Status:** CONTROLLED / APPROVED FOR MVP (Physician Workflow).
+
+### RESTRICTED — PERSON-SPECIFIC RECOMMENDATION (NOT APPROVED FOR MVP)
+
+Năng lực đưa ra khuyến nghị can thiệp sức khỏe cá thể hóa.
+
+Ví dụ:
+- Đề xuất thay đổi lối sống, chế độ ăn uống, tập luyện cá nhân hóa;
+- Đề xuất chỉ định thêm xét nghiệm chuyên sâu tiếp theo dựa trên hồ sơ cá nhân;
+- Đưa ra lời khuyên can thiệp y tế cá thể hóa.
+
+**Status:** RESTRICTED / OUT OF MVP SCOPE (Cần đánh giá lâm sàng và phê duyệt quy chế chuyên sâu trước khi xem xét ở các phiên bản tiếp theo).
+
+### PROHIBITED — AUTONOMOUS DIAGNOSIS / TREATMENT (STRICTLY BANNED)
+
+Năng lực can thiệp trực tiếp vào quyết định chẩn đoán hoặc điều trị y khoa.
+
+Ví dụ:
+- Tự động đưa ra kết luận chẩn đoán bệnh lý thay bác sĩ;
+- Chỉ định, ngừng, thay đổi liều lượng thuốc hoặc kê đơn thuốc;
+- Quyết định phác đồ điều trị;
+- Tự động phân loại cấp cứu (emergency triage) hoặc điều khiển chăm sóc khẩn cấp.
+
+**Status:** PROHIBITED / STRICTLY BANNED (TUYỆT ĐỐI CẤM ở mọi giai đoạn phát triển và triển khai).
 
 ---
 
@@ -343,21 +361,23 @@ Hệ thống tuân thủ Luật Khám bệnh, chữa bệnh 2023 và các quy đ
 
 ## 13. Safety envelope table
 
-| Capability | Approved status | Condition |
-|---|---|---|
-| Extract biomarker values | IN SCOPE LATER | Stage 03 accuracy gate |
-| Preserve source range/unit/date | IN SCOPE LATER | Must keep provenance |
-| Highlight relation to source range | IN SCOPE LATER | No diagnosis inference |
-| Longitudinal trend display | IN SCOPE LATER | Correct subject/date mapping |
-| Explain biomarker terminology | IN SCOPE | Educational framing |
-| Evidence-linked contextualization | IN SCOPE LATER | Grounding + limitation |
-| Follow-up chat on verified data | IN SCOPE LATER | Dataset-scoped |
-| Lifestyle recommendation | RESTRICTED | Giới hạn ở thông tin giáo dục chung |
-| Test ordering recommendation | RESTRICTED | Gợi ý câu hỏi để hỏi bác sĩ Vinmec |
-| Medication change | OUT OF SCOPE | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
-| Autonomous diagnosis | OUT OF SCOPE | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
-| Emergency triage | OUT OF SCOPE | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
-| Autonomous treatment decision | OUT OF SCOPE | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
+| Capability | Capability Class | Approved status | Governance condition |
+|---|---|---|---|
+| Extract biomarker values | LEVEL A | ALLOWED (Stage 03+) | Preserves raw values, units, ranges; Stage 03 accuracy gate |
+| Preserve source range/unit/date | LEVEL A | ALLOWED (Stage 03+) | Full provenance preservation |
+| Longitudinal trend display | LEVEL A | ALLOWED (Stage 05+) | Correct subject/date mapping; factual display only |
+| Explain biomarker terminology | LEVEL B | ALLOWED (Stage 01+) | Educational framing; validated medical dictionaries |
+| Evidence-linked contextualization | LEVEL B | ALLOWED (Stage 08+) | Provenance + claim grounding + limitation disclaimer |
+| Highlight relation to source range | CONTROLLED | ALLOWED (MVP) | Deterministic rule-based comparison; doctor review |
+| Abnormal flags display | CONTROLLED | ALLOWED (MVP) | Deterministic rules; physician interface only |
+| Concise physician summary | CONTROLLED | ALLOWED (MVP) | Clinical summary for physician review; no autonomous inference |
+| Follow-up chat on verified data | CONTROLLED | ALLOWED (Stage 07+) | Dataset-scoped; physician oversight |
+| Lifestyle recommendation | RESTRICTED | NOT IN MVP | Clinical & regulatory review required post-pilot |
+| Test ordering recommendation | RESTRICTED | NOT IN MVP | Suggest questions for doctor only; no autonomous order |
+| Medication change / prescription | PROHIBITED | STRICTLY BANNED | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
+| Autonomous diagnosis | PROHIBITED | STRICTLY BANNED | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
+| Emergency triage | PROHIBITED | STRICTLY BANNED | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
+| Autonomous treatment decision | PROHIBITED | STRICTLY BANNED | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
 
 ---
 
@@ -381,6 +401,9 @@ Stage 07 cần quyết định:
 - [x] Primary user được quyết định: **Option B — Healthcare Professional / Physician (Clinical Pilot & UAT tại Vinmec)**
 - [x] Jurisdiction được quyết định: **Vinmec - Việt Nam**
 - [x] Clinical reviewer/owner được xác định: **Vinmec Clinical Reviewer / Laboratory Specialist**
-- [x] Allowed output level được approve: **Level A & Level B**
-- [x] Prohibited output được approve: **Level D (Kê đơn, chẩn đoán, điều trị, cấp cứu bị cấm tuyệt đối)**
+- [x] Allowed output capability classes được approve:
+  - **LEVEL A (Data Presentation)** & **LEVEL B (Evidence-Linked Explanation)**
+  - **CONTROLLED (Clinician Interpretation: Abnormal flags + concise physician summary - deterministic, rules-based, doctor review required)**
+- [x] Restricted capabilities được xác nhận: **RESTRICTED (Person-specific recommendation - NOT approved for MVP)**
+- [x] Prohibited output được approve: **PROHIBITED (Autonomous diagnosis, medication change, prescription, treatment directive, emergency triage bị cấm tuyệt đối)**
 - [x] Product claims và UX copy tương thích với safety boundary.

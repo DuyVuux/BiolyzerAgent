@@ -52,13 +52,24 @@ Exact classification taxonomy cần security/privacy owner approve ở Stage 14.
 
 Có lưu raw report sau processing không?
 
-**[APPROVED DECISION — TD-05 Tiered Retention Policy]**
-- **Giai đoạn Phát triển (Development / Stage 01–08):**
-  - **Quy tắc tuyệt đối (Zero-PHI):** Không lưu file bệnh nhân thật. Chỉ dùng file synthetic ở `testdata/synthetic/lab-reports/`.
-  - **Ephemeral Processing:** File upload thử nghiệm cục bộ lưu tại `var/uploads/` (gitignored) và bị xóa sau khi hoàn tất trích xuất (`DEV_PURGE_UPLOADS_ON_COMPLETION=true`).
-- **Giai đoạn Sản phẩm tại Vinmec (Production / Stage 10+):**
-  - **Delegated Storage:** Báo cáo gốc được lưu trữ trong hạ tầng lưu trữ bảo mật của Vinmec (EMR/PACS/ObjectStore có mã hóa AES-256).
-  - BioMarker chỉ lưu trữ Document Hash (SHA-256) và URI liên kết để truy vết nguồn gốc, không tự ý nhân bản file PDF ra ngoài ranh giới bảo mật của bệnh viện.
+**[APPROVED DECISION — TD-05 Semantic Data Retention Policy (RFC-2119)]**
+
+- **Hệ thống lưu trữ bệnh án chính thức (Authoritative Record Boundary):**
+  - BioMarker Agent **SHALL NOT** đóng vai trò là kho lưu trữ hồ sơ bệnh án pháp lý (authoritative clinical document repository).
+- **Quyền sở hữu và lưu trữ tài liệu gốc (Document Custody):**
+  - BioMarker Agent **SHALL NOT** sở hữu hay nhân bản độc lập các tệp báo cáo gốc (raw PDF/images).
+  - Tệp gốc **SHALL** thuộc quyền quản lý và lưu trữ của hệ thống quản lý tài liệu lâm sàng được Vinmec phê duyệt (Vinmec-approved clinical document management system).
+- **Phạm vi dữ liệu BioMarker lưu trữ (Retained Data Scope):**
+  - BioMarker Agent **SHALL** chỉ lưu trữ dữ liệu quan sát phái sinh có cấu trúc tối thiểu (derived structured observations: biomarker, value, unit, reference range, date) và thông tin nguồn gốc tối thiểu (provenance metadata) cần thiết cho phân tích xu hướng và đối chiếu bằng chứng y văn.
+- **Quy tắc vòng đời phát triển (Development Lifecycle - Stage 01–08):**
+  - Hệ thống **SHALL** tuân thủ nguyên tắc Zero-PHI: Tuyệt đối không lưu trữ hay xử lý dữ liệu bệnh nhân thật. Chỉ sử dụng dữ liệu giả lập (synthetic fixtures) trong `testdata/synthetic/`.
+  - Nếu có tệp tải lên phục vụ kiểm thử cục bộ, việc xử lý **SHALL** hoàn toàn mang tính tạm thời (ephemeral) trong `var/uploads/` (gitignored) và **SHALL** bị xóa tự động ngay sau khi xử lý hoàn tất.
+- **Ranh giới kỹ thuật được hoãn lại (Deferred Technical Decisions):**
+  - Cơ sở dữ liệu vật lý (PostgreSQL / Document Store): **DEFERRED to Stage 10 (System Architecture)**.
+  - Định dạng lưu trữ dữ liệu phái sinh (Relational / JSONB): **DEFERRED to Stage 10 (System Architecture)**.
+  - Cơ chế và thuật toán mã hóa tại chỗ (Encryption engine / KMS): **DEFERRED to Stage 14 (Security, Privacy & Audit)**.
+  - Định danh và giao thức tích hợp hệ thống bệnh viện (HIS / LIS / EMR API): **DEFERRED to Stage 15 (Clinical Systems Integration)**.
+  - Chi tiết schema đầy đủ của trường provenance: **DEFERRED to Stage 02 & Stage 10**.
 
 **Status:** APPROVED (2026-09-14)
 

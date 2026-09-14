@@ -269,11 +269,11 @@ Nếu tương lai cần, phải có stage/ADR riêng.
 | Capability | Status | Revisit |
 |---|---|---|
 | Structured lab-system integration | DEFERRED | Stage 14–15 |
-| HCP-only view | OPEN | After TD-01 |
-| Patient-facing view | OPEN | After TD-01 |
+| HCP-only view | APPROVED (IN SCOPE) | TD-01 approved: Primary User is Physician |
+| Patient-facing view | OUT OF SCOPE | Excluded for MVP; revisit post-pilot |
 | Report export/share | DEFERRED | Product decision |
 | Persistent personal health timeline | OPEN | Stage 05/10 |
-| Recommendation engine | RESTRICTED | Clinical/regulatory review |
+| Recommendation engine | RESTRICTED | Excluded for MVP; need clinical/regulatory review |
 | Generic Studio authoring | DEFERRED | Stage 15 |
 | Multi-agent orchestration | DEFERRED | Need proven use case |
 
