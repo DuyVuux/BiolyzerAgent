@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "timeline_snapshot_id": "timeline-e5f048260198460b",
+  "content_sha256": "e5f048260198460b51ca33eab053aab1a13210e2f08118091cfdd8f71fa8f94a",
+  "subject_ref": "subject-synthetic-stage05-001",
+  "policy_version": "longitudinal-policy-v1",
+  "source_dataset_snapshot_ids": [
+    "ds-x1"
+  ],
+  "lineage_groups": [
+    {
+      "logical_measurement_id": "lm-685e41d3355849c5",
+      "member_observation_ids": [
+        "x1"
+      ],
+      "selected_observation_id": "x1",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    }
+  ],
+  "series": [],
+  "excluded_observations": [
+    {
+      "observation_id": "x1",
+      "reason": "mapping_not_validated"
+    }
+  ]
+}

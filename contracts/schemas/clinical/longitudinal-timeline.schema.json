@@ -1,0 +1,305 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/clinical/longitudinal-timeline.schema.json",
+  "title": "BioMarker LongitudinalTimelineSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "timeline_snapshot_id",
+    "content_sha256",
+    "subject_ref",
+    "policy_version",
+    "source_dataset_snapshot_ids",
+    "lineage_groups",
+    "series",
+    "excluded_observations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "timeline_snapshot_id": {
+      "type": "string",
+      "pattern": "^timeline-[a-f0-9]{16}$"
+    },
+    "content_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "subject_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_dataset_snapshot_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "lineage_groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lineageGroup"
+      }
+    },
+    "series": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/series"
+      }
+    },
+    "excluded_observations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/excluded"
+      }
+    }
+  },
+  "$defs": {
+    "code": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "system",
+        "code"
+      ],
+      "properties": {
+        "system": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "display": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "value": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "quantity",
+            "interval",
+            "ordinal",
+            "categorical",
+            "text"
+          ]
+        },
+        "value": {
+          "type": "number"
+        },
+        "comparator": {
+          "enum": [
+            "<",
+            "<=",
+            ">",
+            ">="
+          ]
+        },
+        "unit_ucum": {
+          "type": "string"
+        },
+        "source_text": {
+          "type": "string"
+        },
+        "low": {
+          "type": "number"
+        },
+        "high": {
+          "type": "number"
+        },
+        "rank": {
+          "type": "integer"
+        },
+        "normalized_code": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "lineageGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "logical_measurement_id",
+        "member_observation_ids",
+        "resolution",
+        "evidence_basis"
+      ],
+      "properties": {
+        "logical_measurement_id": {
+          "type": "string"
+        },
+        "member_observation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "selected_observation_id": {
+          "type": "string"
+        },
+        "resolution": {
+          "enum": [
+            "unique",
+            "duplicate_collapsed",
+            "revision_selected",
+            "unresolved_conflict",
+            "reconciliation_required",
+            "source_invalidated"
+          ]
+        },
+        "evidence_basis": {
+          "type": "string"
+        }
+      }
+    },
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "logical_measurement_id",
+        "selected_observation_id",
+        "effective_at",
+        "source_dataset_snapshot_id",
+        "value"
+      ],
+      "properties": {
+        "logical_measurement_id": {
+          "type": "string"
+        },
+        "selected_observation_id": {
+          "type": "string"
+        },
+        "effective_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "issued_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_dataset_snapshot_id": {
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/value"
+        }
+      }
+    },
+    "trend": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "computed_numeric",
+            "computed_ordinal",
+            "computed_categorical",
+            "insufficient_points",
+            "history_only_interval",
+            "not_computed_censored_value",
+            "indeterminate_same_time"
+          ]
+        },
+        "direction": {
+          "enum": [
+            "increased",
+            "decreased",
+            "unchanged",
+            "changed"
+          ]
+        },
+        "absolute_delta": {
+          "type": "number"
+        },
+        "rank_delta": {
+          "type": "integer"
+        }
+      }
+    },
+    "series": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "series_id",
+        "canonical_test",
+        "value_kind",
+        "points",
+        "trend"
+      ],
+      "properties": {
+        "series_id": {
+          "type": "string"
+        },
+        "canonical_test": {
+          "$ref": "#/$defs/code"
+        },
+        "value_kind": {
+          "enum": [
+            "quantity",
+            "interval",
+            "ordinal",
+            "categorical",
+            "text"
+          ]
+        },
+        "normalized_unit": {
+          "type": "string"
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/point"
+          },
+          "minItems": 1
+        },
+        "trend": {
+          "$ref": "#/$defs/trend"
+        }
+      }
+    },
+    "excluded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observation_id",
+        "reason"
+      ],
+      "properties": {
+        "observation_id": {
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "mapping_not_validated",
+            "missing_effective_time",
+            "unit_not_normalized",
+            "unresolved_lineage_conflict",
+            "reconciliation_required",
+            "source_invalidated"
+          ]
+        }
+      }
+    }
+  }
+}

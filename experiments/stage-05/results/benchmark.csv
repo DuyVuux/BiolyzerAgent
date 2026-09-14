@@ -1,0 +1,16 @@
+case,pass,error
+chronology_out_of_order,True,
+duplicate_import,True,
+corrected_revision,True,
+same_value_time_distinct_events,True,
+convertible_units,True,
+different_methods_split,True,
+candidate_mapping_excluded,True,
+cross_subject_rejected,True,CROSS_SUBJECT_INPUT
+ordinal_trend,True,
+categorical_change,True,
+interval_history_only,True,
+censored_quantity,True,
+identity_collision_idempotent_duplicate,True,
+identity_collision_hard_conflict,True,
+ambiguous_representation_reconciliation_required,True,

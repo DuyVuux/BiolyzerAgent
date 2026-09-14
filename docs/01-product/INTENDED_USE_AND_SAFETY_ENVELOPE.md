@@ -78,6 +78,28 @@ Nguồn:
 
 Để tránh scope trượt dần và loại trừ triệt để hiện tượng trôi dạt ngữ nghĩa (semantic drift), các năng lực của BioMarker Agent được phân loại thành các Capability Classes rõ ràng:
 
+## 4. Phân loại Khung An toàn (Safety Envelope Matrix)
+
+```mermaid
+flowchart TD
+    subgraph AllowedScope["PHẠM VI CHO PHÉP (IN SCOPE - MVP)"]
+        LevelA["Level A: Data Presentation\n(Trích xuất, chuẩn hóa, giữ nguyên đơn vị & khoảng tham chiếu gốc)"]
+        LevelB["Level B: Evidence-Linked Explanation\n(Giải thích ý nghĩa sinh học kèm trích dẫn y văn có căn cứ)"]
+        Controlled["Controlled: Clinician Interpretation\n(Tóm tắt kết quả, gắn cờ bất thường theo rule tất định cho Bác sĩ)"]
+    end
+
+    subgraph RestrictedScope["PHẠM VI HẠN CHẾ (OUT OF SCOPE - MVP)"]
+        Restricted["Restricted: Person-Specific Recommendation\n(Khuyến nghị chế độ ăn, tập luyện cá thể hóa -> Hoãn sang giai đoạn sau)"]
+    end
+
+    subgraph ProhibitedScope["PHẠM VI NGHIÊM CẤM (STRICTLY BANNED)"]
+        Prohibited["Prohibited: Autonomous Diagnosis & Treatment\n(Tự động chẩn đoán bệnh tật, kê đơn, chỉ định điều trị -> TUYỆT ĐỐI CẤM)"]
+    end
+
+    AllowedScope -.->|Kiểm duyệt chặt chẽ| RestrictedScope
+    RestrictedScope -.->|Rào chắn an toàn tuyệt đối| ProhibitedScope
+```
+
 ### LEVEL A — DATA PRESENTATION (ALLOWED)
 
 Năng lực trích xuất, chuẩn hóa và bảo toàn dữ liệu quan sát gốc.

@@ -1,30 +1,114 @@
 # BioMarker Agent
 
-> **Phân tích Dấu ấn Sinh học Lâm sàng, Theo dõi Diễn tiến Chuỗi Thời gian & Trí tuệ Lâm sàng An toàn**
+> **Phân tích Dấu ấn Sinh học Lâm sàng, Theo dõi Diễn tiến Chuỗi Thời gian & Trí tuệ Lâm sàng An toàn**  
+> *Hệ thống Monorepo Polyglot có Cổng Kiểm soát Giai đoạn phục vụ Chuẩn hóa Danh pháp Xét nghiệm và Kiểm soát Rủi ro Lâm sàng Tất định*
+
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
+[![Monorepo](https://img.shields.io/badge/Monorepo-pnpm%20%7C%20Turbo-orange.svg)](./pnpm-workspace.yaml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](./package.json)
+[![Python Tests](https://img.shields.io/badge/Pytest-29%20passed-brightgreen.svg)](./experiments/)
+[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2005%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
 
 [English](./README.md) | **Tiếng Việt**
 
 ---
 
-## 1. Tổng quan
+## Mục lục
 
-**BioMarker Agent** là hệ thống chuyên sâu được thiết kế để tiếp nhận các báo cáo xét nghiệm chẩn đoán y khoa, trích xuất và chuẩn hóa các quan sát dấu ấn sinh học (biomarkers), duy trì dòng thời gian diễn tiến của bệnh nhân, truy xuất bằng chứng y văn chính thống, và đưa ra các phân tích lâm sàng an toàn, có căn cứ vững chắc.
-
-Dự án tuân theo kiến trúc **Polyglot Monorepo có cổng kiểm soát theo giai đoạn (Stage-Gated Monorepo)**:
-- **Frontend:** TypeScript / React dành cho giao diện người dùng.
-- **Backend:** Go (từ Stage 9) cho các dịch vụ runtime hiệu năng cao và an toàn miền nghiệp vụ.
-- **Hợp đồng dữ liệu (Machine Contracts):** JSON Schema và OpenAPI chuẩn hóa tại `contracts/`.
-- **Hệ thống đánh giá lâm sàng (Evaluation Harness):** Bộ tiêu chí và benchmark độc lập tại `evals/`.
-
-Tài liệu đặc tả kiến trúc: [BIOMARKER_PROJECT_SKELETON_V0.1.md](./BIOMARKER_PROJECT_SKELETON_V0.1.md)
+1. [Tóm tắt Điều hành](#1-tóm-tắt-điều-hành)
+2. [Bài toán Lâm sàng & Khung An toàn (Safety Envelope)](#2-bài-toán-lâm-sàng--khung-an-toàn-safety-envelope)
+3. [Đường ống Xử lý Dữ liệu Lâm sàng Toàn trình](#3-đường-ống-xử-lý-dữ-liệu-lâm-sàng-toàn-trình)
+4. [Kỷ luật Kiến trúc 16 Giai đoạn (16-Stage Discipline)](#4-kỷ-luật-kiến-trúc-16-giai-đoạn-16-stage-discipline)
+5. [Đào sâu vào các Stage đã hoàn thành (00–05)](#5-đào-sâu-vào-các-stage-đã-hoàn-thành-0005)
+   - [Stage 00: Nền tảng Kiến trúc & Quản trị](#stage-00-nền-tảng-kiến-trúc--quản-trị)
+   - [Stage 01: Bối cảnh Sản phẩm & Khung An toàn](#stage-01-bối-cảnh-sản-phẩm--khung-an-toàn)
+   - [Stage 02: Mô hình Miền Dấu ấn Sinh học](#stage-02-mô-hình-miền-dấu-ấn-sinh-học)
+   - [Stage 03: Khảo sát Trích xuất Xét nghiệm (Ingestion)](#stage-03-khảo-sát-trích-xuất-xét-nghiệm-ingestion)
+   - [Stage 04: Chuẩn hóa & Danh pháp Lâm sàng](#stage-04-chuẩn-hóa--danh-pháp-lâm-sàng)
+   - [Stage 05: Mô hình Chuỗi Thời gian (Longitudinal Model)](#stage-05-mô-hình-chuỗi-thời-gian-longitudinal-model)
+6. [Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn](#6-các-bất-biến-miền-nghiệp-vụ-cốt-lõi--rào-chắn-an-toàn)
+7. [Bản đồ Cấu trúc Repository](#7-bản-đồ-cấu-trúc-repository)
+8. [Cài đặt & Xác minh Hệ thống](#8-cài-đặt--xác-minh-hệ-thống)
+9. [Bảo mật Dữ liệu Y tế & Quyền Riêng tư (HIPAA/GDPR)](#9-bảo-mật-dữ-liệu-y-tế--quyền-riêng-tư-hipaagdpr)
+10. [Bản quyền & Giấy phép](#10-bản-quyền--giấy-phép)
 
 ---
 
-## 2. Quá trình Tiến hóa qua từng Stage & Lộ trình Tổng thể
+## 1. Tóm tắt Điều hành
 
-BioMarker Agent được phát triển theo **Kỷ luật 16 Giai đoạn Dựa trên Thực chứng (16-Stage Evidence-Based Discipline)**. Mọi độ phức tạp và hạ tầng công nghệ (database, message queue, worker, microservices) **không bao giờ được giả định trước** — chúng chỉ được kích hoạt khi các thí nghiệm thực nghiệm chứng minh sự cần thiết và vượt qua các cổng kiểm soát an toàn (*Safety Gates*).
+**BioMarker Agent** là hệ thống hỗ trợ ra quyết định lâm sàng (Clinical Decision Support - CDS) chuyên sâu, được thiết kế để tiếp nhận các phiếu kết quả xét nghiệm chẩn đoán, trích xuất và chuẩn hóa các quan sát dấu ấn sinh học theo tiêu chuẩn quốc tế (LOINC, UCUM), xây dựng dòng thời gian diễn tiến chính xác theo thứ tự lâm sàng của bệnh nhân, liên kết các nhận định với y văn khoa học chính thống và cung cấp các phân tích có cổng kiểm soát an toàn tất định dành riêng cho bác sĩ.
 
-### 2.1. Sơ đồ Vòng đời Kiến trúc qua 16 Stage
+### Định vị Kiến trúc Cốt lõi
+- **Kỷ luật Dựa trên Thực chứng qua từng Stage:** Độ phức tạp phải được chứng minh, không được giả định trước. Database, hàng đợi thông điệp (message queue), worker phân tán và container orchestration tuyệt đối bị cấm cho đến khi có failure mode cụ thể đòi hỏi ở Stage tương ứng.
+- **Quyền lực Tối cao thuộc về Hợp đồng Dữ liệu (Contract-First):** Các đặc tả máy đọc được tại [`contracts/`](./contracts/) (JSON Schema, OpenAPI 3.1) là nguồn thẩm quyền tối cao xuyên suốt mọi ngôn ngữ lập trình và dịch vụ runtime.
+- **Polyglot Monorepo:** TypeScript / React cho giao diện bác sĩ (`apps/web`), Go hiệu năng cao cho lõi xử lý nghiệp vụ (`internal/`), và Python cho các khảo sát thực nghiệm, chuẩn hóa thuật ngữ và benchmark đánh giá.
+- **Cổng An toàn Không Đoán mò (Zero-Guesswork):** Hệ thống không bao giờ tự ý suy diễn các trường dữ liệu xét nghiệm bị thiếu, không gom gộp các quan sát độc lập chỉ vì có cùng giá trị, và phân tách triệt để giữa biểu diễn quan sát (representation) với sự kiện đo lường lâm sàng (clinical event).
+
+Đặc tả Kiến trúc Chi tiết: [BIOMARKER_PROJECT_SKELETON_V0.1.md](./BIOMARKER_PROJECT_SKELETON_V0.1.md)
+
+---
+
+## 2. Bài toán Lâm sàng & Khung An toàn (Safety Envelope)
+
+Các báo cáo xét nghiệm lâm sàng có mức độ phân mảnh rất cao, trình bày dưới nhiều định dạng không đồng nhất (PDF kỹ thuật số, văn bản cột cố định, bản scan fax bị mờ/nghiêng) và sử dụng tên gọi cục bộ khác nhau tại từng bệnh viện. Việc ứng dụng AI tạo sinh ngây thơ trực tiếp vào hồ sơ xét nghiệm dễ dẫn đến ảo giác (hallucinations), chẩn đoán hấp tấp, nhầm lẫn thời gian thu mẫu với thời gian tải file, và đưa ra các khuyến nghị điều trị nguy hiểm cho tính mạng bệnh nhân.
+
+BioMarker Agent xây dựng kiến trúc dựa trên các khuyến nghị quốc tế (FDA CDS Guidance 2026 và WHO AI for Health Ethics Guidelines).
+
+### 2.1. Lát cắt Lâm sàng Thẳng đứng Đầu tiên: Xét nghiệm Nước tiểu (Urinalysis)
+Lát cắt khởi điểm tập trung vào **Tổng phân tích nước tiểu (10 thông số que nhúng hóa học + soi cặn kính hiển vi)**:
+- **Thông số que nhúng hóa học:** pH, Tỷ trọng (Specific Gravity), Protein, Glucose, Ketone, Bilirubin, Urobilinogen, Nitrite, Leukocyte Esterase, Hồng cầu ẩn (Occult Blood).
+- **Thông số soi cặn hiển vi:** Hồng cầu (RBC /HPF), Bạch cầu (WBC /HPF), Tế bào biểu mô, Trụ niệu, Tinh thể, Vi khuẩn.
+- **Đa dạng kiểu giá trị:** Hỗ trợ giá trị định lượng (`pH = 6.5`), thứ bậc (`Protein = 2+`, `Trace`), phân loại (`Nitrite = Positive`), khoảng dao động (`RBC = 0-2 /HPF`), và giá trị phân ngưỡng giới hạn (`Glucose < 5 mg/dL`).
+
+### 2.2. Ma trận Phân loại Khung An toàn (Safety Envelope Matrix)
+Để ngăn chặn tình trạng phình scope và trôi dạt ngữ nghĩa lâm sàng, mọi năng lực của hệ thống được giới hạn trong 5 tầng kiểm soát:
+
+```mermaid
+flowchart TD
+    subgraph AllowedScope["PHẠM VI CHO PHÉP (IN SCOPE — MVP)"]
+        LevelA["Level A: Data Presentation\n(Trích xuất, hiển thị khoảng tham chiếu và đơn vị gốc, bảo toàn provenance)"]
+        LevelB["Level B: Evidence-Linked Explanation\n(Giải thích ý nghĩa sinh học gắn liền với bằng chứng y văn chính thống)"]
+        Controlled["Controlled: Clinician Interpretation\n(Gắn cờ bất thường theo rule tất định; tóm tắt báo cáo hỗ trợ bác sĩ)"]
+    end
+
+    subgraph RestrictedScope["PHẠM VI HẠN CHẾ (OUT OF SCOPE — MVP)"]
+        Restricted["Restricted: Person-Specific Recommendation\n(Khuyến nghị chế độ ăn, tập luyện cá thể hóa, chỉ định thêm xét nghiệm chuyên sâu)"]
+    end
+
+    subgraph ProhibitedScope["PHẠM VI TUYỆT ĐỐI CẤM (STRICTLY PROHIBITED)"]
+        Prohibited["Prohibited: Autonomous Diagnosis & Treatment\n(Tự động chẩn đoán bệnh tật, kê đơn thuốc, phân loại cấp cứu, thay đổi liều lượng)"]
+    end
+
+    AllowedScope -.->|Giám sát & Đánh giá Chuyên môn| RestrictedScope
+    RestrictedScope -.->|Rào chắn An toàn Tuyệt đối| ProhibitedScope
+```
+
+---
+
+## 3. Đường ống Xử lý Dữ liệu Lâm sàng Toàn trình
+
+Đường ống xử lý dữ liệu lâm sàng chuyển hóa các tài liệu xét nghiệm thô thành dòng thời gian được chuẩn hóa và kiểm chứng an toàn qua các cổng tất định:
+
+```mermaid
+flowchart LR
+    classDef step fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#ffffff;
+    classDef currentStep fill:#064e3b,stroke:#34d399,stroke-width:2px,color:#ffffff;
+    classDef futureStep fill:#1e293b,stroke:#64748b,stroke-width:1.5px,color:#94a3b8;
+
+    PDF["Báo cáo Xét nghiệm Thô<br/>(PDF Kỹ thuật số / Bản Scan)"]:::step -->|Stage 03 Ingestion| EXT["Quan sát Trích xuất Chuẩn<br/>(Tên địa phương, Kết quả, Đơn vị gốc)"]:::step
+    EXT -->|Stage 04 Normalization| NORM["Quan sát Đã Chuẩn hóa<br/>(Mã LOINC v2.83, Đơn vị UCUM, Mức so sánh)"]:::step
+    NORM -->|Stage 05 Longitudinal| TIME["Dòng thời gian Bệnh nhân<br/>(Lineage, 3 đồng hồ, Snapshot bất biến)"]:::currentStep
+    TIME -->|Stage 06 Evidence| EVID["Căn cứ Bằng chứng Khoa học<br/>(Trích dẫn Y văn, Hướng dẫn Y khoa)"]:::futureStep
+    EVID -->|Stage 07 Safety| SAFE["Cổng An toàn Xác định<br/>(Giới hạn Rủi ro, Bác bỏ Suy đoán)"]:::futureStep
+    SAFE -->|Stage 08–09 Runtime| API["Lõi Dịch vụ Go Backend<br/>(Clean Architecture, Native API)"]:::futureStep
+    API -->|Stage 14 UI| WEB["Giao diện Bác sĩ Trực quan<br/>(React / TypeScript Interactive UI)"]:::futureStep
+```
+
+---
+
+## 4. Kỷ luật Kiến trúc 16 Giai đoạn (16-Stage Discipline)
+
+Quá trình phát triển tuân thủ nghiêm ngặt lộ trình 16 giai đoạn. Mỗi giai đoạn trả lời một câu hỏi kiến trúc cụ thể và phải vượt qua tiêu chí nghiệm thu trước khi giai đoạn sau được kích hoạt.
 
 ```mermaid
 flowchart TD
@@ -33,29 +117,29 @@ flowchart TD
     classDef queued fill:#1e293b,stroke:#64748b,stroke-width:1.5px,color:#f1f5f9;
 
     subgraph PhaseA["CHẶNG A: Nền tảng Bài toán & Miền Lâm sàng (Stages 0–2)"]
-        S0["Stage 00: Khám phá Kiến trúc Ban đầu<br/><b>[HOÀN THÀNH]</b>"]:::done --> S1["Stage 01: Bối cảnh Sản phẩm & Phạm vi An toàn<br/><b>[HOÀN THÀNH]</b>"]:::done
+        S0["Stage 00: Nền tảng Khám phá Kiến trúc & Quản trị<br/><b>[HOÀN THÀNH]</b>"]:::done --> S1["Stage 01: Bối cảnh Sản phẩm & Khung An toàn<br/><b>[HOÀN THÀNH]</b>"]:::done
         S1 --> S2["Stage 02: Mô hình Miền & Hợp đồng Dữ liệu<br/><b>[HOÀN THÀNH]</b>"]:::done
     end
 
     subgraph PhaseB["CHẶNG B: Định hình Năng lực Miền Lâm sàng (Stages 3–8)"]
         S2 --> S3["Stage 03: Khảo sát Trích xuất Xét nghiệm (Ingestion)<br/><b>[HOÀN THÀNH]</b>"]:::done
-        S3 --> S4["Stage 04: Chuẩn hóa Danh pháp Lâm sàng (LOINC/UCUM)<br/><b>[HOÀN THÀNH]</b>"]:::done
-        S4 --> S5["Stage 05: Mô hình Diễn tiến Chuỗi Thời gian<br/><b>[TIẾP THEO / ĐANG THỰC HIỆN]</b>"]:::current
-        S5 --> S6["Stage 06: Công cụ Bằng chứng Khoa học (Evidence Engine)<br/><i>Truy xuất Y văn & Hướng dẫn</i>"]:::queued
+        S3 --> S4["Stage 04: Chuẩn hóa & Danh pháp Lâm sàng (LOINC/UCUM)<br/><b>[HOÀN THÀNH]</b>"]:::done
+        S4 --> S5["Stage 05: Mô hình Chuỗi Thời gian (Longitudinal Model)<br/><b>[HOÀN THÀNH]</b>"]:::done
+        S5 --> S6["Stage 06: Công cụ Bằng chứng Khoa học<br/><b>[TIẾP THEO / ĐANG THỰC HIỆN]</b>"]:::current
         S6 --> S7["Stage 07: Lập luận & Cổng An toàn Lâm sàng<br/><i>Rào chắn Rủi ro & Bác bỏ Suy đoán</i>"]:::queued
         S7 --> S8["Stage 08: Kiến trúc Đánh giá & Chất lượng (Evals)<br/><i>Bộ Tiêu chí Lâm sàng & Red-teaming</i>"]:::queued
     end
 
     subgraph PhaseC["CHẶNG C: Khám phá Runtime & Nền tảng (Stages 9–13)"]
         S8 --> S9["Stage 09: Go Runtime Đơn tiến trình<br/><code>internal/</code>, Clean Architecture"]:::queued
-        S9 --> S10["Stage 10: Quản lý Trạng thái & Lưu trữ"]:::queued
+        S9 --> S10["Stage 10: Quản lý Trạng thái & Lưu trữ (PostgreSQL)"]:::queued
         S10 --> S11["Stage 11: Xử lý Lỗi, Thử lại & Phục hồi"]:::queued
         S11 --> S12["Stage 12: Quyết định Hạ tầng Phân tán (ADR)"]:::queued
         S12 --> S13["Stage 13: Cấu hình, Đánh phiên bản & Chứng thực"]:::queued
     end
 
     subgraph PhaseD["CHẶNG D: Sản phẩm hóa & Tích hợp (Stages 14–15)"]
-        S13 --> S14["Stage 14: Bảo mật, API & Ứng dụng Web (React)"]:::queued
+        S13 --> S14["Stage 14: Bảo mật, RBAC & Ứng dụng Web Bác sĩ"]:::queued
         S14 --> S15["Stage 15: Tích hợp Nền tảng & Đóng gói Sản xuất"]:::queued
     end
 
@@ -65,100 +149,235 @@ flowchart TD
     style PhaseD fill:none,stroke:#a855f7,stroke-width:2px,stroke-dasharray: 4 4;
 ```
 
+### Bảng Ma trận Tiến độ Tổng thể
+
+| Giai đoạn | Trọng tâm Nghiên cứu | Sản phẩm Bàn giao & Ranh giới Kỹ thuật | Trạng thái | Tài liệu Đặc tả |
+|:---:|---|---|:---:|---|
+| **00** | Khởi tạo Quản trị & Kiến trúc | Cấu trúc monorepo, giao thức giải quyết xung đột | **HOÀN THÀNH** | [`docs/00-governance/`](./docs/00-governance/) |
+| **01** | Bối cảnh Sản phẩm & Miền Lâm sàng | Mục đích sử dụng, khung an toàn 5 tầng, persona bác sĩ | **HOÀN THÀNH** | [`docs/01-product/`](./docs/01-product/) |
+| **02** | Mô hình Miền Dấu ấn Sinh học | Hợp đồng JSON Schema, fixtures nước tiểu, kiểu giá trị | **HOÀN THÀNH** | [`docs/02-domain/`](./docs/02-domain/) |
+| **03** | Khảo sát Trích xuất Xét nghiệm | Tập dữ liệu PDF/OCR benchmark, độ chính xác bộ parser | **HOÀN THÀNH** | [`docs/03-ingestion/`](./docs/03-ingestion/) |
+| **04** | Chuẩn hóa Danh pháp Lâm sàng | Mapping LOINC v2.83, chuẩn hóa UCUM, 4 lớp so sánh | **HOÀN THÀNH** | [`docs/04-normalization/`](./docs/04-normalization/) |
+| **05** | Mô hình Chuỗi Thời gian (Longitudinal) | Timeline bệnh nhân, 3 đồng hồ, phân giải trùng lặp, snapshot | **HOÀN THÀNH** | [`docs/05-longitudinal/`](./docs/05-longitudinal/) |
+| **06** | Công cụ Bằng chứng Khoa học | Truy xuất y văn PubMed, liên kết căn cứ với nhận định | **ĐANG THỰC HIỆN** | [`docs/06-evidence/`](./docs/00-governance/MASTER_ROADMAP.md#stage-6--scientific-evidence-engine) |
+| **07** | Lập luận & Cổng An toàn Lâm sàng | Quy trình suy luận có kiểm soát, cổng kiểm soát rủi ro | Chờ kích hoạt | Stage 7 Roadmap Gate |
+| **08** | Kiến trúc Đánh giá & Chất lượng | Bộ dữ liệu đánh giá vàng, tiêu chí chấm điểm, red-team | Chờ kích hoạt | Stage 8 Roadmap Gate |
+| **09** | Go Runtime Đơn tiến trình | Động cơ Go thuần, Clean Architecture, CLI/API | Chờ kích hoạt | Stage 9 Roadmap Gate |
+| **10** | Quản lý Trạng thái & Lưu trữ | Schema PostgreSQL, tính bất biến ngữ nghĩa, transaction | Chờ kích hoạt | Stage 10 Roadmap Gate |
+| **11** | Xử lý Lỗi, Thử lại & Phục hồi | Thử nghiệm Chaos, khóa idempotency, phục hồi sự cố | Chờ kích hoạt | Stage 11 Roadmap Gate |
+| **12** | Quyết định Hạ tầng Phân tán (ADR) | Đánh giá worker, hàng đợi, lease & fencing | Chờ kích hoạt | Stage 12 Roadmap Gate |
+| **13** | Cấu hình, Đánh phiên bản & Chứng thực | Hồ sơ canonical RFC 8785, registry artifact bất biến | Chờ kích hoạt | Stage 13 Roadmap Gate |
+| **14** | Bảo mật, RBAC & Ứng dụng Web | Kiểm soát truy cập theo vai trò, web app React/TS | Chờ kích hoạt | Stage 14 Roadmap Gate |
+| **15** | Đóng gói & Nghiệm thu Sản xuất | Gia cố vận hành, ma trận tương thích, ký nghiệm thu | Chờ kích hoạt | Stage 15 Roadmap Gate |
+
 ---
 
-### 2.2. Đường ống Xử lý Dữ liệu Lâm sàng (Clinical Pipeline)
+## 5. Đào sâu vào các Stage đã hoàn thành (00–05)
 
+### Stage 00: Nền tảng Kiến trúc & Quản trị
+Xác lập hiến chương quản trị và ranh giới monorepo polyglot:
+- **Giao thức Quyền lực (Authority Protocol):** Tài liệu đặc tả (`docs/`) > Hợp đồng máy (`contracts/`) > Mã nguồn triển khai (`apps/`, `internal/`).
+- **Nguyên tắc "Không hạ tầng sớm":** Nghiêm cấm tạo cấu hình Redis, DBOS, Celery hay microservices khi chưa có yêu cầu thực chứng.
+- **Giải quyết Xung đột:** Tuân thủ [SOURCE_AUTHORITY_AND_CONFLICT_PROTOCOL.md](./docs/00-governance/SOURCE_AUTHORITY_AND_CONFLICT_PROTOCOL.md).
+
+### Stage 01: Bối cảnh Sản phẩm & Khung An toàn
+Định hình mục đích sử dụng và chân dung bác sĩ nội khoa:
+- **Đối tượng Phục vụ:** Bác sĩ / Chuyên gia y tế. Loại bỏ hoàn toàn mô hình tự phục vụ B2C khỏi phạm vi MVP.
+- **Kế hoạch Triển khai:** Thử nghiệm nội bộ &rarr; UAT Bác sĩ (ca nước tiểu) &rarr; Go-live hạn chế tại Khoa Nội tổng hợp.
+- **Khung An toàn 5 Tầng:** Phân tầng rõ ràng năng lực cho phép, có điều kiện, hạn chế và tuyệt đối cấm.
+
+### Stage 02: Mô hình Miền Dấu ấn Sinh học
+Định nghĩa các thực thể dữ liệu cốt lõi và schema JSON Schema chuẩn mực:
+- **Thực thể Cốt lõi:** `SourceDocument`, `LabReport`, `BiomarkerObservation`, `ObservationValue`, `ReferenceRange`, và `ClinicalDatasetSnapshot`.
+- **Sơ đồ Quan hệ Thực thể (ER Diagram):**
 ```mermaid
-flowchart LR
-    classDef step fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#ffffff;
-    classDef currentStep fill:#064e3b,stroke:#34d399,stroke-width:2px,color:#ffffff;
+erDiagram
+    SOURCE_DOCUMENT ||--o{ LAB_REPORT : contains_or_represents
+    LAB_REPORT ||--o{ BIOMARKER_OBSERVATION : groups
+    CLINICAL_DATASET_SNAPSHOT ||--o{ SOURCE_DOCUMENT : includes
+    CLINICAL_DATASET_SNAPSHOT ||--o{ LAB_REPORT : includes
+    CLINICAL_DATASET_SNAPSHOT ||--o{ BIOMARKER_OBSERVATION : includes
+    BIOMARKER_OBSERVATION ||--|| OBSERVATION_VALUE : has
+    BIOMARKER_OBSERVATION ||--o{ REFERENCE_RANGE : preserves
+    BIOMARKER_OBSERVATION ||--o{ SOURCE_INTERPRETATION : preserves
+    BIOMARKER_OBSERVATION ||--o| DERIVED_RANGE_ASSESSMENT : may_have
+```
+- **Hợp đồng Dữ liệu:** Đặt tại thư mục [`contracts/schemas/`](./contracts/schemas/).
 
-    PDF["Báo cáo Xét nghiệm Thô<br/>(PDF, Bản quét Scan, Kỹ thuật số)"]:::step -->|Stage 03: Ingestion| EXT["Quan sát Trích xuất Chuẩn<br/>(Tên địa phương, Kết quả, Đơn vị gốc)"]:::step
-    EXT -->|Stage 04: Normalization| NORM["Quan sát Đã Chuẩn hóa<br/>(Mã LOINC, Đơn vị UCUM, Mức so sánh)"]:::currentStep
-    NORM -->|Stage 05: Longitudinal| TIME["Dòng thời gian Bệnh nhân<br/>(Chuỗi Theo dõi, Phân tích Xu hướng)"]:::step
-    TIME -->|Stage 06: Evidence| EVID["Căn cứ Bằng chứng Khoa học<br/>(Trích dẫn Y văn, Hướng dẫn Y khoa)"]:::step
-    EVID -->|Stage 07: Safety| SAFE["Cổng An toàn Xác định<br/>(Giới hạn Rủi ro, Phân tích Được Kiểm chứng)"]:::step
-    SAFE -->|Stage 08–09: Runtime| API["Lõi Dịch vụ Go Backend<br/>(API Xử lý Lâm sàng)"]:::step
-    API -->|Stage 14: UI| WEB["Giao diện Bệnh nhân Trực quan<br/>(React / TypeScript Dashboard)"]:::step
+### Stage 03: Khảo sát Trích xuất Xét nghiệm (Ingestion)
+Khảo sát các đường ống trích xuất từ tài liệu PDF và ảnh quét bằng tập dữ liệu tổng hợp:
+- **Cơ chế Dò tìm Native vs OCR:** File số hóa trích xuất trực tiếp qua `PyMuPDF`/`pdfplumber`; ảnh quét mờ suy thoái tự động chuyển sang OCR `Tesseract 5.5.0`.
+- **Cổng Kiểm soát Zero-Guesswork:** Tuyệt đối không đoán mò trường bị thiếu; ghi nhận `null` kèm cờ cảnh báo chất lượng dữ liệu.
+- **Đánh giá Benchmark:** Đạt 100% độ chính xác trích xuất trên tài liệu tổng hợp nước tiểu số; phân loại rõ các điểm lỗi khi ảnh bị xoay hoặc mờ.
+```mermaid
+flowchart TD
+    InputDoc["Báo cáo xét nghiệm (PDF / Scan)"] --> Probe{"Native-Text Probe\n(Có lớp văn bản kỹ thuật số?)"}
+    Probe -->|Có| NativeExtract["Trích xuất Native Text\n(PyMuPDF / pdfplumber)"]
+    Probe -->|Không| OCRFallback["Cơ chế Fallback OCR\n(Tesseract OCR)"]
+    NativeExtract --> StructParser["Bộ phân tích dòng/cột xác định"]
+    OCRFallback --> StructParser
+    StructParser --> ValKind["Phân loại kiểu giá trị\n(Quantity / Ordinal / Categorical / Interval / Comparator)"]
+    ValKind --> CanonicalBuilder["Khởi tạo Đối tượng Canonical\n(BiomarkerObservation, LabReport)"]
+    CanonicalBuilder --> SchemaGate{"Cổng kiểm tra Schema Stage 02"}
+    SchemaGate -->|Hợp lệ| BenchGate["Cổng Zero-Guesswork & Verification"]
+    SchemaGate -->|Lỗi| FailClosed["Fail-Closed / Ghi nhận Ingestion Error"]
+```
+
+### Stage 04: Chuẩn hóa & Danh pháp Lâm sàng
+Ánh xạ tên xét nghiệm địa phương sang mã quốc tế nhưng luôn bảo toàn dữ liệu nguồn gốc:
+- **Chuẩn Danh pháp:** Vòng đời mapping LOINC v2.83 (`unmapped`, `candidate`, `validated`, `not_applicable`).
+- **Chuẩn hóa Đơn vị:** Quy tắc chuẩn hóa UCUM với ranh giới chuyển đổi toán học nghiêm ngặt.
+- **Mô hình Khả năng So sánh Quan sát (Comparability Model):** Phân loại các cặp quan sát thành 4 nhóm trước khi cho phép ghép chuỗi:
+```mermaid
+flowchart TD
+    Pair["So sánh hai Biomarker Observations (A, B)"] --> ValidCheck{"Cả hai đều có mã LOINC Validated?"}
+    ValidCheck -->|Không| Indet["INDETERMINATE\n(Không đủ điều kiện so sánh)"]
+    ValidCheck -->|Có| SameConcept{"Cùng LOINC Canonical Code?"}
+    SameConcept -->|Không| RelCheck{"Cùng họ chất phân tích?"}
+    RelCheck -->|Có| RelNot["RELATED_NOT_COMPARABLE\n(Khác method / scale -> không merge)"]
+    RelCheck -->|Không| Indet
+    SameConcept -->|Có| ValKindCheck{"Tương thích ValueKind?"}
+    ValKindCheck -->|Không| Indet
+    ValKindCheck -->|Có| UnitCheck{"Ngữ nghĩa đơn vị (UCUM)?"}
+    UnitCheck -->|Cùng đơn vị| Exact["EXACT_COMPARABLE\n(So sánh / vẽ biểu đồ trực tiếp)"]
+    UnitCheck -->|Đơn vị quy đổi được| Conv["CONVERTIBLE_COMPARABLE\n(Quy đổi tuyến tính an toàn)"]
+    UnitCheck -->|Đơn vị không tương thích| Indet
+```
+
+### Stage 05: Mô hình Chuỗi Thời gian (Longitudinal Model)
+Tái tạo dòng thời gian bệnh nhân và các phép chiếu xu hướng từ nhiều báo cáo lịch sử:
+- **Lineage & Invariant LONG-016 (Xung đột Danh tính Tự động Đóng):** Tái sử dụng danh tính nguồn với payload khác nhau mà không có quan hệ revision rõ ràng sẽ bị xử lý như xung đột cứng (`unresolved_conflict`).
+- **Mô hình Ba Trục Thời gian (Three Clocks Chronology):**
+  - `effective_at`: Thời điểm lấy mẫu lâm sàng. Quyết định duy nhất thứ tự dòng thời gian và giải quyết dữ liệu gửi đến lệch thứ tự (out-of-order backfill).
+  - `issued_at`: Thời điểm phát hành phiên bản báo cáo. Chỉ dùng để sắp xếp các phiên bản sửa đổi (amended/corrected) của cùng một sự kiện đo lường.
+  - `received_at`: Thời điểm hệ thống nhận dữ liệu. Phục vụ vận hành kỹ thuật; tuyệt đối không thay thế thời gian lâm sàng.
+- **Mã Băm Định danh Snapshot Xác định:** Tạo snapshot bất biến qua mã băm SHA-256 xác định (chuẩn bị cho hồ sơ chuẩn hóa RFC 8785 JCS).
+- **Ranh giới Tính toán Xu hướng (Trend Computation Boundaries):**
+```mermaid
+flowchart TD
+    Series["LongitudinalSeries (>= 2 points, strictly chronological)"] --> KindCheck{"Kiểm tra ValueKind"}
+    KindCheck -->|Quantity| Q_Check{"Có điểm nào là comparator (<5, >100)?"}
+    Q_Check -->|Có| Q_Censored["Không tính naive numeric delta\n(Đánh dấu comparator-censored)"]
+    Q_Check -->|Không| Q_Delta["Tính absolute_delta & direction\n(increased / decreased / unchanged)"]
+    KindCheck -->|Ordinal| Ord_Check{"Có bảng thứ bậc được validate?"}
+    Ord_Check -->|Có| Ord_Rank["Tính rank_delta & direction"]
+    Ord_Check -->|Không| Ord_Indet["Chỉ lưu lịch sử; không đoán thứ bậc từ chuỗi chữ"]
+    KindCheck -->|Categorical| Cat_Out["Chỉ tính: changed / unchanged\n(NGHIÊM CẤM gán increased/decreased)"]
+    KindCheck -->|Interval: 0-2| Int_Out["Chỉ lưu lịch sử\n(NGHIÊM CẤM collapse thành trung vị 1.0)"]
+    KindCheck -->|Comparator: <5, >10| Comp_Out["Chỉ lưu lịch sử phân ngưỡng"]
 ```
 
 ---
 
-### 2.3. Bảng Ma trận Tiến độ 16 Stage
+## 6. Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn
 
-| Giai đoạn | Trọng tâm | Câu hỏi Cốt lõi / Sản phẩm Bàn giao | Trạng thái |
-|---|---|---|:---:|
-| **Stage 00** | Khởi tạo Quản trị & Kiến trúc | Quy tắc cộng tác, nguồn quyền lực tối cao & bộ khung dự án | **HOÀN THÀNH** |
-| **Stage 01** | Bối cảnh Sản phẩm & Miền Lâm sàng | Mục đích sử dụng, phạm vi an toàn & các giới hạn cấm | **HOÀN THÀNH** |
-| **Stage 02** | Mô hình Miền Dấu ấn Sinh học | Thực thể dữ liệu cốt lõi, hợp đồng JSON Schema, fixtures mẫu | **HOÀN THÀNH** |
-| **Stage 03** | Khảo sát Trích xuất Xét nghiệm | Tập dữ liệu PDF/OCR benchmark, độ chính xác bộ parser, cấm đoán mò | **HOÀN THÀNH** |
-| **Stage 04** | Chuẩn hóa Danh pháp Lâm sàng | Mapping LOINC v2.83, chuẩn hóa UCUM, phân loại khả năng so sánh | **HOÀN THÀNH** |
-| **Stage 05** | Mô hình Chuỗi Thời gian (Longitudinal) | Cấu trúc timeline, chuỗi tương thích, ngữ nghĩa dữ liệu trùng lặp | **TIẾP THEO / ĐANG THỰC HIỆN** |
-| **Stage 06** | Công cụ Bằng chứng Khoa học | Truy xuất tài liệu y văn, liên kết trích dẫn với nhận định lâm sàng | Chờ kích hoạt |
-| **Stage 07** | Lập luận & Cổng An toàn Lâm sàng | Cổng kiểm tra rủi ro tất định, cơ chế từ chối khẳng định không căn cứ | Chờ kích hoạt |
-| **Stage 08** | Kiến trúc Đánh giá & Chất lượng | Bộ dữ liệu đánh giá vàng, tiêu chí chấm điểm, kiểm thử red-team | Chờ kích hoạt |
-| **Stage 09** | Go Runtime Đơn tiến trình | Lõi nghiệp vụ Go, kiến trúc sạch (Clean Architecture), API nội bộ | Chờ kích hoạt |
-| **Stage 10** | Quản lý Trạng thái & Lưu trữ | Tiêu chuẩn kho lưu trữ, kiểm kê trạng thái, ranh giới giao dịch | Chờ kích hoạt |
-| **Stage 11** | Xử lý Lỗi, Thử lại & Phục hồi | Thử nghiệm hỗn loạn (Chaos), quy trình phục hồi, tính lũy kế (idempotency) | Chờ kích hoạt |
-| **Stage 12** | Quyết định Hạ tầng Bền vững | Đánh giá nhu cầu worker, hàng đợi, lease & fencing (tài liệu ADR) | Chờ kích hoạt |
-| **Stage 13** | Cấu hình & Chứng thực Bất biến | Cấu hình bất biến, ghim phiên bản, ảnh chụp snapshot registry | Chờ kích hoạt |
-| **Stage 14** | Bảo mật, Quyền riêng tư & Web App | Bảo vệ dữ liệu cá nhân (Zero-PHI), ứng dụng web React, RBAC | Chờ kích hoạt |
-| **Stage 15** | Đóng gói Kiến trúc Sản xuất | Làm cứng bảo mật sản xuất, ma trận tương thích, nghiệm thu vận hành | Chờ kích hoạt |
-
-Chi tiết toàn bộ 16 giai đoạn được quy định tại [MASTER_ROADMAP.md](./docs/00-governance/MASTER_ROADMAP.md) và các biên bản bàn giao tại [docs/00-governance/](./docs/00-governance/).
+| Mã Invariant | Nội dung Quy tắc | Cơ sở Rào chắn An toàn |
+|---|---|---|
+| **LONG-001** | Timeline là hình chiếu suy dẫn, không phải nguồn thẩm quyền gốc. | Ngăn ngừa việc phép chiếu xu hướng ghi đè dữ liệu quan sát gốc. |
+| **LONG-002** | Một snapshot chỉ chứa duy nhất một đối tượng bệnh nhân (`subject_ref`). | Cách ly tuyệt đối; phát hiện dữ liệu lẫn lộn bệnh nhân sẽ fail-closed ngay lập tức. |
+| **LONG-003** | Cùng giá trị và thời gian không chứng minh đó là dữ liệu trùng lặp. | Hai lần lấy máu hoặc nước tiểu độc lập tại cùng thời điểm vẫn là hai sự kiện riêng biệt. |
+| **LONG-004** | Nhập lặp lại cùng một báo cáo không tạo điểm xu hướng mới. | Cơ chế Idempotent replay gom payload giống hệt nhau thành `duplicate_collapsed`. |
+| **LONG-005** | Báo cáo sửa đổi thay thế báo cáo cũ mà không tạo thêm sự kiện đo lường mới. | Giải quyết thành `revision_selected`; giữ bản cũ trong lịch sử lineage provenance. |
+| **LONG-006** | `effective_at` dẫn dắt trình tự thời gian lâm sàng. | Đảm bảo dòng thời gian phản ánh diễn tiến sinh học, không phải trình tự hành chính. |
+| **LONG-007** | `issued_at` chỉ điều khiển thứ tự các phiên bản sửa đổi. | Ngăn việc báo cáo đính chính làm xáo trộn mốc thời gian lấy mẫu của bệnh nhân. |
+| **LONG-008** | `received_at` / đồng hồ máy chủ không bao giờ thay thế thời gian lâm sàng. | Lệch đồng hồ phân tán hay việc nhập bổ sung dữ liệu cũ không bóp méo lịch sử bệnh. |
+| **LONG-009** | Thuật ngữ candidate/unmapped không được tự ý gia nhập chuỗi xu hướng. | Chỉ danh pháp đã được validate với catalog thẩm định mới được tính toán xu hướng. |
+| **LONG-010** | Khác phương pháp/mã xét nghiệm không được gom chung bằng tên hiển thị. | Ngăn ngừa việc trộn lẫn kết quả que nhúng tự động với kết quả đếm kính hiển vi. |
+| **LONG-011** | Giá trị dạng khoảng (Interval) không bao giờ bị gộp thành điểm trung vị. | Kết quả `0–2 /HPF` phải giữ nguyên là khoảng dao động; nghiêm cấm ép thành `1.0`. |
+| **LONG-012** | Giá trị phân ngưỡng (Comparator) không được xử lý như số học thông thường. | Kết quả `<5 mg/dL` không được trừ cho `10 mg/dL` như một phép trừ số học đơn thuần. |
+| **LONG-013** | Timeline snapshot bắt buộc phải tái tạo được từ input + chính sách. | Đảm bảo khả năng kiểm toán tuyệt đối cho nghiên cứu lâm sàng và chẩn đoán. |
+| **LONG-014** | Timeline snapshot có tính chất bất biến hoàn toàn. | Dữ liệu lịch sử đã được bác sĩ ký duyệt không bao giờ bị sửa đổi đè tại chỗ. |
+| **LONG-015** | Cache và materialized view không bao giờ trở thành bên ghi chính thống. | Ngăn chặn việc tầng đệm hiệu năng làm sai lệch cơ sở dữ liệu lâm sàng chuẩn. |
+| **LONG-016** | Xung đột danh tính nguồn tự động đóng (Fail-closed). | Tái sử dụng danh tính với payload khác nhau mà không có quan hệ revision là xung đột cứng. |
 
 ---
 
-## 3. Các Nguyên tắc Kiến trúc Cốt lõi
+## 7. Bản đồ Cấu trúc Repository
 
-1. **Độ phức tạp Phải Được Chứng minh (Earned Complexity):** Không đưa cơ sở dữ liệu, message queue, worker hay microservice vào hệ thống một cách vội vã khi các Stage chưa chứng minh được nhu cầu thực sự.
-2. **Polyglot Monorepo Tinh gọn:** Quản lý không gian làm việc bằng `pnpm` workspace + `turbo` cho các tác vụ tổng thể; tích hợp Go module độc lập tại Stage 9.
-3. **Ưu tiên Hợp đồng (Contract-First):** Các schema máy đọc tại `contracts/` là nguồn sự thật tối thượng, chi phối toàn bộ mã nguồn triển khai ở mọi ngôn ngữ.
-4. **Ưu tiên Đánh giá (Evaluation-First):** Thư mục `evals/` là thành phần công dân hạng nhất, đo lường tính đúng đắn lâm sàng và độ an toàn của AI tách biệt hoàn toàn với unit test phần mềm.
-5. **An toàn Lâm sàng là Hàng đầu:** An toàn y khoa (`docs/05-safety/`) được coi là mối quan tâm chuyên biệt, tách rời khỏi an toàn an ninh mạng kỹ thuật (`docs/04-security/`). Tuyệt đối tuân thủ chính sách **Zero-PHI** (không commit dữ liệu bệnh nhân thực tế).
+```text
+/workspace/projects/MialyzerAgent/
+├── apps/                        # Các ứng dụng triển khai độc lập (Stage 14+)
+│   └── web/                     # Ứng dụng web React / TypeScript cho bác sĩ
+├── contracts/                   # Hợp đồng Máy Thẩm quyền Tối cao
+│   ├── schemas/                 # JSON Schemas (quan sát biomarker, báo cáo, timeline)
+│   └── openapi/                 # Đặc tả REST API chuẩn OpenAPI 3.1
+├── docs/                        # Tài liệu Kiến trúc & Miền Lâm sàng
+│   ├── 00-governance/           # Quy tắc quản trị, lộ trình, giao thức xung đột
+│   ├── 01-product/              # Bối cảnh sản phẩm, khung an toàn, ranh giới cấm
+│   ├── 02-domain/               # Mô hình miền, bất biến, lát cắt nước tiểu
+│   ├── 03-ingestion/            # Khảo sát trích xuất, phân loại lỗi, benchmark parser
+│   ├── 04-normalization/        # Danh mục ánh xạ LOINC, chuyển đổi UCUM, luật so sánh
+│   └── 05-longitudinal/         # Mô hình timeline, chính sách dedup, 3 đồng hồ, mã băm
+├── evals/                       # Hệ thống Đánh giá Chất lượng Hạng nhất
+│   ├── benchmarks/              # Bộ dữ liệu lâm sàng chuẩn vàng & tiêu chí chấm điểm
+│   └── harnesses/               # Động cơ chấm điểm tự động & kịch bản red-teaming
+├── experiments/                 # Mã Thực nghiệm & Thăm dò Kỹ thuật
+│   ├── stage-03/                # Benchmark trích xuất PDF & bộ parser tổng hợp
+│   ├── stage-04/                # Bộ kiểm thử chuẩn hóa LOINC & chuyển đổi UCUM
+│   └── stage-05/                # Bộ kiểm thử lineage, trật tự thời gian và snapshot
+├── internal/                    # Triển khai Miền Lõi bằng Go (Stage 09+)
+│   ├── domain/                  # Mô hình nghiệp vụ thuần túy (Không phụ thuộc bên thứ ba)
+│   ├── ports/                   # Giao diện Inbound/Outbound (Clean Architecture)
+│   └── service/                 # Dịch vụ điều phối nghiệp vụ
+├── packages/                    # Các thư viện tiện ích TypeScript dùng chung
+├── testdata/                    # Dữ liệu Kiểm thử Lâm sàng Tổng hợp
+│   └── synthetic/               # Bộ dữ liệu nhân tạo tuyệt đối (KHÔNG CHỨA PHI THẬT)
+├── AGENTS.md                    # Hướng dẫn bắt buộc dành cho AI Coding Agents
+├── BIOMARKER_PROJECT_SKELETON_V0.1.md # Bản thiết kế kiến trúc khung tổng thể
+└── package.json                 # Cấu hình workspace Monorepo (pnpm 11 + Turbo)
+```
 
 ---
 
-## 4. Bắt đầu Nhanh
+## 8. Cài đặt & Xác minh Hệ thống
 
-### Yêu cầu môi trường
-- **Node.js**: `>=22.0.0` (Được ghim tại `.node-version`)
+### Yêu cầu Tiên quyết
+- **Node.js**: `>=22.0.0` (Ghim chính xác trong `.node-version`)
 - **pnpm**: `11.10.0`
-- **Go**: `1.27+` (bắt đầu cần từ Stage 9)
-- **Python**: `>=3.11` (phục vụ các bộ thử nghiệm Stage 3 & 4)
+- **Python**: `>=3.11` (cho các bộ kiểm thử thực nghiệm)
+- **Go**: `1.27+` (bắt buộc từ Stage 9)
 
-### Cài đặt & Kiểm tra
+### Thiết lập Workspace & Kiểm tra Toàn vẹn
 ```bash
-# Cài đặt dependencies cho monorepo
+# Clone repository
+git clone https://github.com/duyvd9/BioMarkerAgent.git
+cd BioMarkerAgent
+
+# Cài đặt các gói phụ thuộc
 pnpm install
 
-# Chạy toàn bộ kiểm tra tính toàn vẹn của repo
+# Chạy kiểm tra toàn bộ workspace (lint, typecheck, test)
 pnpm check
+```
 
-# Chạy kiểm thử đơn vị cho Stage 04
-python3 -m unittest discover -s experiments/stage-04/tests -v
+### Chạy Kiểm thử Miền Nghiệp vụ qua từng Stage
+```bash
+# Thực thi toàn bộ test suite thực nghiệm (Stages 03, 04, 05)
+pytest experiments/
+```
 
-# Chạy benchmark thực nghiệm Stage 04
-python3 experiments/stage-04/run_benchmark.py --repo-root .
+Toàn bộ 29 test case miền nghiệp vụ hoàn thành trong `<0.1s`:
+```text
+experiments/stage-03/tests/test_parser.py ......                         [ 20%]
+experiments/stage-04/tests/test_normalization.py .........               [ 51%]
+experiments/stage-05/tests/test_longitudinal.py ..............           [100%]
+============================== 29 passed in 0.06s ==============================
 ```
 
 ---
 
-## 5. Hướng dẫn Điều hướng Thư mục
+## 9. Bảo mật Dữ liệu Y tế & Quyền Riêng tư (HIPAA/GDPR)
 
-- [CONTRIBUTING.md](./CONTRIBUTING.md) — Quy tắc đóng góp, phân nhánh git và quy trình kiểm chứng.
-- [AGENTS.md](./AGENTS.md) — Quy định và giới hạn an toàn bắt buộc dành cho AI Coding Agents.
-- [docs/00-governance/](./docs/00-governance/) — Quản trị kiến trúc, biên bản bàn giao từng Stage và lộ trình tổng thể.
-- [docs/04-normalization/](./docs/04-normalization/) — Các mô hình và chính sách chuẩn hóa danh pháp lâm sàng.
-- [experiments/](./experiments/) — Không gian thực nghiệm khoa học và mã nguồn kiểm thử giải thuật.
-- [contracts/](./contracts/) — Định nghĩa schema chuẩn hóa (JSON Schema, OpenAPI).
-- [testdata/](./testdata/) — Dữ liệu kiểm thử tổng hợp (Synthetic Fixtures), tuân thủ 100% Zero-PHI.
+BioMarker Agent được thiết kế theo triết lý **Zero-Trust & Tuyệt đối Không Dữ liệu Bệnh nhân Thật (Zero-PHI)**:
+1. **Tuyệt đối Không Có Dữ liệu Bệnh nhân Thật (No Real PHI):** Nghiêm cấm lưu trữ, đưa vào bộ đệm (cache) hoặc commit vào git bất kỳ dữ liệu bệnh nhân thật nào (mã bệnh án MRN, tên, ngày sinh, ghi chú lâm sàng thật).
+2. **Dữ liệu Nhân tạo Độc quyền (Synthetic Only):** Mọi hoạt động phát triển, kiểm thử và benchmark chỉ được sử dụng dữ liệu tổng hợp nhân tạo tại [`testdata/synthetic/`](./testdata/synthetic/).
+3. **An toàn Bộ nhớ RAM:** Dữ liệu xét nghiệm thô chỉ được tồn tại tạm thời trên RAM trong phiên xử lý; không ghi xuống file tạm unencrypted hoặc telemetry phân tích bên ngoài.
+4. **Cơ chế Tự động Đóng (Fail-Closed):** Mọi hiện tượng mơ hồ về danh tính bệnh nhân sẽ kích hoạt cơ chế dừng xử lý ngay lập tức để bảo vệ an toàn.
 
 ---
 
-## 6. Bản quyền & Giấy phép
+## 10. Bản quyền & Giấy phép
 
-Dự án được phát hành theo Giấy phép Apache License 2.0. Xem chi tiết tại tệp [LICENSE](./LICENSE).
+Dự án được phân phối dưới giấy phép **Apache License, Version 2.0**. Xem tệp [LICENSE](./LICENSE) để biết thêm chi tiết.
 
 Bản quyền (c) 2026 duyvd9 (DuyVuux). Mọi quyền được bảo lưu.

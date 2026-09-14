@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "timeline_snapshot_id": "timeline-b0f0f9b5213b775d",
+  "content_sha256": "b0f0f9b5213b775de3211d32d518f53b66ecc24c24d52f2616718ca48199df86",
+  "subject_ref": "subject-synthetic-stage05-001",
+  "policy_version": "longitudinal-policy-v1",
+  "source_dataset_snapshot_ids": [
+    "ds-u1",
+    "ds-u2"
+  ],
+  "lineage_groups": [
+    {
+      "logical_measurement_id": "lm-10a4cdf3658851cc",
+      "member_observation_ids": [
+        "u2"
+      ],
+      "selected_observation_id": "u2",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    },
+    {
+      "logical_measurement_id": "lm-5daf61a1c9cb52d9",
+      "member_observation_ids": [
+        "u1"
+      ],
+      "selected_observation_id": "u1",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    }
+  ],
+  "series": [
+    {
+      "series_id": "series-edf2309678a19b77",
+      "canonical_test": {
+        "system": "http://loinc.org",
+        "code": "5804-0",
+        "display": "Synthetic 5804-0",
+        "version": "2.83"
+      },
+      "value_kind": "quantity",
+      "points": [
+        {
+          "logical_measurement_id": "lm-5daf61a1c9cb52d9",
+          "selected_observation_id": "u1",
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "source_dataset_snapshot_id": "ds-u1",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          }
+        },
+        {
+          "logical_measurement_id": "lm-10a4cdf3658851cc",
+          "selected_observation_id": "u2",
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "source_dataset_snapshot_id": "ds-u2",
+          "value": {
+            "kind": "quantity",
+            "value": 40.0,
+            "unit_ucum": "mg/dL",
+            "source_text": "0.4"
+          }
+        }
+      ],
+      "normalized_unit": "mg/dL",
+      "trend": {
+        "status": "computed_numeric",
+        "direction": "increased",
+        "absolute_delta": 10.0
+      }
+    }
+  ],
+  "excluded_observations": []
+}

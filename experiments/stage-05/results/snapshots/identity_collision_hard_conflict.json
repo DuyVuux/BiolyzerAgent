@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "timeline_snapshot_id": "timeline-28faa15a06ff4864",
+  "content_sha256": "28faa15a06ff486469c32f05af4aee43c0f2b55b839c3b8c4defd14a4215f0b7",
+  "subject_ref": "subject-synthetic-stage05-001",
+  "policy_version": "longitudinal-policy-v1",
+  "source_dataset_snapshot_ids": [
+    "ds-conf-1",
+    "ds-conf-2"
+  ],
+  "lineage_groups": [
+    {
+      "logical_measurement_id": "lm-34a07aca1d1d51a1",
+      "member_observation_ids": [
+        "conf-1",
+        "conf-2"
+      ],
+      "resolution": "unresolved_conflict",
+      "evidence_basis": "identity_collision_different_payload_no_revision_lineage"
+    }
+  ],
+  "series": [],
+  "excluded_observations": [
+    {
+      "observation_id": "conf-1",
+      "reason": "unresolved_lineage_conflict"
+    },
+    {
+      "observation_id": "conf-2",
+      "reason": "unresolved_lineage_conflict"
+    }
+  ]
+}

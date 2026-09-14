@@ -1,0 +1,181 @@
+{
+  "metrics": {
+    "scenario_pass_rate": 1.0,
+    "false_merge_rate": 0.0,
+    "snapshot_determinism": true,
+    "cross_subject_rejection": true,
+    "duplicate_resolution": true,
+    "revision_selection": true,
+    "chronology_ordering": true,
+    "comparability_split": true,
+    "candidate_mapping_exclusion": true,
+    "identity_collision_idempotent_duplicate": true,
+    "identity_collision_hard_conflict": true,
+    "reconciliation_required_exclusion": true,
+    "trend_boundary_cases": true
+  },
+  "cases": [
+    {
+      "case": "chronology_out_of_order",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "point_order": [
+          "c-jan",
+          "c-feb",
+          "c-mar"
+        ],
+        "trend_status": "computed_numeric",
+        "delta": 20
+      }
+    },
+    {
+      "case": "duplicate_import",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "points": 1,
+        "resolutions": [
+          "duplicate_collapsed"
+        ]
+      }
+    },
+    {
+      "case": "corrected_revision",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "points": 1,
+        "resolutions": [
+          "revision_selected"
+        ],
+        "selected": [
+          "r-new"
+        ]
+      }
+    },
+    {
+      "case": "same_value_time_distinct_events",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "points": 2,
+        "trend_status": "indeterminate_same_time"
+      }
+    },
+    {
+      "case": "convertible_units",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "series": 1,
+        "delta": 10.0,
+        "normalized_unit": "mg/dL"
+      }
+    },
+    {
+      "case": "different_methods_split",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "series": 2
+      }
+    },
+    {
+      "case": "candidate_mapping_excluded",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "series": 0,
+        "excluded": [
+          "mapping_not_validated"
+        ]
+      }
+    },
+    {
+      "case": "cross_subject_rejected",
+      "pass": true,
+      "error": "CROSS_SUBJECT_INPUT",
+      "detail": {
+        "error": "CROSS_SUBJECT_INPUT"
+      }
+    },
+    {
+      "case": "ordinal_trend",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "trend_status": "computed_ordinal",
+        "direction": "increased",
+        "rank_delta": 2
+      }
+    },
+    {
+      "case": "categorical_change",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "trend_status": "computed_categorical",
+        "direction": "changed"
+      }
+    },
+    {
+      "case": "interval_history_only",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "trend_status": "history_only_interval"
+      }
+    },
+    {
+      "case": "censored_quantity",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "trend_status": "not_computed_censored_value"
+      }
+    },
+    {
+      "case": "identity_collision_idempotent_duplicate",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "points": 1,
+        "resolutions": [
+          "duplicate_collapsed"
+        ]
+      }
+    },
+    {
+      "case": "identity_collision_hard_conflict",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "series": 0,
+        "points": 0,
+        "resolutions": [
+          "unresolved_conflict"
+        ],
+        "excluded": [
+          "unresolved_lineage_conflict",
+          "unresolved_lineage_conflict"
+        ]
+      }
+    },
+    {
+      "case": "ambiguous_representation_reconciliation_required",
+      "pass": true,
+      "error": null,
+      "detail": {
+        "series": 0,
+        "points": 0,
+        "resolutions": [
+          "reconciliation_required"
+        ],
+        "excluded": [
+          "reconciliation_required"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "timeline_snapshot_id": "timeline-fe5fca2e9439e537",
+  "content_sha256": "fe5fca2e9439e5370282490f00c1565b72b17d38f89ec5b1129f942ba2aace30",
+  "subject_ref": "subject-synthetic-stage05-001",
+  "policy_version": "longitudinal-policy-v1",
+  "source_dataset_snapshot_ids": [
+    "ds-g1",
+    "ds-g2"
+  ],
+  "lineage_groups": [
+    {
+      "logical_measurement_id": "lm-2fee21dc3e23eb9e",
+      "member_observation_ids": [
+        "g2"
+      ],
+      "selected_observation_id": "g2",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    },
+    {
+      "logical_measurement_id": "lm-501d2b8a3cbea39d",
+      "member_observation_ids": [
+        "g1"
+      ],
+      "selected_observation_id": "g1",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    }
+  ],
+  "series": [
+    {
+      "series_id": "series-a187d49f05fbad37",
+      "canonical_test": {
+        "system": "http://loinc.org",
+        "code": "5802-4",
+        "display": "Synthetic 5802-4",
+        "version": "2.83"
+      },
+      "value_kind": "categorical",
+      "points": [
+        {
+          "logical_measurement_id": "lm-501d2b8a3cbea39d",
+          "selected_observation_id": "g1",
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "source_dataset_snapshot_id": "ds-g1",
+          "value": {
+            "kind": "categorical",
+            "source_text": "Negative",
+            "normalized_code": "negative"
+          }
+        },
+        {
+          "logical_measurement_id": "lm-2fee21dc3e23eb9e",
+          "selected_observation_id": "g2",
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "source_dataset_snapshot_id": "ds-g2",
+          "value": {
+            "kind": "categorical",
+            "source_text": "Positive",
+            "normalized_code": "positive"
+          }
+        }
+      ],
+      "trend": {
+        "status": "computed_categorical",
+        "direction": "changed"
+      }
+    }
+  ],
+  "excluded_observations": []
+}

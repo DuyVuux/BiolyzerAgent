@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "timeline_snapshot_id": "timeline-656675bcf2754126",
+  "content_sha256": "656675bcf27541262751287cdd644e553bb7ed93dcb274f482fc7373b572589a",
+  "subject_ref": "subject-synthetic-stage05-001",
+  "policy_version": "longitudinal-policy-v1",
+  "source_dataset_snapshot_ids": [
+    "ds-q1",
+    "ds-q2"
+  ],
+  "lineage_groups": [
+    {
+      "logical_measurement_id": "lm-5613c59a868bea4d",
+      "member_observation_ids": [
+        "q2"
+      ],
+      "selected_observation_id": "q2",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    },
+    {
+      "logical_measurement_id": "lm-b0aa1ddedbb40dc3",
+      "member_observation_ids": [
+        "q1"
+      ],
+      "selected_observation_id": "q1",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    }
+  ],
+  "series": [
+    {
+      "series_id": "series-edf2309678a19b77",
+      "canonical_test": {
+        "system": "http://loinc.org",
+        "code": "5804-0",
+        "display": "Synthetic 5804-0",
+        "version": "2.83"
+      },
+      "value_kind": "quantity",
+      "points": [
+        {
+          "logical_measurement_id": "lm-b0aa1ddedbb40dc3",
+          "selected_observation_id": "q1",
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "source_dataset_snapshot_id": "ds-q1",
+          "value": {
+            "kind": "quantity",
+            "value": 5,
+            "unit_ucum": "mg/dL",
+            "comparator": "<",
+            "source_text": "<5"
+          }
+        },
+        {
+          "logical_measurement_id": "lm-5613c59a868bea4d",
+          "selected_observation_id": "q2",
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "source_dataset_snapshot_id": "ds-q2",
+          "value": {
+            "kind": "quantity",
+            "value": 10,
+            "unit_ucum": "mg/dL",
+            "source_text": "10"
+          }
+        }
+      ],
+      "normalized_unit": "mg/dL",
+      "trend": {
+        "status": "not_computed_censored_value"
+      }
+    }
+  ],
+  "excluded_observations": []
+}

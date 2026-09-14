@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "timeline_snapshot_id": "timeline-776f0ace8b0cb730",
+  "content_sha256": "776f0ace8b0cb730ab6fb2b2f172f3ca03047c0f297418365439cd299ca49b14",
+  "subject_ref": "subject-synthetic-stage05-001",
+  "policy_version": "longitudinal-policy-v1",
+  "source_dataset_snapshot_ids": [
+    "ds-i1",
+    "ds-i2"
+  ],
+  "lineage_groups": [
+    {
+      "logical_measurement_id": "lm-027dbde4061b099d",
+      "member_observation_ids": [
+        "i1"
+      ],
+      "selected_observation_id": "i1",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    },
+    {
+      "logical_measurement_id": "lm-ae1d961ebebda703",
+      "member_observation_ids": [
+        "i2"
+      ],
+      "selected_observation_id": "i2",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    }
+  ],
+  "series": [
+    {
+      "series_id": "series-54179ba97a0897a2",
+      "canonical_test": {
+        "system": "http://loinc.org",
+        "code": "13945-1",
+        "display": "Synthetic 13945-1",
+        "version": "2.83"
+      },
+      "value_kind": "interval",
+      "points": [
+        {
+          "logical_measurement_id": "lm-027dbde4061b099d",
+          "selected_observation_id": "i1",
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "source_dataset_snapshot_id": "ds-i1",
+          "value": {
+            "kind": "interval",
+            "low": 0,
+            "high": 2,
+            "unit_ucum": "/[HPF]",
+            "source_text": "0-2"
+          }
+        },
+        {
+          "logical_measurement_id": "lm-ae1d961ebebda703",
+          "selected_observation_id": "i2",
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "source_dataset_snapshot_id": "ds-i2",
+          "value": {
+            "kind": "interval",
+            "low": 2,
+            "high": 4,
+            "unit_ucum": "/[HPF]",
+            "source_text": "2-4"
+          }
+        }
+      ],
+      "normalized_unit": "/[HPF]",
+      "trend": {
+        "status": "history_only_interval"
+      }
+    }
+  ],
+  "excluded_observations": []
+}

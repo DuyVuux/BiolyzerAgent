@@ -91,6 +91,25 @@ Tên local chỉ là một signal.
 
 ## 4. Mapping lifecycle
 
+```mermaid
+stateDiagram-v2
+    [*] --> IngestedObservation
+    IngestedObservation --> CheckRelevance
+    
+    CheckRelevance --> not_applicable: Concept phi lâm sàng / không cần code
+    CheckRelevance --> EvaluateEvidence: Cần định danh chuẩn hóa
+    
+    EvaluateEvidence --> unmapped: Không đủ bằng chứng / không khớp catalog
+    EvaluateEvidence --> candidate: Khớp nhiều LOINC khả dĩ nhưng thiếu context
+    EvaluateEvidence --> validated: Khớp duy nhất semantic fingerprint 6 chiều
+    
+    candidate --> validated: Bổ sung context (specimen, method, unit)
+    candidate --> unmapped: Loại trừ khi context xung đột
+    validated --> [*]
+    unmapped --> [*]
+    not_applicable --> [*]
+```
+
 Stage 04 giữ bốn trạng thái Stage 02:
 
 ```text

@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "timeline_snapshot_id": "timeline-2d3c4dcd7a38c243",
+  "content_sha256": "2d3c4dcd7a38c243063a350dea3ff47d113560633e95aadcabfe8e94ce1c058a",
+  "subject_ref": "subject-synthetic-stage05-001",
+  "policy_version": "longitudinal-policy-v1",
+  "source_dataset_snapshot_ids": [
+    "ds-idem-1",
+    "ds-idem-2"
+  ],
+  "lineage_groups": [
+    {
+      "logical_measurement_id": "lm-90c3700b5975aac6",
+      "member_observation_ids": [
+        "idem-1",
+        "idem-2"
+      ],
+      "selected_observation_id": "idem-1",
+      "resolution": "duplicate_collapsed",
+      "evidence_basis": "same_source_identity_idempotent_payload"
+    }
+  ],
+  "series": [
+    {
+      "series_id": "series-edf2309678a19b77",
+      "canonical_test": {
+        "system": "http://loinc.org",
+        "code": "5804-0",
+        "display": "Synthetic 5804-0",
+        "version": "2.83"
+      },
+      "value_kind": "quantity",
+      "points": [
+        {
+          "logical_measurement_id": "lm-90c3700b5975aac6",
+          "selected_observation_id": "idem-1",
+          "effective_at": "2026-01-10T08:00:00Z",
+          "issued_at": "2026-01-10T09:00:00Z",
+          "source_dataset_snapshot_id": "ds-idem-1",
+          "value": {
+            "kind": "quantity",
+            "value": 45,
+            "unit_ucum": "mg/dL",
+            "source_text": "45"
+          }
+        }
+      ],
+      "normalized_unit": "mg/dL",
+      "trend": {
+        "status": "insufficient_points"
+      }
+    }
+  ],
+  "excluded_observations": []
+}

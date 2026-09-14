@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "timeline_snapshot_id": "timeline-f3ab2b55f6e3d384",
+  "content_sha256": "f3ab2b55f6e3d384b3feb3f145f7d90f367a79028ddbc58d7f93d966950d6a27",
+  "subject_ref": "subject-synthetic-stage05-001",
+  "policy_version": "longitudinal-policy-v1",
+  "source_dataset_snapshot_ids": [
+    "ds-s1",
+    "ds-s2"
+  ],
+  "lineage_groups": [
+    {
+      "logical_measurement_id": "lm-41149f4e886212b0",
+      "member_observation_ids": [
+        "s2"
+      ],
+      "selected_observation_id": "s2",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    },
+    {
+      "logical_measurement_id": "lm-5825ae6ab4c4ca6c",
+      "member_observation_ids": [
+        "s1"
+      ],
+      "selected_observation_id": "s1",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    }
+  ],
+  "series": [
+    {
+      "series_id": "series-edf2309678a19b77",
+      "canonical_test": {
+        "system": "http://loinc.org",
+        "code": "5804-0",
+        "display": "Synthetic 5804-0",
+        "version": "2.83"
+      },
+      "value_kind": "quantity",
+      "points": [
+        {
+          "logical_measurement_id": "lm-41149f4e886212b0",
+          "selected_observation_id": "s2",
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T10:05:00Z",
+          "source_dataset_snapshot_id": "ds-s2",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          }
+        },
+        {
+          "logical_measurement_id": "lm-5825ae6ab4c4ca6c",
+          "selected_observation_id": "s1",
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T10:00:00Z",
+          "source_dataset_snapshot_id": "ds-s1",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          }
+        }
+      ],
+      "normalized_unit": "mg/dL",
+      "trend": {
+        "status": "indeterminate_same_time"
+      }
+    }
+  ],
+  "excluded_observations": []
+}

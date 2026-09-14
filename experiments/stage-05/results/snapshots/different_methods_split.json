@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "timeline_snapshot_id": "timeline-e96301188ac6d622",
+  "content_sha256": "e96301188ac6d622539244039eb2a7819d1d0b22d1b5082368cab41bf9b9a71c",
+  "subject_ref": "subject-synthetic-stage05-001",
+  "policy_version": "longitudinal-policy-v1",
+  "source_dataset_snapshot_ids": [
+    "ds-m1",
+    "ds-m2"
+  ],
+  "lineage_groups": [
+    {
+      "logical_measurement_id": "lm-7864e9fa7905a8e7",
+      "member_observation_ids": [
+        "m2"
+      ],
+      "selected_observation_id": "m2",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    },
+    {
+      "logical_measurement_id": "lm-8fad5f439523be00",
+      "member_observation_ids": [
+        "m1"
+      ],
+      "selected_observation_id": "m1",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    }
+  ],
+  "series": [
+    {
+      "series_id": "series-51d0d33de8135881",
+      "canonical_test": {
+        "system": "http://loinc.org",
+        "code": "5799-2",
+        "display": "Synthetic 5799-2",
+        "version": "2.83"
+      },
+      "value_kind": "ordinal",
+      "points": [
+        {
+          "logical_measurement_id": "lm-8fad5f439523be00",
+          "selected_observation_id": "m1",
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "source_dataset_snapshot_id": "ds-m1",
+          "value": {
+            "kind": "ordinal",
+            "source_text": "1+",
+            "rank": 2
+          }
+        }
+      ],
+      "trend": {
+        "status": "insufficient_points"
+      }
+    },
+    {
+      "series_id": "series-df154333c781e2a6",
+      "canonical_test": {
+        "system": "http://loinc.org",
+        "code": "60026-2",
+        "display": "Synthetic 60026-2",
+        "version": "2.83"
+      },
+      "value_kind": "ordinal",
+      "points": [
+        {
+          "logical_measurement_id": "lm-7864e9fa7905a8e7",
+          "selected_observation_id": "m2",
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "source_dataset_snapshot_id": "ds-m2",
+          "value": {
+            "kind": "ordinal",
+            "source_text": "1+",
+            "rank": 2
+          }
+        }
+      ],
+      "trend": {
+        "status": "insufficient_points"
+      }
+    }
+  ],
+  "excluded_observations": []
+}

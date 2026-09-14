@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "timeline_snapshot_id": "timeline-8d4a9e3a6df8d384",
+  "content_sha256": "8d4a9e3a6df8d384dba5bb9feddea97e877d7c2571dd8ea587ae22ba15d36259",
+  "subject_ref": "subject-synthetic-stage05-001",
+  "policy_version": "longitudinal-policy-v1",
+  "source_dataset_snapshot_ids": [
+    "ds-feb",
+    "ds-jan",
+    "ds-mar"
+  ],
+  "lineage_groups": [
+    {
+      "logical_measurement_id": "lm-04dae550f46ad6a3",
+      "member_observation_ids": [
+        "c-jan"
+      ],
+      "selected_observation_id": "c-jan",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    },
+    {
+      "logical_measurement_id": "lm-7b635cf897b2cbb6",
+      "member_observation_ids": [
+        "c-feb"
+      ],
+      "selected_observation_id": "c-feb",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    },
+    {
+      "logical_measurement_id": "lm-dc46830eabf40d1f",
+      "member_observation_ids": [
+        "c-mar"
+      ],
+      "selected_observation_id": "c-mar",
+      "resolution": "unique",
+      "evidence_basis": "single_representation"
+    }
+  ],
+  "series": [
+    {
+      "series_id": "series-edf2309678a19b77",
+      "canonical_test": {
+        "system": "http://loinc.org",
+        "code": "5804-0",
+        "display": "Synthetic 5804-0",
+        "version": "2.83"
+      },
+      "value_kind": "quantity",
+      "points": [
+        {
+          "logical_measurement_id": "lm-04dae550f46ad6a3",
+          "selected_observation_id": "c-jan",
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T10:00:00Z",
+          "source_dataset_snapshot_id": "ds-jan",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          }
+        },
+        {
+          "logical_measurement_id": "lm-7b635cf897b2cbb6",
+          "selected_observation_id": "c-feb",
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T10:00:00Z",
+          "source_dataset_snapshot_id": "ds-feb",
+          "value": {
+            "kind": "quantity",
+            "value": 40,
+            "unit_ucum": "mg/dL",
+            "source_text": "40"
+          }
+        },
+        {
+          "logical_measurement_id": "lm-dc46830eabf40d1f",
+          "selected_observation_id": "c-mar",
+          "effective_at": "2026-03-01T08:00:00Z",
+          "issued_at": "2026-03-01T10:00:00Z",
+          "source_dataset_snapshot_id": "ds-mar",
+          "value": {
+            "kind": "quantity",
+            "value": 50,
+            "unit_ucum": "mg/dL",
+            "source_text": "50"
+          }
+        }
+      ],
+      "normalized_unit": "mg/dL",
+      "trend": {
+        "status": "computed_numeric",
+        "direction": "increased",
+        "absolute_delta": 20
+      }
+    }
+  ],
+  "excluded_observations": []
+}

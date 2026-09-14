@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "timeline_snapshot_id": "timeline-f39d9c73b00527f1",
+  "content_sha256": "f39d9c73b00527f1685eb3cf797ce5b7e2c0fd8b2ebb289fc7605d9f24830d62",
+  "subject_ref": "subject-synthetic-stage05-001",
+  "policy_version": "longitudinal-policy-v1",
+  "source_dataset_snapshot_ids": [
+    "ds-rec-1"
+  ],
+  "lineage_groups": [
+    {
+      "logical_measurement_id": "lm-fdd2bad3d160b239",
+      "member_observation_ids": [
+        "rec-1"
+      ],
+      "resolution": "reconciliation_required",
+      "evidence_basis": "reconciliation_required:explicit_reconciliation_flag"
+    }
+  ],
+  "series": [],
+  "excluded_observations": [
+    {
+      "observation_id": "rec-1",
+      "reason": "reconciliation_required"
+    }
+  ]
+}

@@ -28,6 +28,26 @@ Stage này **không** chọn production OCR vendor hay production parser.
 
 ## 2. Experimental pipeline
 
+```mermaid
+flowchart TD
+    InputDoc["Báo cáo xét nghiệm (PDF / Ảnh scan)"] --> Probe{"Native-Text Probe\n(Có lớp văn bản kỹ thuật số khả dụng?)"}
+    
+    Probe -->|Có| NativeExtract["Trích xuất Native Text\n(PyMuPDF / pdfplumber)"]
+    Probe -->|Không| OCRFallback["Cơ chế Fallback OCR\n(Tesseract OCR Engine)"]
+    
+    NativeExtract --> StructParser["Bộ phân tích dòng/cột xác định (Deterministic Parser)"]
+    OCRFallback --> StructParser
+    
+    StructParser --> ValKind["Phân loại kiểu giá trị (Value-Kind Classifier)\n(Quantity / Ordinal / Categorical / Interval / Comparator)"]
+    ValKind --> CanonicalBuilder["Khởi tạo Đối tượng Canonical\n(BiomarkerObservation, LabReport, Provenance)"]
+    
+    CanonicalBuilder --> SchemaGate{"Cổng kiểm tra Schema Stage 02\n(JSON Schema Validation)"}
+    SchemaGate -->|Không hợp lệ| FailClosed["Fail-Closed / Đánh dấu Ingestion Error"]
+    SchemaGate -->|Hợp lệ| BenchGate{"Cổng Zero-Guesswork & Verification Gate"}
+    
+    BenchGate --> Pass["Canonical Dataset Snapshot Hoàn chỉnh"]
+```
+
 Candidate ingestion pipeline được characterization:
 
 ```text

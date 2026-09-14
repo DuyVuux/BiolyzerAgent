@@ -1,0 +1,846 @@
+{
+  "synthetic_only": true,
+  "cases": [
+    {
+      "id": "chronology_out_of_order",
+      "observations": [
+        {
+          "observation_id": "c-mar",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-mar",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 50,
+            "unit_ucum": "mg/dL",
+            "source_text": "50"
+          },
+          "effective_at": "2026-03-01T08:00:00Z",
+          "issued_at": "2026-03-01T10:00:00Z",
+          "received_at": "2026-03-01T11:00:00Z",
+          "source_event_key": "evt-mar",
+          "source_fingerprint": "fp-c-mar",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "c-jan",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-jan",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T10:00:00Z",
+          "received_at": "2026-03-05T11:00:00Z",
+          "source_event_key": "evt-jan",
+          "source_fingerprint": "fp-c-jan",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "c-feb",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-feb",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 40,
+            "unit_ucum": "mg/dL",
+            "source_text": "40"
+          },
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T10:00:00Z",
+          "received_at": "2026-03-04T11:00:00Z",
+          "source_event_key": "evt-feb",
+          "source_fingerprint": "fp-c-feb",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "point_order": [
+          "c-jan",
+          "c-feb",
+          "c-mar"
+        ],
+        "trend_status": "computed_numeric",
+        "delta": 20
+      }
+    },
+    {
+      "id": "duplicate_import",
+      "observations": [
+        {
+          "observation_id": "d1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-d1",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T10:00:00Z",
+          "received_at": "2026-01-01T11:00:00Z",
+          "source_event_key": "evt-d1",
+          "source_fingerprint": "same-fp",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "d2",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-d2",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T10:00:00Z",
+          "received_at": "2026-01-02T11:00:00Z",
+          "source_event_key": "evt-d1",
+          "source_fingerprint": "same-fp",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "points": 1,
+        "lineage_resolution": "duplicate_collapsed"
+      }
+    },
+    {
+      "id": "corrected_revision",
+      "observations": [
+        {
+          "observation_id": "r-old",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-r1",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T10:00:00Z",
+          "received_at": "2026-01-01T11:00:00Z",
+          "source_event_key": "evt-rev",
+          "source_fingerprint": "fp-old",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "r-new",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-r2",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 50,
+            "unit_ucum": "mg/dL",
+            "source_text": "50"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-03T10:00:00Z",
+          "received_at": "2026-01-03T11:00:00Z",
+          "source_event_key": "evt-rev",
+          "source_fingerprint": "fp-new",
+          "source_status": "corrected"
+        }
+      ],
+      "expect": {
+        "selected": "r-new",
+        "lineage_resolution": "revision_selected",
+        "points": 1
+      }
+    },
+    {
+      "id": "same_value_time_distinct_events",
+      "observations": [
+        {
+          "observation_id": "s1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-s1",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T10:00:00Z",
+          "received_at": "2026-01-01T11:00:00Z",
+          "source_event_key": "evt-s1",
+          "source_fingerprint": "fp-s1",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "s2",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-s2",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T10:05:00Z",
+          "received_at": "2026-01-01T11:05:00Z",
+          "source_event_key": "evt-s2",
+          "source_fingerprint": "fp-s2",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "points": 2,
+        "trend_status": "indeterminate_same_time"
+      }
+    },
+    {
+      "id": "convertible_units",
+      "observations": [
+        {
+          "observation_id": "u1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-u1",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "received_at": "2026-01-01T10:00:00Z",
+          "source_event_key": "evt-u1",
+          "source_fingerprint": "fp-u1",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "u2",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-u2",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 0.4,
+            "unit_ucum": "g/L",
+            "source_text": "0.4"
+          },
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "received_at": "2026-02-01T10:00:00Z",
+          "source_event_key": "evt-u2",
+          "source_fingerprint": "fp-u2",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "series": 1,
+        "normalized_unit": "mg/dL",
+        "delta": 10
+      }
+    },
+    {
+      "id": "different_methods_split",
+      "observations": [
+        {
+          "observation_id": "m1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-m1",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5799-2",
+            "display": "Synthetic 5799-2",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "ordinal",
+            "source_text": "1+",
+            "rank": 2
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "received_at": "2026-01-01T10:00:00Z",
+          "source_event_key": "evt-m1",
+          "source_fingerprint": "fp-m1",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "m2",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-m2",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "60026-2",
+            "display": "Synthetic 60026-2",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "ordinal",
+            "source_text": "1+",
+            "rank": 2
+          },
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "received_at": "2026-02-01T10:00:00Z",
+          "source_event_key": "evt-m2",
+          "source_fingerprint": "fp-m2",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "series": 2
+      }
+    },
+    {
+      "id": "candidate_mapping_excluded",
+      "observations": [
+        {
+          "observation_id": "x1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-x1",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5799-2",
+            "display": "Synthetic 5799-2",
+            "version": "2.83"
+          },
+          "mapping_status": "candidate",
+          "value": {
+            "kind": "ordinal",
+            "source_text": "1+",
+            "rank": 2
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "received_at": "2026-01-01T10:00:00Z",
+          "source_event_key": "evt-x1",
+          "source_fingerprint": "fp-x1",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "excluded_reason": "mapping_not_validated",
+        "series": 0
+      }
+    },
+    {
+      "id": "cross_subject_rejected",
+      "observations": [
+        {
+          "observation_id": "cs1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-cs1",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "received_at": "2026-01-01T10:00:00Z",
+          "source_event_key": "evt-cs1",
+          "source_fingerprint": "fp-cs1",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "cs2",
+          "subject_ref": "subject-synthetic-stage05-OTHER",
+          "source_dataset_snapshot_id": "ds-cs2",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 40,
+            "unit_ucum": "mg/dL",
+            "source_text": "40"
+          },
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "received_at": "2026-02-01T10:00:00Z",
+          "source_event_key": "evt-cs2",
+          "source_fingerprint": "fp-cs2",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "error": "CROSS_SUBJECT_INPUT"
+      }
+    },
+    {
+      "id": "ordinal_trend",
+      "observations": [
+        {
+          "observation_id": "o1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-o1",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5799-2",
+            "display": "Synthetic 5799-2",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "ordinal",
+            "source_text": "Negative",
+            "rank": 0,
+            "normalized_code": "negative"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "received_at": "2026-01-01T10:00:00Z",
+          "source_event_key": "evt-o1",
+          "source_fingerprint": "fp-o1",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "o2",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-o2",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5799-2",
+            "display": "Synthetic 5799-2",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "ordinal",
+            "source_text": "1+",
+            "rank": 2,
+            "normalized_code": "1_plus"
+          },
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "received_at": "2026-02-01T10:00:00Z",
+          "source_event_key": "evt-o2",
+          "source_fingerprint": "fp-o2",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "trend_status": "computed_ordinal",
+        "direction": "increased",
+        "rank_delta": 2
+      }
+    },
+    {
+      "id": "categorical_change",
+      "observations": [
+        {
+          "observation_id": "g1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-g1",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5802-4",
+            "display": "Synthetic 5802-4",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "categorical",
+            "source_text": "Negative",
+            "normalized_code": "negative"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "received_at": "2026-01-01T10:00:00Z",
+          "source_event_key": "evt-g1",
+          "source_fingerprint": "fp-g1",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "g2",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-g2",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5802-4",
+            "display": "Synthetic 5802-4",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "categorical",
+            "source_text": "Positive",
+            "normalized_code": "positive"
+          },
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "received_at": "2026-02-01T10:00:00Z",
+          "source_event_key": "evt-g2",
+          "source_fingerprint": "fp-g2",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "trend_status": "computed_categorical",
+        "direction": "changed"
+      }
+    },
+    {
+      "id": "interval_history_only",
+      "observations": [
+        {
+          "observation_id": "i1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-i1",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "13945-1",
+            "display": "Synthetic 13945-1",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "interval",
+            "low": 0,
+            "high": 2,
+            "unit_ucum": "/[HPF]",
+            "source_text": "0-2"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "received_at": "2026-01-01T10:00:00Z",
+          "source_event_key": "evt-i1",
+          "source_fingerprint": "fp-i1",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "i2",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-i2",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "13945-1",
+            "display": "Synthetic 13945-1",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "interval",
+            "low": 2,
+            "high": 4,
+            "unit_ucum": "/[HPF]",
+            "source_text": "2-4"
+          },
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "received_at": "2026-02-01T10:00:00Z",
+          "source_event_key": "evt-i2",
+          "source_fingerprint": "fp-i2",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "trend_status": "history_only_interval"
+      }
+    },
+    {
+      "id": "censored_quantity",
+      "observations": [
+        {
+          "observation_id": "q1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-q1",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 5,
+            "unit_ucum": "mg/dL",
+            "comparator": "<",
+            "source_text": "<5"
+          },
+          "effective_at": "2026-01-01T08:00:00Z",
+          "issued_at": "2026-01-01T09:00:00Z",
+          "received_at": "2026-01-01T10:00:00Z",
+          "source_event_key": "evt-q1",
+          "source_fingerprint": "fp-q1",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "q2",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-q2",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 10,
+            "unit_ucum": "mg/dL",
+            "source_text": "10"
+          },
+          "effective_at": "2026-02-01T08:00:00Z",
+          "issued_at": "2026-02-01T09:00:00Z",
+          "received_at": "2026-02-01T10:00:00Z",
+          "source_event_key": "evt-q2",
+          "source_fingerprint": "fp-q2",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "trend_status": "not_computed_censored_value"
+      }
+    },
+    {
+      "id": "identity_collision_idempotent_duplicate",
+      "observations": [
+        {
+          "observation_id": "idem-1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-idem-1",
+          "source_system": "lis-main-hospital",
+          "external_observation_id": "ext-obs-101",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 45,
+            "unit_ucum": "mg/dL",
+            "source_text": "45"
+          },
+          "effective_at": "2026-01-10T08:00:00Z",
+          "issued_at": "2026-01-10T09:00:00Z",
+          "received_at": "2026-01-10T10:00:00Z",
+          "source_fingerprint": "fp-idem-1",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "idem-2",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-idem-2",
+          "source_system": "lis-main-hospital",
+          "external_observation_id": "ext-obs-101",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 45,
+            "unit_ucum": "mg/dL",
+            "source_text": "45"
+          },
+          "effective_at": "2026-01-10T08:00:00Z",
+          "issued_at": "2026-01-10T09:00:00Z",
+          "received_at": "2026-01-11T10:00:00Z",
+          "source_fingerprint": "fp-idem-2",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "points": 1,
+        "lineage_resolution": "duplicate_collapsed"
+      }
+    },
+    {
+      "id": "identity_collision_hard_conflict",
+      "observations": [
+        {
+          "observation_id": "conf-1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-conf-1",
+          "source_system": "lis-main-hospital",
+          "external_observation_id": "ext-obs-202",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 30,
+            "unit_ucum": "mg/dL",
+            "source_text": "30"
+          },
+          "effective_at": "2026-01-15T08:00:00Z",
+          "issued_at": "2026-01-15T09:00:00Z",
+          "received_at": "2026-01-15T10:00:00Z",
+          "source_status": "final"
+        },
+        {
+          "observation_id": "conf-2",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-conf-2",
+          "source_system": "lis-main-hospital",
+          "external_observation_id": "ext-obs-202",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 85,
+            "unit_ucum": "mg/dL",
+            "source_text": "85"
+          },
+          "effective_at": "2026-01-15T08:00:00Z",
+          "issued_at": "2026-01-15T09:00:00Z",
+          "received_at": "2026-01-16T10:00:00Z",
+          "source_status": "final"
+        }
+      ],
+      "expect": {
+        "series": 0,
+        "points": 0,
+        "lineage_resolution": "unresolved_conflict",
+        "excluded_reason": "unresolved_lineage_conflict"
+      }
+    },
+    {
+      "id": "ambiguous_representation_reconciliation_required",
+      "observations": [
+        {
+          "observation_id": "rec-1",
+          "subject_ref": "subject-synthetic-stage05-001",
+          "source_dataset_snapshot_id": "ds-rec-1",
+          "source_system": "lis-main-hospital",
+          "external_observation_id": "ext-obs-303",
+          "canonical_test": {
+            "system": "http://loinc.org",
+            "code": "5804-0",
+            "display": "Synthetic 5804-0",
+            "version": "2.83"
+          },
+          "mapping_status": "validated",
+          "value": {
+            "kind": "quantity",
+            "value": 40,
+            "unit_ucum": "mg/dL",
+            "source_text": "40"
+          },
+          "effective_at": "2026-01-20T08:00:00Z",
+          "issued_at": "2026-01-20T09:00:00Z",
+          "received_at": "2026-01-20T10:00:00Z",
+          "source_status": "reconciliation_required",
+          "reconciliation_required": true,
+          "partial_payload": true
+        }
+      ],
+      "expect": {
+        "series": 0,
+        "points": 0,
+        "lineage_resolution": "reconciliation_required",
+        "excluded_reason": "reconciliation_required"
+      }
+    }
+  ]
+}

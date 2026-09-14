@@ -15,6 +15,26 @@ Nếu Stage 04 chỉ normalize tên mà không xác định comparability, Stage
 
 ## 2. Four classes
 
+```mermaid
+flowchart TD
+    Pair["So sánh hai Biomarker Observations (A, B)"] --> ValidCheck{"Cả hai đều có mã LOINC Validated?"}
+    
+    ValidCheck -->|Không| Indet["INDETERMINATE\n(Chưa đủ điều kiện so sánh)"]
+    ValidCheck -->|Có| SameConcept{"Cùng LOINC Canonical Code?"}
+    
+    SameConcept -->|Không| RelCheck{"Cùng họ chất phân tích (analyte / component)?"}
+    RelCheck -->|Có| RelNot["RELATED_NOT_COMPARABLE\n(Khác method / scale / property -> không merge)"]
+    RelCheck -->|Không| Indet
+    
+    SameConcept -->|Có| ValKindCheck{"Cùng tương thích ValueKind?"}
+    ValKindCheck -->|Không| Indet
+    ValKindCheck -->|Có| UnitCheck{"Ngữ nghĩa đơn vị (UCUM)?"}
+    
+    UnitCheck -->|Cùng đơn vị chuẩn hóa| Exact["EXACT_COMPARABLE\n(So sánh / vẽ biểu đồ trực tiếp)"]
+    UnitCheck -->|Đơn vị khác nhưng có phép chuyển đổi chuẩn| Conv["CONVERTIBLE_COMPARABLE\n(Quy đổi tuyến tính an toàn)"]
+    UnitCheck -->|Đơn vị không tương thích / không quy đổi được| Indet
+```
+
 ### EXACT_COMPARABLE
 
 ```text
