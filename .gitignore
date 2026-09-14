@@ -20,14 +20,28 @@ coverage/
 # Local runtime data
 var/
 
-# IDE
+# IDE & OS
 .idea/
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
-
-# OS
 .DS_Store
 
 # Generated local reports if policy says non-committed
 evals/reports/local/
+
+# -----------------------------------------------------------------------------
+# Internal Working Notes, Learning Logs & Stage Foundation Artifacts
+# (Excluded so repository stays clean, professional, and executive-ready)
+# -----------------------------------------------------------------------------
+docs/**/stage-*-foundation/
+docs/**/learning-notes/
+docs/**/internal/
+docs/**/scratch/
+docs/**/worklogs/
+docs/**/*.draft.md
+docs/**/*.scratch.md
+**/PACKAGE_MANIFEST.yaml
+
+# Local Agent environment skills, workflows & IDE tools
+.agents/
