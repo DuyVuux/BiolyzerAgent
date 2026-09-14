@@ -68,3 +68,12 @@ pnpm check
 - [experiments/](./experiments/) — Disposable, technical investigations and proofs-of-concept.
 - [evals/](./evals/) — Benchmark datasets, clinical rubrics, and automated evaluators.
 - [testdata/](./testdata/) — Synthetic and de-identified clinical test fixtures.
+
+---
+
+## 6. License
+
+This project is licensed under the Apache License, Version 2.0. See the [LICENSE](./LICENSE) file for the full license text.
+
+Copyright (c) 2026 duyvd9 (DuyVuux). All rights reserved.
+
