@@ -1,0 +1,538 @@
+{
+  "summary": {
+    "mapping_status_accuracy": 1.0,
+    "validated_code_exact_accuracy": 1.0,
+    "false_validation_rate": 0.0,
+    "unit_normalization_accuracy": 1.0,
+    "safe_conversion_accuracy": 1.0,
+    "comparability_accuracy": 1.0,
+    "stage03_unknown_label_no_guess": true
+  },
+  "mapping": [
+    {
+      "id": "m01",
+      "expected_status": "validated",
+      "actual_status": "validated",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "validated",
+        "candidate_codes": [
+          "5803-2"
+        ],
+        "validated_code": "5803-2",
+        "display": "pH of Urine by Test strip",
+        "terminology_version": "2.83",
+        "matched_dimensions": [
+          "alias",
+          "system",
+          "scale",
+          "method",
+          "unit"
+        ],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "id": "m02",
+      "expected_status": "validated",
+      "actual_status": "validated",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "validated",
+        "candidate_codes": [
+          "50560-2"
+        ],
+        "validated_code": "50560-2",
+        "display": "pH of Urine by Automated test strip",
+        "terminology_version": "2.83",
+        "matched_dimensions": [
+          "alias",
+          "system",
+          "scale",
+          "method",
+          "unit"
+        ],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "id": "m03",
+      "expected_status": "validated",
+      "actual_status": "validated",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "validated",
+        "candidate_codes": [
+          "5799-2"
+        ],
+        "validated_code": "5799-2",
+        "display": "Leukocyte esterase [Presence] in Urine by Test strip",
+        "terminology_version": "2.83",
+        "matched_dimensions": [
+          "alias",
+          "system",
+          "scale",
+          "method"
+        ],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "id": "m04",
+      "expected_status": "validated",
+      "actual_status": "validated",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "validated",
+        "candidate_codes": [
+          "60026-2"
+        ],
+        "validated_code": "60026-2",
+        "display": "Leukocyte esterase [Presence] in Urine by Automated test strip",
+        "terminology_version": "2.83",
+        "matched_dimensions": [
+          "alias",
+          "system",
+          "scale",
+          "method"
+        ],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "id": "m05",
+      "expected_status": "candidate",
+      "actual_status": "candidate",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "candidate",
+        "candidate_codes": [
+          "5799-2",
+          "60026-2"
+        ],
+        "validated_code": null,
+        "matched_dimensions": [
+          "alias"
+        ],
+        "missing_dimensions": [
+          "method"
+        ]
+      }
+    },
+    {
+      "id": "m06",
+      "expected_status": "validated",
+      "actual_status": "validated",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "validated",
+        "candidate_codes": [
+          "25428-4"
+        ],
+        "validated_code": "25428-4",
+        "display": "Glucose [Presence] in Urine by Test strip",
+        "terminology_version": "2.83",
+        "matched_dimensions": [
+          "alias",
+          "system",
+          "scale",
+          "method"
+        ],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "id": "m07",
+      "expected_status": "candidate",
+      "actual_status": "candidate",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "candidate",
+        "candidate_codes": [
+          "25428-4",
+          "50555-2"
+        ],
+        "validated_code": null,
+        "matched_dimensions": [
+          "alias"
+        ],
+        "missing_dimensions": [
+          "method"
+        ]
+      }
+    },
+    {
+      "id": "m08",
+      "expected_status": "validated",
+      "actual_status": "validated",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "validated",
+        "candidate_codes": [
+          "5804-0"
+        ],
+        "validated_code": "5804-0",
+        "display": "Protein [Mass/volume] in Urine by Test strip",
+        "terminology_version": "2.83",
+        "matched_dimensions": [
+          "alias",
+          "system",
+          "scale",
+          "method",
+          "unit"
+        ],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "id": "m09",
+      "expected_status": "validated",
+      "actual_status": "validated",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "validated",
+        "candidate_codes": [
+          "13945-1"
+        ],
+        "validated_code": "13945-1",
+        "display": "Erythrocytes [#/area] in Urine sediment by Microscopy high power field",
+        "terminology_version": "2.83",
+        "matched_dimensions": [
+          "alias",
+          "system",
+          "scale",
+          "method",
+          "unit"
+        ],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "id": "m10",
+      "expected_status": "validated",
+      "actual_status": "validated",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "validated",
+        "candidate_codes": [
+          "5821-4"
+        ],
+        "validated_code": "5821-4",
+        "display": "Leukocytes [#/area] in Urine sediment by Microscopy high power field",
+        "terminology_version": "2.83",
+        "matched_dimensions": [
+          "alias",
+          "system",
+          "scale",
+          "method",
+          "unit"
+        ],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "id": "m11",
+      "expected_status": "unmapped",
+      "actual_status": "unmapped",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "unmapped",
+        "candidate_codes": [],
+        "validated_code": null,
+        "matched_dimensions": [],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "id": "m12",
+      "expected_status": "validated",
+      "actual_status": "validated",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "validated",
+        "candidate_codes": [
+          "5778-6"
+        ],
+        "validated_code": "5778-6",
+        "display": "Color of Urine",
+        "terminology_version": "2.83",
+        "matched_dimensions": [
+          "alias",
+          "system",
+          "scale"
+        ],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "id": "m13",
+      "expected_status": "unmapped",
+      "actual_status": "unmapped",
+      "status_ok": true,
+      "code_ok": true,
+      "candidate_ok": true,
+      "result": {
+        "status": "unmapped",
+        "candidate_codes": [],
+        "validated_code": null,
+        "matched_dimensions": [],
+        "missing_dimensions": []
+      }
+    }
+  ],
+  "units": [
+    {
+      "id": "u01",
+      "source": "mg/dL",
+      "expected": "mg/dL",
+      "actual": "mg/dL",
+      "ok": true
+    },
+    {
+      "id": "u02",
+      "source": "mg/dl",
+      "expected": "mg/dL",
+      "actual": "mg/dL",
+      "ok": true
+    },
+    {
+      "id": "u03",
+      "source": "MG/DL",
+      "expected": "mg/dL",
+      "actual": "mg/dL",
+      "ok": true
+    },
+    {
+      "id": "u04",
+      "source": "g/L",
+      "expected": "g/L",
+      "actual": "g/L",
+      "ok": true
+    },
+    {
+      "id": "u05",
+      "source": "/HPF",
+      "expected": "/[HPF]",
+      "actual": "/[HPF]",
+      "ok": true
+    },
+    {
+      "id": "u06",
+      "source": "/[HPF]",
+      "expected": "/[HPF]",
+      "actual": "/[HPF]",
+      "ok": true
+    },
+    {
+      "id": "u07",
+      "source": "/LPF",
+      "expected": "/[LPF]",
+      "actual": "/[LPF]",
+      "ok": true
+    },
+    {
+      "id": "u08",
+      "source": "pH",
+      "expected": "[pH]",
+      "actual": "[pH]",
+      "ok": true
+    },
+    {
+      "id": "u09",
+      "source": "made-up-unit",
+      "expected": null,
+      "actual": null,
+      "ok": true
+    }
+  ],
+  "conversions": [
+    {
+      "id": "c01",
+      "expected_status": "converted",
+      "actual": {
+        "status": "converted",
+        "value": 0.3,
+        "unit": "g/L",
+        "rule_id": "mg/dL_to_g/L"
+      },
+      "ok": true
+    },
+    {
+      "id": "c02",
+      "expected_status": "converted",
+      "actual": {
+        "status": "converted",
+        "value": 30.0,
+        "unit": "mg/dL",
+        "rule_id": "g/L_to_mg/dL"
+      },
+      "ok": true
+    },
+    {
+      "id": "c03",
+      "expected_status": "rejected",
+      "actual": {
+        "status": "rejected",
+        "value": null,
+        "unit": null,
+        "rule_id": null
+      },
+      "ok": true
+    },
+    {
+      "id": "c04",
+      "expected_status": "rejected",
+      "actual": {
+        "status": "rejected",
+        "value": null,
+        "unit": null,
+        "rule_id": null
+      },
+      "ok": true
+    }
+  ],
+  "comparability": [
+    {
+      "id": "p01",
+      "expected": "EXACT_COMPARABLE",
+      "actual": "EXACT_COMPARABLE",
+      "ok": true
+    },
+    {
+      "id": "p02",
+      "expected": "CONVERTIBLE_COMPARABLE",
+      "actual": "CONVERTIBLE_COMPARABLE",
+      "ok": true
+    },
+    {
+      "id": "p03",
+      "expected": "RELATED_NOT_COMPARABLE",
+      "actual": "RELATED_NOT_COMPARABLE",
+      "ok": true
+    },
+    {
+      "id": "p04",
+      "expected": "RELATED_NOT_COMPARABLE",
+      "actual": "RELATED_NOT_COMPARABLE",
+      "ok": true
+    },
+    {
+      "id": "p05",
+      "expected": "INDETERMINATE",
+      "actual": "INDETERMINATE",
+      "ok": true
+    },
+    {
+      "id": "p06",
+      "expected": "EXACT_COMPARABLE",
+      "actual": "EXACT_COMPARABLE",
+      "ok": true
+    }
+  ],
+  "stage03_regression": [
+    {
+      "local_test_name": "SYNTH_PH",
+      "mapping": {
+        "status": "unmapped",
+        "candidate_codes": [],
+        "validated_code": null,
+        "matched_dimensions": [],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "local_test_name": "SYNTH_PROTEIN",
+      "mapping": {
+        "status": "unmapped",
+        "candidate_codes": [],
+        "validated_code": null,
+        "matched_dimensions": [],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "local_test_name": "SYNTH_LE",
+      "mapping": {
+        "status": "unmapped",
+        "candidate_codes": [],
+        "validated_code": null,
+        "matched_dimensions": [],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "local_test_name": "SYNTH_RBC",
+      "mapping": {
+        "status": "unmapped",
+        "candidate_codes": [],
+        "validated_code": null,
+        "matched_dimensions": [],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "local_test_name": "SYNTH_WBC",
+      "mapping": {
+        "status": "unmapped",
+        "candidate_codes": [],
+        "validated_code": null,
+        "matched_dimensions": [],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "local_test_name": "SYNTH_COLOR",
+      "mapping": {
+        "status": "unmapped",
+        "candidate_codes": [],
+        "validated_code": null,
+        "matched_dimensions": [],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "local_test_name": "SYNTH_CLARITY",
+      "mapping": {
+        "status": "unmapped",
+        "candidate_codes": [],
+        "validated_code": null,
+        "matched_dimensions": [],
+        "missing_dimensions": []
+      }
+    },
+    {
+      "local_test_name": "SYNTH_NITRITE",
+      "mapping": {
+        "status": "unmapped",
+        "candidate_codes": [],
+        "validated_code": null,
+        "matched_dimensions": [],
+        "missing_dimensions": []
+      }
+    }
+  ]
+}

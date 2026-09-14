@@ -9,6 +9,12 @@ coverage/
 *.test
 *.out
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
 # App build
 **/.out/
 
@@ -17,8 +23,14 @@ coverage/
 .env.*
 !.env.example
 
-# Local runtime data
+# Local runtime & clinical data (Zero-PHI Protection)
 var/
+data/
+local_data/
+
+# Loose PDF documents (defense-in-depth: only synthetic testdata PDFs are tracked)
+*.pdf
+!testdata/**/*.pdf
 
 # IDE & OS
 .idea/

@@ -1,0 +1,185 @@
+{
+  "terminology_system": "http://loinc.org",
+  "terminology_version": "2.83",
+  "concepts": [
+    {
+      "code": "5803-2",
+      "display": "pH of Urine by Test strip",
+      "aliases": [
+        "ph",
+        "urine ph",
+        "ph urine"
+      ],
+      "component": "ph",
+      "system": "urine",
+      "scale": "semiqn",
+      "method": "test_strip",
+      "unit_ucum": "[pH]",
+      "source_url": "https://loinc.org/5803-2"
+    },
+    {
+      "code": "50560-2",
+      "display": "pH of Urine by Automated test strip",
+      "aliases": [
+        "ph",
+        "urine ph",
+        "ph urine"
+      ],
+      "component": "ph",
+      "system": "urine",
+      "scale": "semiqn",
+      "method": "test_strip_automated",
+      "unit_ucum": "[pH]",
+      "source_url": "https://loinc.org/50556-0"
+    },
+    {
+      "code": "5811-5",
+      "display": "Specific gravity of Urine by Test strip",
+      "aliases": [
+        "specific gravity",
+        "sg",
+        "sp gr"
+      ],
+      "component": "specific_gravity",
+      "system": "urine",
+      "scale": "semiqn",
+      "method": "test_strip",
+      "unit_ucum": "{Spec grav}",
+      "source_url": "https://loinc.org/5811-5"
+    },
+    {
+      "code": "5802-4",
+      "display": "Nitrite [Presence] in Urine by Test strip",
+      "aliases": [
+        "nitrite",
+        "nitrites"
+      ],
+      "component": "nitrite",
+      "system": "urine",
+      "scale": "ord",
+      "method": "test_strip",
+      "unit_ucum": null,
+      "source_url": "https://loinc.org/5802-4"
+    },
+    {
+      "code": "5799-2",
+      "display": "Leukocyte esterase [Presence] in Urine by Test strip",
+      "aliases": [
+        "leukocyte esterase",
+        "le",
+        "leu"
+      ],
+      "component": "leukocyte_esterase",
+      "system": "urine",
+      "scale": "ord",
+      "method": "test_strip",
+      "unit_ucum": null,
+      "source_url": "https://loinc.org/24357-6/panel"
+    },
+    {
+      "code": "60026-2",
+      "display": "Leukocyte esterase [Presence] in Urine by Automated test strip",
+      "aliases": [
+        "leukocyte esterase",
+        "le",
+        "leu"
+      ],
+      "component": "leukocyte_esterase",
+      "system": "urine",
+      "scale": "ord",
+      "method": "test_strip_automated",
+      "unit_ucum": null,
+      "source_url": "https://loinc.org/50556-0/panel"
+    },
+    {
+      "code": "25428-4",
+      "display": "Glucose [Presence] in Urine by Test strip",
+      "aliases": [
+        "glucose",
+        "urine glucose",
+        "glu"
+      ],
+      "component": "glucose",
+      "system": "urine",
+      "scale": "ord",
+      "method": "test_strip",
+      "unit_ucum": null,
+      "source_url": "https://loinc.org/LG40865-4"
+    },
+    {
+      "code": "50555-2",
+      "display": "Glucose [Presence] in Urine by Automated test strip",
+      "aliases": [
+        "glucose",
+        "urine glucose",
+        "glu"
+      ],
+      "component": "glucose",
+      "system": "urine",
+      "scale": "ord",
+      "method": "test_strip_automated",
+      "unit_ucum": null,
+      "source_url": "https://loinc.org/kb/users-guide/special-cases/urinalysis-test-strip"
+    },
+    {
+      "code": "5804-0",
+      "display": "Protein [Mass/volume] in Urine by Test strip",
+      "aliases": [
+        "protein",
+        "urine protein",
+        "pro"
+      ],
+      "component": "protein",
+      "system": "urine",
+      "scale": "qn",
+      "method": "test_strip",
+      "unit_ucum": "mg/dL",
+      "source_url": "https://loinc.org/58077-9"
+    },
+    {
+      "code": "13945-1",
+      "display": "Erythrocytes [#/area] in Urine sediment by Microscopy high power field",
+      "aliases": [
+        "rbc",
+        "erythrocytes",
+        "red blood cells"
+      ],
+      "component": "erythrocytes",
+      "system": "urine_sediment",
+      "scale": "qn",
+      "method": "microscopy_light_hpf",
+      "unit_ucum": "/[HPF]",
+      "source_url": "https://loinc.org/13945-1"
+    },
+    {
+      "code": "5821-4",
+      "display": "Leukocytes [#/area] in Urine sediment by Microscopy high power field",
+      "aliases": [
+        "wbc",
+        "leukocytes",
+        "white blood cells"
+      ],
+      "component": "leukocytes",
+      "system": "urine_sediment",
+      "scale": "qn",
+      "method": "microscopy_light_hpf",
+      "unit_ucum": "/[HPF]",
+      "source_url": "https://loinc.org/5821-4"
+    },
+    {
+      "code": "5778-6",
+      "display": "Color of Urine",
+      "aliases": [
+        "color",
+        "urine color",
+        "colour"
+      ],
+      "component": "observation_color",
+      "system": "urine",
+      "scale": "nom",
+      "method": null,
+      "unit_ucum": null,
+      "source_url": "https://loinc.org/5778-6"
+    }
+  ]
+}

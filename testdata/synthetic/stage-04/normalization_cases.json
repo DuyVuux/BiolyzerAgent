@@ -1,0 +1,305 @@
+{
+  "mapping_cases": [
+    {
+      "id": "m01",
+      "local_test_name": "pH",
+      "system": "urine",
+      "scale": "semiqn",
+      "method": "test_strip",
+      "unit_source": "pH",
+      "expected_status": "validated",
+      "expected_code": "5803-2"
+    },
+    {
+      "id": "m02",
+      "local_test_name": "pH",
+      "system": "urine",
+      "scale": "semiqn",
+      "method": "test_strip_automated",
+      "unit_source": "pH",
+      "expected_status": "validated",
+      "expected_code": "50560-2"
+    },
+    {
+      "id": "m03",
+      "local_test_name": "LE",
+      "system": "urine",
+      "scale": "ord",
+      "method": "test_strip",
+      "unit_source": null,
+      "expected_status": "validated",
+      "expected_code": "5799-2"
+    },
+    {
+      "id": "m04",
+      "local_test_name": "LE",
+      "system": "urine",
+      "scale": "ord",
+      "method": "test_strip_automated",
+      "unit_source": null,
+      "expected_status": "validated",
+      "expected_code": "60026-2"
+    },
+    {
+      "id": "m05",
+      "local_test_name": "LE",
+      "system": "urine",
+      "scale": "ord",
+      "method": null,
+      "unit_source": null,
+      "expected_status": "candidate",
+      "expected_candidates": [
+        "5799-2",
+        "60026-2"
+      ]
+    },
+    {
+      "id": "m06",
+      "local_test_name": "Glucose",
+      "system": "urine",
+      "scale": "ord",
+      "method": "test_strip",
+      "unit_source": null,
+      "expected_status": "validated",
+      "expected_code": "25428-4"
+    },
+    {
+      "id": "m07",
+      "local_test_name": "Glucose",
+      "system": "urine",
+      "scale": "ord",
+      "method": null,
+      "unit_source": null,
+      "expected_status": "candidate",
+      "expected_candidates": [
+        "25428-4",
+        "50555-2"
+      ]
+    },
+    {
+      "id": "m08",
+      "local_test_name": "Protein",
+      "system": "urine",
+      "scale": "qn",
+      "method": "test_strip",
+      "unit_source": "mg/dL",
+      "expected_status": "validated",
+      "expected_code": "5804-0"
+    },
+    {
+      "id": "m09",
+      "local_test_name": "RBC",
+      "system": "urine_sediment",
+      "scale": "qn",
+      "method": "microscopy_light_hpf",
+      "unit_source": "/HPF",
+      "expected_status": "validated",
+      "expected_code": "13945-1"
+    },
+    {
+      "id": "m10",
+      "local_test_name": "WBC",
+      "system": "urine_sediment",
+      "scale": "qn",
+      "method": "microscopy_light_hpf",
+      "unit_source": "/HPF",
+      "expected_status": "validated",
+      "expected_code": "5821-4"
+    },
+    {
+      "id": "m11",
+      "local_test_name": "RBC",
+      "system": "urine",
+      "scale": "qn",
+      "method": null,
+      "unit_source": "/HPF",
+      "expected_status": "unmapped"
+    },
+    {
+      "id": "m12",
+      "local_test_name": "Color",
+      "system": "urine",
+      "scale": "nom",
+      "method": null,
+      "unit_source": null,
+      "expected_status": "validated",
+      "expected_code": "5778-6"
+    },
+    {
+      "id": "m13",
+      "local_test_name": "Unknown Marker",
+      "system": "urine",
+      "scale": "ord",
+      "method": "test_strip",
+      "unit_source": null,
+      "expected_status": "unmapped"
+    }
+  ],
+  "unit_cases": [
+    {
+      "id": "u01",
+      "source": "mg/dL",
+      "expected": "mg/dL"
+    },
+    {
+      "id": "u02",
+      "source": "mg/dl",
+      "expected": "mg/dL"
+    },
+    {
+      "id": "u03",
+      "source": "MG/DL",
+      "expected": "mg/dL"
+    },
+    {
+      "id": "u04",
+      "source": "g/L",
+      "expected": "g/L"
+    },
+    {
+      "id": "u05",
+      "source": "/HPF",
+      "expected": "/[HPF]"
+    },
+    {
+      "id": "u06",
+      "source": "/[HPF]",
+      "expected": "/[HPF]"
+    },
+    {
+      "id": "u07",
+      "source": "/LPF",
+      "expected": "/[LPF]"
+    },
+    {
+      "id": "u08",
+      "source": "pH",
+      "expected": "[pH]"
+    },
+    {
+      "id": "u09",
+      "source": "made-up-unit",
+      "expected": null
+    }
+  ],
+  "conversion_cases": [
+    {
+      "id": "c01",
+      "value": 30.0,
+      "from": "mg/dL",
+      "to": "g/L",
+      "expected_status": "converted",
+      "expected_value": 0.3
+    },
+    {
+      "id": "c02",
+      "value": 0.3,
+      "from": "g/L",
+      "to": "mg/dL",
+      "expected_status": "converted",
+      "expected_value": 30.0
+    },
+    {
+      "id": "c03",
+      "value": 30.0,
+      "from": "mg/dL",
+      "to": "mmol/L",
+      "expected_status": "rejected",
+      "expected_value": null
+    },
+    {
+      "id": "c04",
+      "value": 2.0,
+      "from": "/[HPF]",
+      "to": "/[LPF]",
+      "expected_status": "rejected",
+      "expected_value": null
+    }
+  ],
+  "comparability_cases": [
+    {
+      "id": "p01",
+      "left": {
+        "status": "validated",
+        "code": "5804-0",
+        "unit": "mg/dL"
+      },
+      "right": {
+        "status": "validated",
+        "code": "5804-0",
+        "unit": "mg/dL"
+      },
+      "expected": "EXACT_COMPARABLE"
+    },
+    {
+      "id": "p02",
+      "left": {
+        "status": "validated",
+        "code": "5804-0",
+        "unit": "mg/dL"
+      },
+      "right": {
+        "status": "validated",
+        "code": "5804-0",
+        "unit": "g/L"
+      },
+      "expected": "CONVERTIBLE_COMPARABLE"
+    },
+    {
+      "id": "p03",
+      "left": {
+        "status": "validated",
+        "code": "5799-2",
+        "unit": null
+      },
+      "right": {
+        "status": "validated",
+        "code": "60026-2",
+        "unit": null
+      },
+      "expected": "RELATED_NOT_COMPARABLE"
+    },
+    {
+      "id": "p04",
+      "left": {
+        "status": "validated",
+        "code": "5803-2",
+        "unit": "[pH]"
+      },
+      "right": {
+        "status": "validated",
+        "code": "50560-2",
+        "unit": "[pH]"
+      },
+      "expected": "RELATED_NOT_COMPARABLE"
+    },
+    {
+      "id": "p05",
+      "left": {
+        "status": "candidate",
+        "code": null,
+        "unit": null
+      },
+      "right": {
+        "status": "validated",
+        "code": "5799-2",
+        "unit": null
+      },
+      "expected": "INDETERMINATE"
+    },
+    {
+      "id": "p06",
+      "left": {
+        "status": "validated",
+        "code": "13945-1",
+        "unit": "/[HPF]"
+      },
+      "right": {
+        "status": "validated",
+        "code": "13945-1",
+        "unit": "/[HPF]"
+      },
+      "expected": "EXACT_COMPARABLE"
+    }
+  ]
+}
