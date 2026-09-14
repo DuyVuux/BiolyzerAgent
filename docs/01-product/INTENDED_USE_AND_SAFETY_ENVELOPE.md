@@ -42,23 +42,28 @@ Do đó, intended use không phải câu marketing. Nó điều khiển:
 
 ---
 
-## 2. Candidate intended use v0
+## 2. Approved Intended Use
 
 **[APPROVED INTENDED USE]**
 
-> BioMarker Agent được thiết kế cho **non-time-critical informational review** của dữ liệu biomarker từ báo cáo xét nghiệm. Hệ thống tổ chức và giải thích dữ liệu đã được xác minh, cho phép so sánh theo thời gian khi có đủ dữ liệu, và cung cấp evidence-linked educational context. Hệ thống không được thiết kế để tự động thiết lập chẩn đoán, chỉ định điều trị, thay đổi thuốc, hoặc thay thế phán đoán của healthcare professional.
+> BioMarker Agent được định hướng như một hệ thống **physician-facing clinical information support tool** hỗ trợ bác sĩ trong quy trình chuyên môn: tóm tắt kết quả xét nghiệm, làm nổi bật/gắn cờ các kết quả bất thường dựa trên dữ liệu nguồn, cung cấp giải thích ngắn gọn và bằng chứng/ngữ cảnh y khoa (evidence/provenance) để bác sĩ kiểm tra. Hệ thống không tự trở thành clinical authority, không tự động đưa ra chẩn đoán, không chỉ định điều trị hay thay đổi thuốc, và không thay thế phán đoán chuyên môn của bác sĩ.
 
 ---
 
-## 3. Intended user & Rollout decision
+## 3. Primary User & Rollout Strategy
 
 **[APPROVED DECISION — TD-01 & TD-01B]**
 
-- **TD-01 (Primary User):** **Option A — Individual User / Patient**
-  - Người dùng chính là bệnh nhân / cá nhân tự theo dõi sức khỏe và đọc hiểu kết quả xét nghiệm của bản thân.
-  - *Ảnh hưởng lâm sàng:* Cung cấp giải thích dữ liệu ở mức độ dễ hiểu, không dùng biệt ngữ gây hoang mang, có dẫn chứng nguồn rõ ràng và luôn hướng dẫn người bệnh trao đổi trực tiếp với bác sĩ điều trị.
-- **TD-01B (Rollout Mode):** **Option A — Internal Pilot**
-  - Giai đoạn đầu triển khai dưới hình thức thử nghiệm nội bộ tại Vinmec trước khi mở rộng.
+- **TD-01 (Primary User):** **Option B — Healthcare Professional / Physician**
+  - Trước mắt là bác sĩ sử dụng kết quả xét nghiệm trong quy trình chuyên môn tại bệnh viện.
+  - BioMarker Agent ở giai đoạn MVP **không được thiết kế như một sản phẩm self-service dành trực tiếp cho bệnh nhân/người dùng phổ thông**.
+  - *Quy định phạm vi:* **Patient / Individual User = OUT OF CURRENT MVP SCOPE**.
+- **TD-01B (Rollout Strategy):** **Internal Clinical Pilot → Physician UAT → Limited Go-live**
+  - *01/10/2026:* Bắt đầu triển khai;
+  - *30/10/2026:* Demo tính năng AI tóm tắt kết quả, gắn cờ bất thường và giải thích ngắn gọn cho bác sĩ;
+  - *30/11/2026:* UAT với bác sĩ cho use case AI đọc kết quả xét nghiệm nước tiểu;
+  - *31/12/2026:* Go-live cho Khoa Nội tổng hợp tại một bệnh viện (Vinmec);
+  - *Hướng nâng cấp tiếp theo:* Phân tích xu hướng dọc qua nhiều lần xét nghiệm để hỗ trợ tầm soát và cảnh báo sớm.
 
 Nguồn:
 
@@ -373,7 +378,7 @@ Stage 07 cần quyết định:
 
 **[APPROVED BASELINE — ALL EXIT CONDITIONS MET ON 2026-09-14]**
 
-- [x] Primary user được quyết định: **Option A — Individual User / Patient (Internal Pilot)**
+- [x] Primary user được quyết định: **Option B — Healthcare Professional / Physician (Clinical Pilot & UAT tại Vinmec)**
 - [x] Jurisdiction được quyết định: **Vinmec - Việt Nam**
 - [x] Clinical reviewer/owner được xác định: **Vinmec Clinical Reviewer / Laboratory Specialist**
 - [x] Allowed output level được approve: **Level A & Level B**

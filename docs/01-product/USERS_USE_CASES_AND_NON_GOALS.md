@@ -11,9 +11,10 @@
 
 **[APPROVED DECISION — TD-01 & TD-01B]**
 
-- **Primary User:** **Individual User / Patient** (Bệnh nhân / Người dùng cá nhân theo dõi kết quả xét nghiệm của mình trong giai đoạn **Internal Pilot** tại Vinmec).
-- **Secondary Actor:** **Healthcare Professional / Clinician** (Bác sĩ điều trị - đối tượng mà người bệnh được khuyến khích trao đổi cùng với bản tóm tắt và câu hỏi do hệ thống gợi ý).
-- **Clinical Reviewer:** Bác sĩ/Chuyên gia xét nghiệm phụ trách thẩm định an toàn nội dung.
+- **Primary User:** **Healthcare Professional / Physician** (Bác sĩ sử dụng kết quả xét nghiệm trong quy trình chuyên môn tại bệnh viện).
+  - *Rollout Strategy:* **Internal Clinical Pilot → Physician UAT (30/11 use case xét nghiệm nước tiểu) → Limited Go-live Khoa Nội tổng hợp (31/12/2026)**.
+- **Excluded User (MVP Scope):** **Patient / Individual User = OUT OF CURRENT MVP SCOPE** (BioMarker Agent ở giai đoạn MVP không được thiết kế như sản phẩm self-service cho bệnh nhân).
+- **Clinical Reviewer:** Bác sĩ/Chuyên gia xét nghiệm phụ trách thẩm định an toàn thuật toán và câu từ giải thích.
 - **External Clinical System:** Hệ thống LIS/EMR Vinmec trong các giai đoạn tích hợp sau.
 
 ---

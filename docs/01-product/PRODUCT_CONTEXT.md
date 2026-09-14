@@ -131,16 +131,93 @@ thay vì model “nhớ” dữ liệu lâm sàng chỉ từ chat history.
 
 ## 5. Candidate users
  
-### 5.1 Primary user & Rollout Mode
+### 5.1 Primary User — TD-01
 
-**[APPROVED DECISION — TD-01 & TD-01B]**
+**Status:** APPROVED PRODUCT DIRECTION
 
-Đã chính thức phê duyệt cấu trúc và lựa chọn:
+#### Quyết định
 
-- **TD-01 (Primary User):** **Option A — Individual User / Patient**
-  - *Ý nghĩa:* Người dùng cá nhân/bệnh nhân tự xem và theo dõi kết quả xét nghiệm của mình. Hệ thống ưu tiên tối đa tính dễ hiểu (Explainability), an toàn y tế (Safety boundaries), ngôn ngữ thân thiện (Consumer-grade wording) nhưng có dẫn chứng khoa học chính xác.
-- **TD-01B (Initial Rollout Mode):** **Option A — Internal Pilot**
-  - *Ý nghĩa:* Triển khai thử nghiệm nội bộ trong phạm vi có kiểm soát trước khi mở rộng. Cho phép thẩm định chất lượng AI, quy trình xác minh (verification gate) và thu thập phản hồi chuyên môn trong môi trường an toàn trước khi công bố rộng rãi.
+Primary User của BioMarker Agent trong phạm vi MVP là:
+
+> **Healthcare Professional — trước mắt là bác sĩ sử dụng kết quả xét nghiệm trong quy trình chuyên môn.**
+
+BioMarker Agent ở giai đoạn MVP **không được thiết kế như một sản phẩm self-service dành trực tiếp cho bệnh nhân/người dùng phổ thông**.
+
+#### Cơ sở quyết định
+
+Roadmap sản phẩm hiện tại xác định rõ chuỗi triển khai:
+
+* **01/10/2026:** bắt đầu triển khai;
+* **30/10/2026:** demo tính năng AI tóm tắt kết quả, gắn cờ bất thường và giải thích ngắn gọn **cho bác sĩ**;
+* **30/11/2026:** UAT với **bác sĩ** cho use case AI đọc kết quả xét nghiệm nước tiểu;
+* **31/12/2026:** go-live cho **Khoa Nội tổng hợp tại một bệnh viện**;
+* hướng nâng cấp tiếp theo là phân tích xu hướng qua nhiều lần xét nghiệm để hỗ trợ tầm soát và cảnh báo sớm nguy cơ bệnh.
+
+Từ roadmap trên, actor sử dụng trực tiếp hệ thống trong MVP là bác sĩ.
+
+#### Phân biệt Primary User và Rollout Strategy
+
+`Internal Pilot` không được xem là một loại Primary User.
+
+Hai khái niệm phải được tách:
+
+```text
+Primary User
+= Healthcare Professional / Physician
+
+Initial Rollout Strategy
+= Internal Clinical Pilot
+  → Physician UAT
+  → Limited Go-live tại một khoa / một bệnh viện
+```
+
+Nói cách khác, **bác sĩ là người sử dụng sản phẩm**, còn **internal pilot là cách sản phẩm được triển khai và kiểm chứng trước khi mở rộng**.
+
+#### Product positioning cho MVP
+
+BioMarker Agent được định hướng như một hệ thống **physician-facing clinical information support tool** hỗ trợ bác sĩ:
+
+```text
+Lab result
+→ structured understanding
+→ abnormal-result highlighting
+→ concise explanation
+→ evidence/context support
+→ longitudinal analysis trong các phiên bản sau
+```
+
+Hệ thống hỗ trợ việc đọc và tổng hợp thông tin; output của AI **không tự trở thành clinical authority và không thay thế phán đoán chuyên môn của bác sĩ**.
+
+Việc có được phân loại chính thức là Clinical Decision Support software hoặc thuộc một regulatory category cụ thể hay không **không được quyết định chỉ từ TD-01**. Việc đó còn phụ thuộc intended use, chức năng thực tế, mức độ recommendation/automation và jurisdiction mục tiêu.
+
+#### Scope consequence
+
+Với quyết định này:
+
+**IN SCOPE cho MVP:**
+
+* tóm tắt kết quả xét nghiệm;
+* làm nổi bật/gắn cờ các kết quả bất thường dựa trên dữ liệu nguồn và rule được xác định;
+* giải thích ngắn gọn cho bác sĩ;
+* cung cấp provenance và context cần thiết để bác sĩ kiểm tra;
+* hỗ trợ UAT trên use case xét nghiệm nước tiểu;
+* chuẩn bị architecture để sau này phân tích xu hướng nhiều lần xét nghiệm.
+
+**KHÔNG suy ra từ TD-01:**
+
+* AI được quyền tự chẩn đoán;
+* AI được quyền quyết định điều trị;
+* AI được quyền tự đưa ra cảnh báo lâm sàng có tính authority;
+* bác sĩ bắt buộc phải làm theo recommendation của AI;
+* sản phẩm đã được regulatory-classified.
+
+#### Future users
+
+Patient-facing experience có thể được xem xét trong một phase sản phẩm khác, nhưng hiện tại:
+
+> **Patient / Individual User = OUT OF CURRENT MVP SCOPE**
+
+Nếu sau này mở sản phẩm trực tiếp cho bệnh nhân, intended use, safety envelope, UX, evidence presentation và regulatory assessment phải được review lại; không được mặc định tái sử dụng nguyên policy dành cho bác sĩ.
 
 ---
 
@@ -292,11 +369,11 @@ Stage 01 được xem là đạt product-discovery baseline khi team có thể t
 
 | ID | Vấn đề / Quyết định | Lựa chọn chính thức | Trạng thái |
 |---|---|---|---|
-| **TD-01** | Primary User | **Option A — Individual User / Patient** (Bệnh nhân/người dùng tự theo dõi sức khỏe) | **APPROVED (2026-09-14)** |
-| **TD-01B** | Initial Rollout Mode | **Option A — Internal Pilot** (Triển khai thử nghiệm nội bộ trước khi mở rộng) | **APPROVED (2026-09-14)** |
+| **TD-01** | Primary User | **Option B — Healthcare Professional / Physician** (Bác sĩ sử dụng trong quy trình chuyên môn) | **APPROVED (2026-09-14)** |
+| **TD-01B** | Initial Rollout Strategy | **Internal Clinical Pilot → Physician UAT (30/11: Nước tiểu) → Limited Go-live Khoa Nội tổng hợp (31/12)** | **APPROVED (2026-09-14)** |
 | **TD-02** | Geography & Jurisdiction | **Vinmec - Việt Nam** (Tuân thủ Luật Khám bệnh, chữa bệnh 2023 & quy chuẩn BYT) | **APPROVED (2026-09-14)** |
 | **TD-03** | Clinical Owner / Sign-off | **Vinmec Clinical Reviewer / Laboratory Specialist** phụ trách duyệt safety wording | **APPROVED (2026-09-14)** |
-| **TD-04** | Follow-up & Recommendation | Level A (Giải thích) & Level B (Evidence) được phép; Level C (Cảnh báo) kiểm soát; Level D (Kê đơn/Chẩn đoán) tuyệt đối cấm | **APPROVED (2026-09-14)** |
+| **TD-04** | Follow-up & Recommendation | Hỗ trợ tóm tắt, gắn cờ, giải thích ngắn gọn cho bác sĩ; CẤM tự chẩn đoán, kê đơn, điều trị | **APPROVED (2026-09-14)** |
 | **TD-05** | Raw PDF Retention Policy | **Tiered Policy:** Dev/Stage 1-8: Ephemeral/Synthetic only (`var/uploads/`); Prod: Delegated storage to Vinmec EMR/Encrypted ObjectStore | **APPROVED (2026-09-14)** |
 | **TD-06** | Clinical System Integration | Defer đến Stage 10/15 khi pipeline cốt lõi hoàn tất | **DEFERRED (Stage 15)** |
 
