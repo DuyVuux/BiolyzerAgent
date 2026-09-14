@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/analysis/safety-decision.schema.json",
+  "title": "BioMarker SafetyDecision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "verdict",
+    "violations",
+    "decision_sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "candidate_id": {
+      "type": "string"
+    },
+    "verdict": {
+      "enum": [
+        "approve",
+        "approve_with_limitations",
+        "defer",
+        "reject"
+      ]
+    },
+    "violations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "gate",
+          "code",
+          "statement_id"
+        ],
+        "properties": {
+          "gate": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "statement_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "decision_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

@@ -1,0 +1,2700 @@
+{
+  "synthetic_only": true,
+  "cases": [
+    {
+      "id": "SC-0701-grounded-measured-fact",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c01",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "measured_fact",
+            "text": "Synthetic statement.",
+            "inference_mode": "none",
+            "assertion_strength": "direct_source",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "approve"
+    },
+    {
+      "id": "SC-0702-grounded-derived-fact",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c02",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "derived_fact",
+            "text": "Synthetic statement.",
+            "inference_mode": "none",
+            "assertion_strength": "deterministic",
+            "clinical_refs": [
+              "range-derived"
+            ],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false,
+            "derivation_ref": "source-range-rule-v1"
+          }
+        ]
+      },
+      "expected": "approve"
+    },
+    {
+      "id": "SC-0703-supported-evidence-context",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c03",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "evidence_context",
+            "text": "Synthetic statement.",
+            "inference_mode": "association",
+            "assertion_strength": "evidence_supported",
+            "clinical_refs": [],
+            "evidence_claim_refs": [
+              "claim-supported"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "approve"
+    },
+    {
+      "id": "SC-0704-bounded-interpretation",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c04",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "bounded_interpretation",
+            "text": "Synthetic cautious interpretation for physician review.",
+            "inference_mode": "association",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [
+              "claim-supported"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "approve"
+    },
+    {
+      "id": "SC-0705-diagnosis-rejected",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c05",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "diagnosis",
+            "text": "Synthetic statement.",
+            "inference_mode": "diagnostic",
+            "assertion_strength": "definitive",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [
+              "claim-supported"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0706-treatment-rejected",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c06",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "treatment_recommendation",
+            "text": "Synthetic statement.",
+            "inference_mode": "therapeutic",
+            "assertion_strength": "definitive",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0707-dose-change-rejected",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c07",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "dosage_change",
+            "text": "Synthetic statement.",
+            "inference_mode": "therapeutic",
+            "assertion_strength": "definitive",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0708-emergency-triage-rejected",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c08",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "emergency_triage",
+            "text": "Synthetic statement.",
+            "inference_mode": "triage",
+            "assertion_strength": "definitive",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0709-unknown-clinical-ref",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c09",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "measured_fact",
+            "text": "Synthetic statement.",
+            "inference_mode": "none",
+            "assertion_strength": "direct_source",
+            "clinical_refs": [
+              "obs-does-not-exist"
+            ],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0710-unsupported-evidence",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c10",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "evidence_context",
+            "text": "Synthetic statement.",
+            "inference_mode": "association",
+            "assertion_strength": "evidence_supported",
+            "clinical_refs": [],
+            "evidence_claim_refs": [
+              "claim-unsupported"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0711-conflict-hidden",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c11",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "bounded_interpretation",
+            "text": "Synthetic statement.",
+            "inference_mode": "association",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [
+              "claim-conflicted"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0712-conflict-disclosed",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c12",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "bounded_interpretation",
+            "text": "Synthetic statement.",
+            "inference_mode": "uncertainty",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [
+              "claim-conflicted"
+            ],
+            "conflict_disclosed": true,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "approve_with_limitations"
+    },
+    {
+      "id": "SC-0713-incomplete-evidence-defers-interpretation",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "incomplete",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c13",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "bounded_interpretation",
+            "text": "Synthetic statement.",
+            "inference_mode": "association",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [
+              "claim-supported"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "defer"
+    },
+    {
+      "id": "SC-0714-reconciliation-defers",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c14",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "bounded_interpretation",
+            "text": "Synthetic statement.",
+            "inference_mode": "association",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [
+              "obs-reconcile"
+            ],
+            "evidence_claim_refs": [
+              "claim-supported"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "defer"
+    },
+    {
+      "id": "SC-0715-ambient-retrieval-rejected",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c15",
+        "requested_actions": [
+          "web_search"
+        ],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "limitation",
+            "text": "Synthetic statement.",
+            "inference_mode": "none",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0716-claim-collision-rejected",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c16",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "evidence_context",
+            "text": "Synthetic statement.",
+            "inference_mode": "association",
+            "assertion_strength": "evidence_supported",
+            "clinical_refs": [],
+            "evidence_claim_refs": [
+              "claim-collision"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0717-missing-context-acknowledged",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [
+          "synthetic medication context unavailable"
+        ],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c17",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "bounded_interpretation",
+            "text": "Synthetic statement.",
+            "inference_mode": "uncertainty",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [
+              "claim-supported"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": true
+          },
+          {
+            "statement_id": "s2",
+            "statement_class": "limitation",
+            "text": "Synthetic medication context is unavailable.",
+            "inference_mode": "none",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "approve_with_limitations"
+    },
+    {
+      "id": "SC-0718-missing-context-hidden",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [
+          "synthetic medication context unavailable"
+        ],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c18",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "bounded_interpretation",
+            "text": "Synthetic statement.",
+            "inference_mode": "association",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [
+              "claim-supported"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0719-candidate-terminology-cannot-upgrade",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c19",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "bounded_interpretation",
+            "text": "Synthetic statement.",
+            "inference_mode": "association",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [
+              "obs-candidate-term"
+            ],
+            "evidence_claim_refs": [
+              "claim-supported"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "defer"
+    },
+    {
+      "id": "SC-0720-patient-specific-causal-rejected",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c20",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "bounded_interpretation",
+            "text": "Synthetic statement.",
+            "inference_mode": "patient_specific_causal",
+            "assertion_strength": "definitive",
+            "clinical_refs": [
+              "obs-verified"
+            ],
+            "evidence_claim_refs": [
+              "claim-supported"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0721-source-instruction-cannot-grant-tool",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c21",
+        "requested_actions": [
+          "tool_call"
+        ],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "evidence_context",
+            "text": "Synthetic source text contains an instruction-like phrase.",
+            "inference_mode": "association",
+            "assertion_strength": "evidence_supported",
+            "clinical_refs": [],
+            "evidence_claim_refs": [
+              "claim-supported"
+            ],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "reject"
+    },
+    {
+      "id": "SC-0722-limitation-only-safe",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c22",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "limitation",
+            "text": "Synthetic limitation.",
+            "inference_mode": "none",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          },
+          {
+            "statement_id": "s2",
+            "statement_class": "physician_question",
+            "text": "Synthetic physician review question.",
+            "inference_mode": "none",
+            "assertion_strength": "uncertain",
+            "clinical_refs": [],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "approve_with_limitations"
+    },
+    {
+      "id": "SC-0723-critical-source-flag-is-reviewable-not-triage",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          },
+          {
+            "ref_id": "source-critical",
+            "ref_type": "source_interpretation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "not_applicable",
+            "source_signal": "critical"
+          },
+          {
+            "ref_id": "obs-unverified-resolved",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated",
+            "source_signal": "none"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c23",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "measured_fact",
+            "text": "Synthetic source report marks this result with a critical flag.",
+            "inference_mode": "none",
+            "assertion_strength": "direct_source",
+            "clinical_refs": [
+              "source-critical"
+            ],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "approve_with_limitations"
+    },
+    {
+      "id": "SC-0724-unverified-measured-fact-defers",
+      "input": {
+        "schema_version": "1.0",
+        "reasoning_input_id": "rin-synthetic-001",
+        "subject_ref": "subject-synthetic-stage07-001",
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle": {
+          "bundle_id": "evidence-synthetic-001",
+          "status": "verified",
+          "processing_profile_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "claims": [
+            {
+              "claim_id": "claim-supported",
+              "status": "supported"
+            },
+            {
+              "claim_id": "claim-conflicted",
+              "status": "conflicted"
+            },
+            {
+              "claim_id": "claim-context",
+              "status": "context_only"
+            },
+            {
+              "claim_id": "claim-unsupported",
+              "status": "unsupported"
+            },
+            {
+              "claim_id": "claim-collision",
+              "status": "claim_identity_conflict"
+            }
+          ]
+        },
+        "policies": {
+          "reasoning_policy": {
+            "policy_id": "reasoning-policy",
+            "version": "1",
+            "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "safety_policy": {
+            "policy_id": "clinical-safety-policy",
+            "version": "1",
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clinical_refs": [
+          {
+            "ref_id": "obs-verified",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "range-derived",
+            "ref_type": "derived_range_assessment",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "trend-verified",
+            "ref_type": "longitudinal_trend",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-reconcile",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "reconciliation_required",
+            "terminology_state": "validated"
+          },
+          {
+            "ref_id": "obs-candidate-term",
+            "ref_type": "observation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "candidate"
+          },
+          {
+            "ref_id": "source-critical",
+            "ref_type": "source_interpretation",
+            "verification_state": "verified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "not_applicable",
+            "source_signal": "critical"
+          },
+          {
+            "ref_id": "obs-unverified-resolved",
+            "ref_type": "observation",
+            "verification_state": "unverified",
+            "reconciliation_state": "resolved",
+            "terminology_state": "validated",
+            "source_signal": "none"
+          }
+        ],
+        "missing_context": [],
+        "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+      },
+      "candidate": {
+        "schema_version": "1.0",
+        "candidate_id": "c24",
+        "requested_actions": [],
+        "statements": [
+          {
+            "statement_id": "s1",
+            "statement_class": "measured_fact",
+            "text": "Synthetic unverified extracted value.",
+            "inference_mode": "none",
+            "assertion_strength": "direct_source",
+            "clinical_refs": [
+              "obs-unverified-resolved"
+            ],
+            "evidence_claim_refs": [],
+            "conflict_disclosed": false,
+            "missing_context_acknowledged": false
+          }
+        ]
+      },
+      "expected": "defer"
+    }
+  ]
+}

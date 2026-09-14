@@ -18,8 +18,12 @@ Only the following data formats are permitted in `testdata/`:
 ```text
 testdata/
 └── synthetic/
-    ├── lab-reports/   # Mock PDFs, scanned image samples, raw text reports
-    └── expected/      # Ground-truth structured JSON extractions
+    ├── stage-02/      # Canonical biomarker fixtures & urinalysis ground truth
+    ├── stage-03/      # Mock PDFs, scanned image samples, raw text reports
+    ├── stage-04/      # Normalization & terminology test cases
+    ├── stage-05/      # Longitudinal timeline & ordering test cases
+    ├── stage-06/      # Evidence retrieval & citation collision test cases
+    └── stage-07/      # Reasoning candidates & clinical safety benchmark fixtures
 ```
 
 ---

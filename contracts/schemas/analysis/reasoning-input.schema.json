@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/analysis/reasoning-input.schema.json",
+  "title": "BioMarker ReasoningInputSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "reasoning_input_id",
+    "subject_ref",
+    "clinical_snapshot_id",
+    "evidence_bundle",
+    "policies",
+    "clinical_refs",
+    "missing_context"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "reasoning_input_id": {
+      "type": "string"
+    },
+    "subject_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "clinical_snapshot_id": {
+      "type": "string"
+    },
+    "timeline_snapshot_id": {
+      "type": "string"
+    },
+    "evidence_bundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bundle_id",
+        "status",
+        "processing_profile_digest",
+        "claims"
+      ],
+      "properties": {
+        "bundle_id": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "verified",
+            "conflicted",
+            "incomplete"
+          ]
+        },
+        "processing_profile_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "claim_id",
+              "status"
+            ],
+            "properties": {
+              "claim_id": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "supported",
+                  "conflicted",
+                  "context_only",
+                  "unsupported",
+                  "claim_identity_conflict"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "policies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reasoning_policy",
+        "safety_policy"
+      ],
+      "properties": {
+        "reasoning_policy": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "safety_policy": {
+          "$ref": "#/$defs/descriptor"
+        }
+      }
+    },
+    "clinical_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ref_id",
+          "ref_type",
+          "verification_state",
+          "reconciliation_state",
+          "terminology_state"
+        ],
+        "properties": {
+          "ref_id": {
+            "type": "string"
+          },
+          "ref_type": {
+            "enum": [
+              "observation",
+              "derived_range_assessment",
+              "longitudinal_trend",
+              "source_interpretation"
+            ]
+          },
+          "verification_state": {
+            "enum": [
+              "verified",
+              "unverified",
+              "corrected"
+            ]
+          },
+          "reconciliation_state": {
+            "enum": [
+              "resolved",
+              "reconciliation_required"
+            ]
+          },
+          "terminology_state": {
+            "enum": [
+              "validated",
+              "candidate",
+              "unmapped",
+              "not_applicable"
+            ]
+          },
+          "source_signal": {
+            "enum": [
+              "none",
+              "abnormal",
+              "critical"
+            ]
+          }
+        }
+      }
+    },
+    "missing_context": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "critical_value_policy_state": {
+      "enum": [
+        "disabled_pending_approved_clinical_policy",
+        "enabled_approved_policy"
+      ]
+    }
+  },
+  "$defs": {
+    "descriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_id",
+        "version",
+        "digest"
+      ],
+      "properties": {
+        "policy_id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    }
+  }
+}

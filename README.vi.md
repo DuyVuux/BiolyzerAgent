@@ -6,8 +6,8 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![Monorepo](https://img.shields.io/badge/Monorepo-pnpm%20%7C%20Turbo-orange.svg)](./pnpm-workspace.yaml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](./package.json)
-[![Python Tests](https://img.shields.io/badge/Pytest-43%20passed-brightgreen.svg)](./experiments/)
-[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2006%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
+[![Python Tests](https://img.shields.io/badge/Pytest-65%20passed-brightgreen.svg)](./experiments/)
+[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2007%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
 
 [English](./README.md) | **Tiếng Việt**
 
@@ -19,7 +19,7 @@
 2. [Bài toán Lâm sàng & Khung An toàn (Safety Envelope)](#2-bài-toán-lâm-sàng--khung-an-toàn-safety-envelope)
 3. [Đường ống Xử lý Dữ liệu Lâm sàng Toàn trình](#3-đường-ống-xử-lý-dữ-liệu-lâm-sàng-toàn-trình)
 4. [Kỷ luật Kiến trúc 16 Giai đoạn (16-Stage Discipline)](#4-kỷ-luật-kiến-trúc-16-giai-đoạn-16-stage-discipline)
-5. [Đào sâu vào các Stage đã hoàn thành (00–06)](#5-đào-sâu-vào-các-stage-đã-hoàn-thành-0006)
+5. [Đào sâu vào các Stage đã hoàn thành (00–07)](#5-đào-sâu-vào-các-stage-đã-hoàn-thành-0007)
    - [Stage 00: Nền tảng Kiến trúc & Quản trị](#stage-00-nền-tảng-kiến-trúc--quản-trị)
    - [Stage 01: Bối cảnh Sản phẩm & Khung An toàn](#stage-01-bối-cảnh-sản-phẩm--khung-an-toàn)
    - [Stage 02: Mô hình Miền Dấu ấn Sinh học](#stage-02-mô-hình-miền-dấu-ấn-sinh-học)
@@ -27,6 +27,7 @@
    - [Stage 04: Chuẩn hóa & Danh pháp Lâm sàng](#stage-04-chuẩn-hóa--danh-pháp-lâm-sàng)
    - [Stage 05: Mô hình Chuỗi Thời gian (Longitudinal Model)](#stage-05-mô-hình-chuỗi-thời-gian-longitudinal-model)
    - [Stage 06: Công cụ Bằng chứng Khoa học (Scientific Evidence Engine)](#stage-06-công-cụ-bằng-chứng-khoa-học-scientific-evidence-engine)
+   - [Stage 07: Lập luận & Cổng An toàn Lâm sàng Tất định (Reasoning & Clinical Safety Engine)](#stage-07-lập-luận--cổng-an-toàn-lâm-sàng-tất-định-reasoning--clinical-safety-engine)
 6. [Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn](#6-các-bất-biến-miền-nghiệp-vụ-cốt-lõi--rào-chắn-an-toàn)
 7. [Bản đồ Cấu trúc Repository](#7-bản-đồ-cấu-trúc-repository)
 8. [Cài đặt & Xác minh Hệ thống](#8-cài-đặt--xác-minh-hệ-thống)
@@ -99,9 +100,10 @@ flowchart LR
     PDF["Báo cáo Xét nghiệm Thô<br/>(PDF Kỹ thuật số / Bản Scan)"]:::step -->|Stage 03 Ingestion| EXT["Quan sát Trích xuất Chuẩn<br/>(Tên địa phương, Kết quả, Đơn vị gốc)"]:::step
     EXT -->|Stage 04 Normalization| NORM["Quan sát Đã Chuẩn hóa<br/>(Mã LOINC v2.83, Đơn vị UCUM, Mức so sánh)"]:::step
     NORM -->|Stage 05 Longitudinal| TIME["Dòng thời gian Bệnh nhân<br/>(Lineage, 3 đồng hồ, Snapshot bất biến)"]:::step
-    TIME -->|Stage 06 Evidence| EVID["Căn cứ Bằng chứng Khoa học<br/>(PubMed/Crossref, Claims & Frozen Bundle)"]:::currentStep
-    EVID -->|Stage 07 Safety| SAFE["Cổng An toàn Xác định<br/>(Giới hạn Rủi ro, Bác bỏ Suy đoán)"]:::futureStep
-    SAFE -->|Stage 08–09 Runtime| API["Lõi Dịch vụ Go Backend<br/>(Clean Architecture, Native API)"]:::futureStep
+    TIME -->|Stage 06 Evidence| EVID["Căn cứ Bằng chứng Khoa học<br/>(PubMed/Crossref, Claims & Frozen Bundle)"]:::step
+    EVID -->|Stage 07 Safety| SAFE["Cổng An toàn Tất định<br/>(9 Cổng Tất định, Zero-Trust LLM)"]:::currentStep
+    SAFE -->|Stage 08 Eval| EVAL["Đánh giá Đối kháng & Evals<br/>(Bộ Tiêu chí Lâm sàng & Red-teaming)"]:::futureStep
+    EVAL -->|Stage 09 Runtime| API["Lõi Dịch vụ Go Backend<br/>(Clean Architecture, Native API)"]:::futureStep
     API -->|Stage 14 UI| WEB["Giao diện Bác sĩ Trực quan<br/>(React / TypeScript Interactive UI)"]:::futureStep
 ```
 
@@ -127,8 +129,8 @@ flowchart TD
         S3 --> S4["Stage 04: Chuẩn hóa & Danh pháp Lâm sàng (LOINC/UCUM)<br/><b>[HOÀN THÀNH]</b>"]:::done
         S4 --> S5["Stage 05: Mô hình Chuỗi Thời gian (Longitudinal Model)<br/><b>[HOÀN THÀNH]</b>"]:::done
         S5 --> S6["Stage 06: Công cụ Bằng chứng Khoa học<br/><b>[HOÀN THÀNH]</b>"]:::done
-        S6 --> S7["Stage 07: Lập luận & Cổng An toàn Lâm sàng<br/><b>[TIẾP THEO / SẴN SÀNG]</b>"]:::current
-        S7 --> S8["Stage 08: Kiến trúc Đánh giá & Chất lượng (Evals)<br/><i>Bộ Tiêu chí Lâm sàng & Red-teaming</i>"]:::queued
+        S6 --> S7["Stage 07: Lập luận & Cổng An toàn Lâm sàng Tất định<br/><b>[HOÀN THÀNH]</b>"]:::done
+        S7 --> S8["Stage 08: Kiến trúc Đánh giá & Chất lượng (Evals)<br/><b>[TIẾP THEO / SẴN SÀNG]</b>"]:::current
     end
 
     subgraph PhaseC["CHẶNG C: Khám phá Runtime & Nền tảng (Stages 9–13)"]
@@ -340,6 +342,101 @@ Toàn bộ 18 kịch bản kiểm thử lâm sàng tự động (`SC-0601` đế
 - **Bao đóng hồ sơ xử lý (`bundle_closure_enforced`):** `true` (Gắn chặt chính sách và schema).
 - **Bộ kiểm thử đơn vị (`pytest experiments/`):** 14/14 tests Stage 06 vượt qua, đóng góp vào tổng số 43/43 tests toàn monorepo.
 
+### Stage 07: Lập luận & Cổng An toàn Lâm sàng Tất định (Reasoning & Clinical Safety Engine)
+Thiết lập bộ rào chắn an toàn tất định (Deterministic Safety Gates) đóng vai trò thẩm quyền an toàn độc lập, tách rời hoàn toàn khỏi mô hình ngôn ngữ lớn (LLM):
+
+#### 1. Đặt vấn đề Kiến trúc & Triết lý An toàn Zero-Trust
+Trong các hệ thống AI y tế ngây thơ, việc phụ thuộc vào "kỹ thuật nhắc lệnh" (prompt engineering) như: *"Hãy là một bác sĩ cẩn trọng, không được tự ý chẩn đoán hoặc kê đơn"* là hoàn toàn không đủ độ tin cậy và vi phạm nghiêm trọng các tiêu chuẩn an toàn y tế quốc tế (FDA CDS Guidance 2026, WHO AI Ethics). 
+
+Stage 07 xác lập 2 nguyên lý nền tảng:
+$$\text{LLM / Model} \neq \text{Safety Authority}$$
+$$\text{LLM / Model} \neq \text{Clinical Authority}$$
+
+Mọi suy luận do mô hình đề xuất đều chỉ là **ứng viên chưa đáng tin cậy** (`UNTRUSTED_CANDIDATE`). Quyền phê duyệt hoặc từ chối thuộc về cỗ máy an toàn tất định được kiểm chứng bằng mã nguồn, hợp đồng dữ liệu máy và thuật toán kiểm tra ràng buộc.
+
+#### 2. Không gian Suy luận Khép kín (Closed Input Universe)
+Toàn bộ quá trình suy luận bị cô lập tuyệt đối trong một snapshot đầu vào xác định:
+- `clinical_snapshot_id`: Tập dữ liệu quan sát lâm sàng đã được xác minh.
+- `timeline_snapshot_id`: Dòng thời gian bệnh nhân được đóng băng (tùy chọn).
+- `evidence_bundle`: Gói bằng chứng y văn từ Stage 06 có mã băm xác định (`processing_profile_digest`).
+- `policies`: Mã băm bất biến của chính sách suy luận và chính sách an toàn.
+- **Cấm hoàn toàn Ambient Retrieval:** Mô hình không có quyền tự gọi web search hay kích hoạt tool ngoài luồng. Nếu thiếu thông tin, hệ thống trả về `NEED_MORE_EVIDENCE` để Stage 06 chạy lại quy trình tìm kiếm chuẩn.
+
+#### 3. Bộ Hợp đồng Dữ liệu Thẩm quyền Tối cao (`contracts/schemas/analysis/`)
+- [`contracts/schemas/analysis/reasoning-input.schema.json`](./contracts/schemas/analysis/reasoning-input.schema.json): Quy định cấu trúc đầu vào khép kín, danh sách tham chiếu lâm sàng (`clinical_refs`) cùng trạng thái xác minh (`verification_state`, `reconciliation_state`), hồ sơ chính sách và bối cảnh còn thiếu.
+- [`contracts/schemas/analysis/reasoning-candidate.schema.json`](./contracts/schemas/analysis/reasoning-candidate.schema.json): Quy định cấu trúc ứng viên suy luận ở cấp độ từng phát biểu độc lập (`statements`), bao gồm cả các phân lớp bị cấm để cỗ máy an toàn có thể phát hiện và đo lường.
+- [`contracts/schemas/analysis/safety-decision.schema.json`](./contracts/schemas/analysis/safety-decision.schema.json): Quy định cấu trúc phán quyết an toàn (`verdict`, danh sách `violations` chi tiết theo từng cổng và mã băm tất định `decision_sha256`).
+- [`contracts/schemas/analysis/reasoning-output.schema.json`](./contracts/schemas/analysis/reasoning-output.schema.json): Quy định cấu trúc dữ liệu an toàn cuối cùng chuyển tới bác sĩ (`SafeReasoningOutput`), bắt buộc chứa `physician_review_required: true`, các phát biểu được duyệt, căn cứ thẩm định (`review_basis`) và các giới hạn cảnh báo (`limitations`).
+
+#### 4. Mô hình Bóc tách Cấp độ Phát biểu (Statement-Level Grounding)
+Hệ thống cấm tuyệt đối việc trả về văn bản tự do dạng đoạn văn (free-form prose paragraph) vì văn bản tự do sẽ che giấu đâu là sự thật thực đo, đâu là suy diễn. Mọi ứng viên suy luận bắt buộc phải bóc tách thành các phát biểu đơn vị:
+- **6 Phân lớp phát biểu ĐƯỢC PHÉP xuất hiện:**
+  1. `measured_fact`: Báo cáo chỉ số gốc thực đo (bắt buộc liên kết `>= 1 clinical_ref`).
+  2. `derived_fact`: Dữ kiện suy dẫn tất định như khoảng tham chiếu, delta xu hướng (bắt buộc có `derivation_ref` và `>= 1 clinical_ref`).
+  3. `evidence_context`: Tóm tắt bằng chứng y văn liên quan (bắt buộc trích dẫn `>= 1 evidence_claim_ref`).
+  4. `bounded_interpretation`: Diễn giải lâm sàng có giới hạn hỗ trợ bác sĩ (bắt buộc liên kết cả dữ liệu lâm sàng + y văn; cấm tuyệt đối mức độ khẳng định `definitive`).
+  5. `limitation`: Tuyên bố rõ ràng các giới hạn dữ liệu, bối cảnh thiếu hụt hoặc xung đột y văn.
+  6. `physician_question`: Câu hỏi gợi mở để bác sĩ độc lập rà soát thêm (không phải chỉ định lâm sàng).
+- **5 Phân lớp phát biểu BỊ CẤM TUYỆT ĐỐI:**
+  - `diagnosis` (Chẩn đoán bệnh).
+  - `treatment_recommendation` (Khuyến nghị phác đồ điều trị).
+  - `medication_change` (Chỉ định bắt đầu / ngừng thuốc).
+  - `dosage_change` (Thay đổi liều lượng thuốc).
+  - `emergency_triage` (Tự động phân luồng cấp cứu).
+- **Các chế độ suy luận bị cấm:** Cấm `diagnostic`, `therapeutic`, `triage` và suy luận quan hệ nhân quả cá thể hóa (`patient_specific_causal`). Chỉ cho phép `none`, `association`, và `uncertainty`.
+
+#### 5. Hệ thống 9 Cổng An Toàn Tất Định (Gates G0 – G8)
+1. **Cổng G0 (Input Closure Gate):** Kiểm tra bao đóng đầu vào: đảm bảo đầy đủ digest SHA-256 của gói bằng chứng, chính sách suy luận và chính sách an toàn. Nếu thiếu -> `DEFER`.
+2. **Cổng G1 (Clinical Eligibility Gate):** Kiểm tra tham chiếu lâm sàng. Từ chối hoặc hoãn nếu ref không tồn tại, trạng thái `reconciliation_required`, dữ liệu chưa xác minh (`unverified`) hoặc thuật ngữ chưa chuẩn hóa (`candidate`/`unmapped`).
+3. **Cổng G2 (Evidence Eligibility Gate):** Kiểm tra tham chiếu y văn. Bác bỏ nếu dùng claim không tồn tại, claim không có căn cứ (`unsupported`), claim xung đột danh tính (`claim_identity_conflict`), hoặc gói bằng chứng chưa hoàn tất (`incomplete`).
+4. **Cổng G3 (Capability Scope Gate):** Chặn đứng mọi yêu cầu gọi tool, web search, truy xuất mở (`ambient_action`).
+5. **Cổng G4 (Prohibited Clinical Behavior Gate):** Quét và chặn toàn bộ phát biểu thuộc lớp cấm (chẩn đoán, điều trị, đổi thuốc, đổi liều, phân loại cấp cứu).
+6. **Cổng G5 (Statement Grounding Gate):** Xác thực tính gắn kết của phát biểu với bằng chứng: `measured_fact` phải neo vào quan sát lâm sàng; `derived_fact` phải có luật dẫn xuất; `evidence_context` phải có claim; `bounded_interpretation` phải có đủ cả hai và không được dùng giọng điệu khẳng định tuyệt đối (`definitive`).
+7. **Cổng G6 (Conflict & Uncertainty Gate):** Nếu y văn có quan điểm trái chiều, bắt buộc phải công khai (`conflict_disclosed = true`). Nếu thiếu bối cảnh bệnh nhân, bắt buộc phải thừa nhận (`missing_context_acknowledged = true`). Tín hiệu nguy cấp (`critical`) từ báo cáo gốc chỉ được hiển thị dưới dạng `measured_fact` có giới hạn, cấm tự ý biến thành phân loại cấp cứu khi chưa có quy trình y tế được phê duyệt.
+8. **Cổng G7 (Reviewability Gate):** Kiểm tra tính minh bạch và khả năng kiểm toán độc lập: bắt buộc kết xuất đầy đủ `review_basis` gồm các ID snapshot, danh sách clinical refs, evidence claim refs và policy digests để bác sĩ kiểm tra chéo.
+9. **Cổng G8 (Final Payload Schema Gate):** Kiểm định cấu trúc đầu ra theo đúng JSON Schema chuẩn `reasoning-output.schema.json`.
+
+#### 6. Triết lý Phán quyết "Thất bại Đóng" (Fail-Closed & Whole-Candidate Rejection)
+- Thang ưu tiên phán quyết: `REJECT` > `DEFER` > `APPROVE_WITH_LIMITATIONS` > `APPROVE`.
+- **Từ chối toàn bộ ứng viên (Whole-Candidate Rejection):** Khi phát hiện bất kỳ phát biểu nào vi phạm điều cấm (như chẩn đoán hay kê đơn), hệ thống **từ chối toàn bộ ứng viên** (`verdict: reject`) thay vì âm thầm cắt bỏ câu sai phạm. Việc sinh ra phát biểu không an toàn chính là bằng chứng đánh giá (evaluation evidence) để đánh giá năng lực an toàn của mô hình ở Stage 08.
+- Tính toán mã băm tất định `decision_sha256` trên toàn bộ phán quyết và vi phạm.
+
+#### 7. Sơ đồ Kiến trúc Cổng An toàn Tất định
+```mermaid
+flowchart TD
+    Input["ReasoningInputSnapshot\n(Vũ trụ Đóng: Clinical, Timeline, Frozen Bundle)"] --> G0{"G0: Input Closure"}
+    G0 -->|Thiếu digest| Defer0["DEFER: Missing Policy/Profile"]
+    G0 -->|Hợp lệ| Cand["Untrusted Model Candidate\n(Decomposed Statements)"]
+    Cand --> G3{"G3: Capability Scope"}
+    G3 -->|Request Tool/Web| Rej3["REJECT: Ambient Action"]
+    G3 -->|Hợp lệ| G4{"G4: Prohibited Behavior"}
+    G4 -->|Chẩn đoán / Điều trị / Triage| Rej4["REJECT: Whole Candidate"]
+    G4 -->|Hợp lệ| G1G2{"G1 & G2: Clinical/Evidence Eligibility"}
+    G1G2 -->|Unverified / Incomplete| Def12["DEFER: Data not eligible"]
+    G1G2 -->|Hợp lệ| G5{"G5: Statement Grounding"}
+    G5 -->|Ungrounded / Definitive| Rej5["REJECT: Grounding Violation"]
+    G5 -->|Hợp lệ| G6{"G6: Conflict & Uncertainty"}
+    G6 -->|Giấu mâu thuẫn / Quên thiếu sót| Rej6["REJECT: Non-disclosure"]
+    G6 -->|Công khai mâu thuẫn / Cờ Critical| Lim6["APPROVE_WITH_LIMITATIONS"]
+    G6 -->|Đầy đủ & Không xung đột| App6["APPROVE"]
+    Lim6 & App6 --> G7G8{"G7 & G8: Reviewability & Schema Gate"}
+    G7G8 --> SafeOut["SafeReasoningOutput\n(physician_review_required = true, review_basis)"]
+```
+
+#### 8. Kết quả Benchmark & Đo lường Toàn diện (24/24 Kịch bản)
+Toàn bộ 24 kịch bản kiểm thử lâm sàng tự động (`SC-0701` đến `SC-0724`) đạt tỷ lệ tuyệt đối:
+- **Tỷ lệ vượt qua kịch bản (`scenario_pass_rate`):** `1.0` (100% pass trên 24 kịch bản).
+- **Tỷ lệ chấp nhận dữ kiện hợp lệ (`grounded_allowed_acceptance_rate`):** `1.0`.
+- **Tỷ lệ thoát hành vi cấm (`prohibited_behavior_escape_rate`):** `0.0` (Chặn đứng 100% chẩn đoán, kê đơn, đổi liều, cấp cứu).
+- **Tỷ lệ chấp nhận nhận định không căn cứ (`unsupported_statement_acceptance_rate`):** `0.0`.
+- **Tỷ lệ thoát hành động ngoại vi (`ambient_action_escape_rate`):** `0.0` (Chặn đứng 100% yêu cầu web search / tool call).
+- **Tỷ lệ che giấu mâu thuẫn (`conflict_nondisclosure_acceptance_rate`):** `0.0`.
+- **Tỷ lệ vi phạm chính sách cấp cứu (`critical_policy_escape_rate`):** `0.0`.
+- **Tỷ lệ lọt dữ kiện chưa xác minh (`unverified_clinical_fact_escape_rate`):** `0.0`.
+- **Tính đầy đủ của căn cứ kiểm tra bác sĩ (`approved_output_review_basis_complete`):** `true`.
+- **Tính tất định của quyết định an toàn (`safety_decision_determinism`):** `true`.
+- **Bộ kiểm thử đơn vị (`pytest experiments/`):** 22/22 tests Stage 07 vượt qua, nâng tổng số tests toàn monorepo lên **65/65 passed**.
+
 ---
 
 ## 6. Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn
@@ -382,6 +479,28 @@ Toàn bộ 18 kịch bản kiểm thử lâm sàng tự động (`SC-0601` đế
 | **EVID-018** | Kết quả truy xuất muộn sau khi đóng băng không được vào snapshot. | Các attempt hoặc source hoàn tất sau `frozen_at` sẽ bị fail-closed và không thể sửa đổi gói đã chốt. |
 | **EVID-019** | Xung đột danh tính nhận định tự động khóa (Fail-closed). | Trích xuất trùng lặp claim ID nhưng khác nội dung mệnh đề sẽ bị cô lập ở trạng thái `claim_identity_conflict`. |
 | **EVID-020** | Bao đóng hồ sơ xử lý (Processing Profile Closure). | Mã băm chính sách, mã băm schema và phiên bản engine được chốt cứng bên trong manifest của bundle. |
+| **SAFE-001** | Đầu ra của AI không phải là thẩm quyền lâm sàng. | Bác sĩ là người chịu trách nhiệm chuyên môn cuối cùng; mọi output đều yêu cầu bác sĩ duyệt (`physician_review_required = true`). |
+| **SAFE-002** | Ứng viên suy luận của mô hình là không đáng tin cậy cho tới khi vượt qua các cổng tất định. | Ngăn chặn việc ngộ nhận LLM là cơ quan thẩm quyền an toàn (Safety Authority). |
+| **SAFE-003** | Stage 07 không được phép tìm kiếm tự do ngoài luồng (Ambient Retrieval). | Loại bỏ trôi dạt bằng chứng và bảo toàn khả năng tái lập kết quả suy luận. |
+| **SAFE-004** | Tham chiếu lâm sàng hoặc bằng chứng không xác định tự động đóng (Fail-closed). | Bác bỏ ngay lập tức các nhận định tham chiếu tới mã ref hoặc claim ID không tồn tại. |
+| **SAFE-005** | Bằng chứng không được hỗ trợ (`unsupported`) không được hỗ trợ suy luận. | Triệt tiêu hoàn toàn việc dùng y văn không liên quan để bảo vệ lập luận. |
+| **SAFE-006** | Xung đột y văn bắt buộc phải được công khai, không được che giấu. | Ngăn chặn việc mô hình thiên kiến một chiều khi y văn có quan điểm trái ngược. |
+| **SAFE-007** | Xung đột danh tính claim (`claim_identity_conflict`) không được dùng để suy luận. | Bảo vệ suy luận khỏi các nhận định bị lỗi phiên bản hoặc va chạm mệnh đề. |
+| **SAFE-008** | Dữ liệu lâm sàng cần đối soát (`reconciliation_required`) hoãn suy luận cá thể hóa. | Chuyển sang trạng thái DEFER cho tới khi con người đối soát xong mâu thuẫn dữ liệu. |
+| **SAFE-009** | Thuật ngữ candidate/unmapped không được nâng cấp qua suy luận của mô hình. | Ngăn ngừa việc LLM tự ý đoán mã danh pháp chuẩn hóa cho dữ liệu chưa được map. |
+| **SAFE-010** | Nghiêm cấm tuyệt đối hành vi chẩn đoán bệnh tật trong MVP hiện tại. | Tránh vi phạm quy định pháp lý về thiết bị y tế và đảm bảo an toàn tính mạng bệnh nhân. |
+| **SAFE-011** | Nghiêm cấm tuyệt đối chỉ định điều trị, kê đơn, đổi thuốc và đổi liều. | AI CDS chỉ cung cấp bối cảnh thông tin y khoa, không can thiệp phác đồ điều trị. |
+| **SAFE-012** | Nghiêm cấm tự động phân luồng cấp cứu khi chưa có quy trình y tế được phê duyệt. | AI không được tự bịa ngưỡng nguy kịch (panic values) khi chưa có hội đồng lâm sàng ký duyệt. |
+| **SAFE-013** | Phát biểu dữ kiện thực đo (`measured_fact`) bắt buộc phải trích dẫn nguồn lâm sàng. | Đảm bảo tính truy vết 100% về chỉ số xét nghiệm cụ thể trong bệnh án. |
+| **SAFE-014** | Phát biểu dữ kiện suy dẫn (`derived_fact`) bắt buộc trích dẫn nguồn và quy tắc dẫn xuất. | Khả năng kiểm toán công thức tính toán khoảng tham chiếu hoặc delta xu hướng. |
+| **SAFE-015** | Phát biểu bối cảnh bằng chứng (`evidence_context`) bắt buộc trích dẫn EvidenceClaim. | Ngăn chặn các nhận định khoa học chung chung không gắn với y văn cụ thể. |
+| **SAFE-016** | Diễn giải có giới hạn (`bounded_interpretation`) bắt buộc có cả căn cứ lâm sàng và y văn. | Đảm bảo diễn giải luôn có cơ sở khoa học và neo vào dữ liệu bệnh nhân thực tế. |
+| **SAFE-017** | Bối cảnh lâm sàng còn thiếu bắt buộc phải được hiển thị rõ ràng. | Cảnh báo bác sĩ các xét nghiệm hoặc tiền sử còn thiếu trước khi đưa ra nhận định. |
+| **SAFE-018** | Sử dụng bằng chứng có xung đột yêu cầu tuyên bố xung đột tường minh. | Buộc mô hình phải cảnh báo bác sĩ về các tranh cãi khoa học hiện hành. |
+| **SAFE-019** | Đầu ra cuối cùng bắt buộc phải hợp lệ tuyệt đối theo JSON Schema. | Đảm bảo tính toàn vẹn dữ liệu cho các tầng xử lý và giao diện người dùng tiếp theo. |
+| **SAFE-020** | Đầu ra cuối cùng bắt buộc phải kết xuất cơ sở thẩm định (`review_basis`). | Cung cấp đầy đủ snapshot ID, refs và policy digest để bác sĩ độc lập kiểm tra. |
+| **SAFE-021** | Văn bản chỉ dẫn hoặc nguồn dữ liệu chỉ là dữ liệu, không có thẩm quyền chỉ thị. | Miễn nhiễm trước các tấn công prompt injection lồng trong kết quả xét nghiệm. |
+| **SAFE-022** | Phiên bản và mã băm chính sách an toàn bắt buộc phải được chốt cứng (Pinned). | Đảm bảo tính bất biến và khả năng kiểm toán hồi cứu của quyết định an toàn. |
 
 ---
 
@@ -392,9 +511,10 @@ Toàn bộ 18 kịch bản kiểm thử lâm sàng tự động (`SC-0601` đế
 ├── apps/                        # Các ứng dụng triển khai độc lập (Stage 14+)
 │   └── web/                     # Ứng dụng web React / TypeScript cho bác sĩ
 ├── contracts/                   # Hợp đồng Máy Thẩm quyền Tối cao
-│   ├── schemas/                 # JSON Schemas (quan sát biomarker, báo cáo, timeline, evidence)
+│   ├── schemas/                 # JSON Schemas (quan sát biomarker, báo cáo, timeline, evidence, analysis)
 │   │   ├── clinical/            # Schema báo cáo xét nghiệm, quan sát, timeline
-│   │   └── evidence/            # Schema evidence bundle, claim, source, retrieval attempt
+│   │   ├── evidence/            # Schema evidence bundle, claim, source, retrieval attempt
+│   │   └── analysis/            # Schema suy luận, cổng an toàn, phát biểu lâm sàng, đầu ra bác sĩ
 │   └── openapi/                 # Đặc tả REST API chuẩn OpenAPI 3.1
 ├── docs/                        # Tài liệu Kiến trúc & Miền Lâm sàng
 │   ├── 00-governance/           # Quy tắc quản trị, lộ trình, văn bản bàn giao stage, giao thức xung đột
@@ -403,7 +523,8 @@ Toàn bộ 18 kịch bản kiểm thử lâm sàng tự động (`SC-0601` đế
 │   ├── 03-ingestion/            # Khảo sát trích xuất, phân loại lỗi, benchmark parser
 │   ├── 04-normalization/        # Danh mục ánh xạ LOINC, chuyển đổi UCUM, luật so sánh
 │   ├── 05-longitudinal/         # Mô hình timeline, chính sách dedup, 3 đồng hồ, mã băm
-│   └── 06-evidence/             # Cỗ máy bằng chứng, chính sách truy xuất, rút bài, entailment, xếp hạng
+│   ├── 06-evidence/             # Cỗ máy bằng chứng, chính sách truy xuất, rút bài, entailment, xếp hạng
+│   └── 07-reasoning-safety/     # Kiến trúc suy luận, 9 cổng an toàn tất định, mô hình phát biểu, rào chắn
 ├── evals/                       # Hệ thống Đánh giá Chất lượng Hạng nhất
 │   ├── benchmarks/              # Bộ dữ liệu lâm sàng chuẩn vàng & tiêu chí chấm điểm
 │   └── harnesses/               # Động cơ chấm điểm tự động & kịch bản red-teaming
@@ -411,7 +532,8 @@ Toàn bộ 18 kịch bản kiểm thử lâm sàng tự động (`SC-0601` đế
 │   ├── stage-03/                # Benchmark trích xuất PDF & bộ parser tổng hợp
 │   ├── stage-04/                # Bộ kiểm thử chuẩn hóa LOINC & chuyển đổi UCUM
 │   ├── stage-05/                # Bộ kiểm thử lineage, trật tự thời gian và snapshot
-│   └── stage-06/                # Bộ kiểm thử sổ cái bằng chứng, va chạm danh tính và bundle
+│   ├── stage-06/                # Bộ kiểm thử sổ cái bằng chứng, va chạm danh tính và bundle
+│   └── stage-07/                # Cỗ máy an toàn tất định, đánh giá ứng viên suy luận & benchmark an toàn
 ├── internal/                    # Triển khai Miền Lõi bằng Go (Stage 09+)
 │   ├── domain/                  # Mô hình nghiệp vụ thuần túy (Không phụ thuộc bên thứ ba)
 │   ├── ports/                   # Giao diện Inbound/Outbound (Clean Architecture)
@@ -423,7 +545,8 @@ Toàn bộ 18 kịch bản kiểm thử lâm sàng tự động (`SC-0601` đế
 │       ├── stage-03/            # Tập tin kiểm thử PDF đa định dạng & scan mờ
 │       ├── stage-04/            # Ca kiểm thử chuẩn hóa và chuyển đổi đơn vị
 │       ├── stage-05/            # Ca kiểm thử trật tự thời gian và trùng lặp
-│       └── stage-06/            # Ca kiểm thử truy xuất bằng chứng, rút bài và va chạm
+│       ├── stage-06/            # Ca kiểm thử truy xuất bằng chứng, rút bài và va chạm
+│       └── stage-07/            # Ca kiểm thử ứng viên suy luận, vi phạm hành vi cấm & rào chắn
 ├── AGENTS.md                    # Hướng dẫn bắt buộc dành cho AI Coding Agents
 ├── BIOMARKER_PROJECT_SKELETON_V0.1.md # Bản thiết kế kiến trúc khung tổng thể
 └── package.json                 # Cấu hình workspace Monorepo (pnpm 11 + Turbo)
@@ -454,17 +577,18 @@ pnpm check
 
 ### Chạy Kiểm thử Miền Nghiệp vụ qua từng Stage
 ```bash
-# Thực thi toàn bộ test suite thực nghiệm (Stages 03, 04, 05, 06)
+# Thực thi toàn bộ test suite thực nghiệm (Stages 03, 04, 05, 06, 07)
 pytest experiments/
 ```
 
-Toàn bộ 43 test case miền nghiệp vụ hoàn thành trong `<0.1s`:
+Toàn bộ 65 test case miền nghiệp vụ hoàn thành trong `<0.1s`:
 ```text
-experiments/stage-03/tests/test_parser.py ......                         [ 13%]
-experiments/stage-04/tests/test_normalization.py .........               [ 34%]
-experiments/stage-05/tests/test_longitudinal.py ..............           [ 67%]
-experiments/stage-06/tests/test_evidence.py ..............               [100%]
-============================== 43 passed in 0.08s ==============================
+experiments/stage-03/tests/test_parser.py ......                         [  9%]
+experiments/stage-04/tests/test_normalization.py .........               [ 23%]
+experiments/stage-05/tests/test_longitudinal.py ..............           [ 44%]
+experiments/stage-06/tests/test_evidence.py ..............               [ 66%]
+experiments/stage-07/tests/test_safety.py ......................         [100%]
+============================== 65 passed in 0.09s ==============================
 ```
 
 ---

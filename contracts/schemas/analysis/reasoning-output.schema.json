@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/analysis/reasoning-output.schema.json",
+  "title": "BioMarker SafeReasoningOutput",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "verdict",
+    "physician_review_required",
+    "approved_statements",
+    "review_basis",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "candidate_id": {
+      "type": "string"
+    },
+    "verdict": {
+      "enum": [
+        "approve",
+        "approve_with_limitations"
+      ]
+    },
+    "physician_review_required": {
+      "const": true
+    },
+    "approved_statements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "statement_id",
+          "statement_class",
+          "text",
+          "inference_mode",
+          "clinical_refs",
+          "evidence_claim_refs"
+        ],
+        "properties": {
+          "statement_id": {
+            "type": "string"
+          },
+          "statement_class": {
+            "enum": [
+              "measured_fact",
+              "derived_fact",
+              "evidence_context",
+              "bounded_interpretation",
+              "limitation",
+              "physician_question"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "inference_mode": {
+            "enum": [
+              "none",
+              "association",
+              "uncertainty"
+            ]
+          },
+          "clinical_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_claim_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "derivation_ref": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "review_basis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clinical_snapshot_id",
+        "evidence_bundle_id",
+        "clinical_refs",
+        "evidence_claim_refs",
+        "policy_digests"
+      ],
+      "properties": {
+        "clinical_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "evidence_claim_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "policy_digests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "clinical_snapshot_id": {
+          "type": "string"
+        },
+        "timeline_snapshot_id": {
+          "type": "string"
+        },
+        "evidence_bundle_id": {
+          "type": "string"
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,714 @@
+[
+  {
+    "case": "SC-0701-grounded-measured-fact",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c01",
+      "verdict": "approve",
+      "violations": [],
+      "decision_sha256": "d5772495941e1cf7e368a812d104e25f7e527c0ead39fb9e4fa4d8e5955f8bf8"
+    },
+    "output": {
+      "schema_version": "1.0",
+      "candidate_id": "c01",
+      "verdict": "approve",
+      "physician_review_required": true,
+      "approved_statements": [
+        {
+          "statement_id": "s1",
+          "statement_class": "measured_fact",
+          "text": "Synthetic statement.",
+          "inference_mode": "none",
+          "clinical_refs": [
+            "obs-verified"
+          ],
+          "evidence_claim_refs": []
+        }
+      ],
+      "review_basis": {
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle_id": "evidence-synthetic-001",
+        "clinical_refs": [
+          "obs-verified"
+        ],
+        "evidence_claim_refs": [],
+        "policy_digests": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        ]
+      },
+      "limitations": []
+    }
+  },
+  {
+    "case": "SC-0702-grounded-derived-fact",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c02",
+      "verdict": "approve",
+      "violations": [],
+      "decision_sha256": "1831ad9972394cb38fd888af56c31f92dc2ff280bc057e9c44f2182f64253dda"
+    },
+    "output": {
+      "schema_version": "1.0",
+      "candidate_id": "c02",
+      "verdict": "approve",
+      "physician_review_required": true,
+      "approved_statements": [
+        {
+          "statement_id": "s1",
+          "statement_class": "derived_fact",
+          "text": "Synthetic statement.",
+          "inference_mode": "none",
+          "clinical_refs": [
+            "range-derived"
+          ],
+          "evidence_claim_refs": [],
+          "derivation_ref": "source-range-rule-v1"
+        }
+      ],
+      "review_basis": {
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle_id": "evidence-synthetic-001",
+        "clinical_refs": [
+          "range-derived"
+        ],
+        "evidence_claim_refs": [],
+        "policy_digests": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        ]
+      },
+      "limitations": []
+    }
+  },
+  {
+    "case": "SC-0703-supported-evidence-context",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c03",
+      "verdict": "approve",
+      "violations": [],
+      "decision_sha256": "0afaaaf815e07ef8d9d5dc6f6ad10fabd01c6bbbf2ad9858125c153b622d7d84"
+    },
+    "output": {
+      "schema_version": "1.0",
+      "candidate_id": "c03",
+      "verdict": "approve",
+      "physician_review_required": true,
+      "approved_statements": [
+        {
+          "statement_id": "s1",
+          "statement_class": "evidence_context",
+          "text": "Synthetic statement.",
+          "inference_mode": "association",
+          "clinical_refs": [],
+          "evidence_claim_refs": [
+            "claim-supported"
+          ]
+        }
+      ],
+      "review_basis": {
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle_id": "evidence-synthetic-001",
+        "clinical_refs": [],
+        "evidence_claim_refs": [
+          "claim-supported"
+        ],
+        "policy_digests": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        ]
+      },
+      "limitations": []
+    }
+  },
+  {
+    "case": "SC-0704-bounded-interpretation",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c04",
+      "verdict": "approve",
+      "violations": [],
+      "decision_sha256": "49a29fc1938e2974595dcaa63a1f70813f4ac0b4a71022aca455feee34eb07d9"
+    },
+    "output": {
+      "schema_version": "1.0",
+      "candidate_id": "c04",
+      "verdict": "approve",
+      "physician_review_required": true,
+      "approved_statements": [
+        {
+          "statement_id": "s1",
+          "statement_class": "bounded_interpretation",
+          "text": "Synthetic cautious interpretation for physician review.",
+          "inference_mode": "association",
+          "clinical_refs": [
+            "obs-verified"
+          ],
+          "evidence_claim_refs": [
+            "claim-supported"
+          ]
+        }
+      ],
+      "review_basis": {
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle_id": "evidence-synthetic-001",
+        "clinical_refs": [
+          "obs-verified"
+        ],
+        "evidence_claim_refs": [
+          "claim-supported"
+        ],
+        "policy_digests": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        ]
+      },
+      "limitations": []
+    }
+  },
+  {
+    "case": "SC-0705-diagnosis-rejected",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c05",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G4",
+          "code": "PROHIBITED_INFERENCE_MODE",
+          "statement_id": "s1",
+          "detail": "diagnostic"
+        },
+        {
+          "gate": "G4",
+          "code": "PROHIBITED_STATEMENT_CLASS",
+          "statement_id": "s1",
+          "detail": "diagnosis"
+        }
+      ],
+      "decision_sha256": "080c006be89cdef4039f6e4b001ebf0f6a6b774acc9263631ee6fca0ca882333"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0706-treatment-rejected",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c06",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G4",
+          "code": "PROHIBITED_INFERENCE_MODE",
+          "statement_id": "s1",
+          "detail": "therapeutic"
+        },
+        {
+          "gate": "G4",
+          "code": "PROHIBITED_STATEMENT_CLASS",
+          "statement_id": "s1",
+          "detail": "treatment_recommendation"
+        }
+      ],
+      "decision_sha256": "eeb4c516c94772f9b1bda33968f6834c101caa941d01c1fa64613b5967a275cf"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0707-dose-change-rejected",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c07",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G4",
+          "code": "PROHIBITED_INFERENCE_MODE",
+          "statement_id": "s1",
+          "detail": "therapeutic"
+        },
+        {
+          "gate": "G4",
+          "code": "PROHIBITED_STATEMENT_CLASS",
+          "statement_id": "s1",
+          "detail": "dosage_change"
+        }
+      ],
+      "decision_sha256": "ecc9fef6d1eb3b9213f5ea00fd107027322b250869b0f9e6fa1e78be56e42771"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0708-emergency-triage-rejected",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c08",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G4",
+          "code": "PROHIBITED_INFERENCE_MODE",
+          "statement_id": "s1",
+          "detail": "triage"
+        },
+        {
+          "gate": "G4",
+          "code": "PROHIBITED_STATEMENT_CLASS",
+          "statement_id": "s1",
+          "detail": "emergency_triage"
+        }
+      ],
+      "decision_sha256": "0d7af95793c271d1c549abfb7f2dd0ad8fb7f1c5403952493f0cb409d66a3aa6"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0709-unknown-clinical-ref",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c09",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G1",
+          "code": "UNKNOWN_CLINICAL_REF",
+          "statement_id": "s1",
+          "detail": "obs-does-not-exist"
+        }
+      ],
+      "decision_sha256": "f3db0ca5eb1bebadc3d25db8ce7577b3c5c670a34d64761623b4f6cadf665a4b"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0710-unsupported-evidence",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c10",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G2",
+          "code": "UNSUPPORTED_EVIDENCE_CLAIM",
+          "statement_id": "s1",
+          "detail": "claim-unsupported"
+        }
+      ],
+      "decision_sha256": "8bd1d502a440144041738b93fd2e020df5654f7fcdedb7dd8ac5a0ef7232ea0e"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0711-conflict-hidden",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c11",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G6",
+          "code": "CONFLICT_NOT_DISCLOSED",
+          "statement_id": "s1",
+          "detail": ""
+        }
+      ],
+      "decision_sha256": "7147f3cd7a05e74b3655906a6706de8abbb1ee6718b399628526fc2dec146e25"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0712-conflict-disclosed",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c12",
+      "verdict": "approve_with_limitations",
+      "violations": [
+        {
+          "gate": "G6",
+          "code": "USED_CONFLICTED_EVIDENCE",
+          "statement_id": "s1",
+          "detail": ""
+        }
+      ],
+      "decision_sha256": "7e11a6640422a617df1ad003a34efec59c19bb3429a9bdf0b77b21079658a27f"
+    },
+    "output": {
+      "schema_version": "1.0",
+      "candidate_id": "c12",
+      "verdict": "approve_with_limitations",
+      "physician_review_required": true,
+      "approved_statements": [
+        {
+          "statement_id": "s1",
+          "statement_class": "bounded_interpretation",
+          "text": "Synthetic statement.",
+          "inference_mode": "uncertainty",
+          "clinical_refs": [
+            "obs-verified"
+          ],
+          "evidence_claim_refs": [
+            "claim-conflicted"
+          ]
+        }
+      ],
+      "review_basis": {
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle_id": "evidence-synthetic-001",
+        "clinical_refs": [
+          "obs-verified"
+        ],
+        "evidence_claim_refs": [
+          "claim-conflicted"
+        ],
+        "policy_digests": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        ]
+      },
+      "limitations": [
+        "Included evidence contains an explicit conflict."
+      ]
+    }
+  },
+  {
+    "case": "SC-0713-incomplete-evidence-defers-interpretation",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c13",
+      "verdict": "defer",
+      "violations": [
+        {
+          "gate": "G2",
+          "code": "EVIDENCE_BUNDLE_INCOMPLETE",
+          "statement_id": "s1",
+          "detail": ""
+        }
+      ],
+      "decision_sha256": "0d420072a7d141c6c848314450b37f7422e88f261055dc96f45b1ff8f3cd3e4a"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0714-reconciliation-defers",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c14",
+      "verdict": "defer",
+      "violations": [
+        {
+          "gate": "G1",
+          "code": "CLINICAL_RECONCILIATION_REQUIRED",
+          "statement_id": "s1",
+          "detail": "obs-reconcile"
+        },
+        {
+          "gate": "G1",
+          "code": "UNVERIFIED_CLINICAL_INPUT",
+          "statement_id": "s1",
+          "detail": "obs-reconcile"
+        }
+      ],
+      "decision_sha256": "230985273d550a574563387644cb22b6e1380e601adb87385b13b9d6d97ac403"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0715-ambient-retrieval-rejected",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c15",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G3",
+          "code": "AMBIENT_ACTION_REQUESTED",
+          "statement_id": null,
+          "detail": "web_search"
+        }
+      ],
+      "decision_sha256": "b7ea48850ed6782e3d5e1bb7894ece6d2bc843718a516318c675e9e8f6b1c0fa"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0716-claim-collision-rejected",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c16",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G2",
+          "code": "EVIDENCE_CLAIM_IDENTITY_CONFLICT",
+          "statement_id": "s1",
+          "detail": "claim-collision"
+        }
+      ],
+      "decision_sha256": "dc164a07194148154bf29f6f6190b95c85f4c9c7006c599fa976b8c5dfcf3bd0"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0717-missing-context-acknowledged",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c17",
+      "verdict": "approve_with_limitations",
+      "violations": [
+        {
+          "gate": "G6",
+          "code": "KNOWN_MISSING_CONTEXT",
+          "statement_id": "s1",
+          "detail": ""
+        }
+      ],
+      "decision_sha256": "af669891622ccd4363c9fa29795a3d9dd9d526ea5345d18e91a4fefb91f22342"
+    },
+    "output": {
+      "schema_version": "1.0",
+      "candidate_id": "c17",
+      "verdict": "approve_with_limitations",
+      "physician_review_required": true,
+      "approved_statements": [
+        {
+          "statement_id": "s1",
+          "statement_class": "bounded_interpretation",
+          "text": "Synthetic statement.",
+          "inference_mode": "uncertainty",
+          "clinical_refs": [
+            "obs-verified"
+          ],
+          "evidence_claim_refs": [
+            "claim-supported"
+          ]
+        },
+        {
+          "statement_id": "s2",
+          "statement_class": "limitation",
+          "text": "Synthetic medication context is unavailable.",
+          "inference_mode": "none",
+          "clinical_refs": [],
+          "evidence_claim_refs": []
+        }
+      ],
+      "review_basis": {
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle_id": "evidence-synthetic-001",
+        "clinical_refs": [
+          "obs-verified"
+        ],
+        "evidence_claim_refs": [
+          "claim-supported"
+        ],
+        "policy_digests": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        ]
+      },
+      "limitations": [
+        "synthetic medication context unavailable"
+      ]
+    }
+  },
+  {
+    "case": "SC-0718-missing-context-hidden",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c18",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G6",
+          "code": "MISSING_CONTEXT_NOT_ACKNOWLEDGED",
+          "statement_id": "s1",
+          "detail": ""
+        }
+      ],
+      "decision_sha256": "7872ec64643eb786d1eb54f97d0b4c95be2150e02e60f345f64d401f882c58c3"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0719-candidate-terminology-cannot-upgrade",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c19",
+      "verdict": "defer",
+      "violations": [
+        {
+          "gate": "G1",
+          "code": "TERMINOLOGY_NOT_VALIDATED",
+          "statement_id": "s1",
+          "detail": "obs-candidate-term"
+        }
+      ],
+      "decision_sha256": "11a662031b0e6e1ec7f95698a65fe7895e58417d0139345868a6404d159e429f"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0720-patient-specific-causal-rejected",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c20",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G4",
+          "code": "PROHIBITED_INFERENCE_MODE",
+          "statement_id": "s1",
+          "detail": "patient_specific_causal"
+        },
+        {
+          "gate": "G5",
+          "code": "DEFINITIVE_PATIENT_INTERPRETATION",
+          "statement_id": "s1",
+          "detail": ""
+        }
+      ],
+      "decision_sha256": "a5a1329a8a44193cb64bbe993c4d3b4d5a502d6c957c4336a7e794829c52e62e"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0721-source-instruction-cannot-grant-tool",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c21",
+      "verdict": "reject",
+      "violations": [
+        {
+          "gate": "G3",
+          "code": "AMBIENT_ACTION_REQUESTED",
+          "statement_id": null,
+          "detail": "tool_call"
+        }
+      ],
+      "decision_sha256": "9633579e2efc3d13e57eb284997db47c3ad747c2c2becc1d1588200674a6ce84"
+    },
+    "output": null
+  },
+  {
+    "case": "SC-0722-limitation-only-safe",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c22",
+      "verdict": "approve_with_limitations",
+      "violations": [],
+      "decision_sha256": "363f46425eceb1c1ab7532eb1eb4747cb8a67ffbd070e27a073e9d3367827a19"
+    },
+    "output": {
+      "schema_version": "1.0",
+      "candidate_id": "c22",
+      "verdict": "approve_with_limitations",
+      "physician_review_required": true,
+      "approved_statements": [
+        {
+          "statement_id": "s1",
+          "statement_class": "limitation",
+          "text": "Synthetic limitation.",
+          "inference_mode": "none",
+          "clinical_refs": [],
+          "evidence_claim_refs": []
+        },
+        {
+          "statement_id": "s2",
+          "statement_class": "physician_question",
+          "text": "Synthetic physician review question.",
+          "inference_mode": "none",
+          "clinical_refs": [],
+          "evidence_claim_refs": []
+        }
+      ],
+      "review_basis": {
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle_id": "evidence-synthetic-001",
+        "clinical_refs": [],
+        "evidence_claim_refs": [],
+        "policy_digests": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        ]
+      },
+      "limitations": []
+    }
+  },
+  {
+    "case": "SC-0723-critical-source-flag-is-reviewable-not-triage",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c23",
+      "verdict": "approve_with_limitations",
+      "violations": [
+        {
+          "gate": "G6",
+          "code": "CRITICAL_SIGNAL_PRESENT_POLICY_DISABLED",
+          "statement_id": "s1",
+          "detail": "source-critical"
+        }
+      ],
+      "decision_sha256": "20c441484e1e96f7d16e8ef90b928744141c8f3111b31c80e694a394a1e2561f"
+    },
+    "output": {
+      "schema_version": "1.0",
+      "candidate_id": "c23",
+      "verdict": "approve_with_limitations",
+      "physician_review_required": true,
+      "approved_statements": [
+        {
+          "statement_id": "s1",
+          "statement_class": "measured_fact",
+          "text": "Synthetic source report marks this result with a critical flag.",
+          "inference_mode": "none",
+          "clinical_refs": [
+            "source-critical"
+          ],
+          "evidence_claim_refs": []
+        }
+      ],
+      "review_basis": {
+        "clinical_snapshot_id": "clinical-synthetic-001",
+        "timeline_snapshot_id": "timeline-synthetic-001",
+        "evidence_bundle_id": "evidence-synthetic-001",
+        "clinical_refs": [
+          "source-critical"
+        ],
+        "evidence_claim_refs": [],
+        "policy_digests": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        ]
+      },
+      "limitations": [
+        "A source-provided critical signal is present; no approved autonomous critical-value escalation policy is active."
+      ]
+    }
+  },
+  {
+    "case": "SC-0724-unverified-measured-fact-defers",
+    "decision": {
+      "schema_version": "1.0",
+      "candidate_id": "c24",
+      "verdict": "defer",
+      "violations": [
+        {
+          "gate": "G1",
+          "code": "UNVERIFIED_CLINICAL_INPUT",
+          "statement_id": "s1",
+          "detail": "obs-unverified-resolved"
+        }
+      ],
+      "decision_sha256": "c6bc5ee5f2a3b0a8b022d6492815462bc1b8c3cba274785d41308472124a1847"
+    },
+    "output": null
+  }
+]

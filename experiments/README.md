@@ -16,13 +16,14 @@ As stages progress, subdirectories will be created:
 
 ```text
 experiments/
-├── stage-03-ingestion/          # Ingestion PoC (PDF parsing, OCR, table extraction)
-├── stage-04-normalization/      # Terminology & unit alignment experiments
-├── stage-06-evidence/           # Retrieval & citation verification experiments
-├── stage-07-reasoning-safety/   # Guardrails & safety gate PoC
-├── stage-09-runtime/            # Eino pipeline benchmarks
-├── stage-11-failure-recovery/   # Chaos & circuit-breaking experiments
-└── stage-12-durability/         # Durability/worker experiments (conditional)
+├── stage-03/                # Ingestion PoC (PDF parsing, OCR, table extraction)
+├── stage-04/                # Terminology & unit alignment experiments
+├── stage-05/                # Longitudinal model & timeline experiments
+├── stage-06/                # Retrieval & citation verification experiments
+├── stage-07/                # Reasoning & deterministic safety gate experiments
+├── stage-09/                # Eino pipeline benchmarks (planned)
+├── stage-11/                # Chaos & circuit-breaking experiments (planned)
+└── stage-12/                # Durability/worker experiments (conditional)
 ```
 
 ---
