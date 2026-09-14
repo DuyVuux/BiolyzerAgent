@@ -48,3 +48,6 @@ docs/**/*.scratch.md
 
 # AI zip generation rules (internal AI prompt reference, excluded from public repo)
 docs/00-governance/AI_ZIP_GENERATION_RULES.md
+
+# Project target skeleton & internal prompt references (excluded from git tracking)
+BIOMARKER_PROJECT_SKELETON_V0.1.md
