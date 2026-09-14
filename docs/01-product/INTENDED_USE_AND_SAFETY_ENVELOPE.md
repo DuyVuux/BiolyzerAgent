@@ -1,7 +1,8 @@
 # BioMarker Agent — Intended Use & Safety Envelope
 
-> **Status:** PROPOSAL v0.1 — REQUIRES PRODUCT + CLINICAL REVIEW  
-> **Stage:** 01  
+> **Status:** APPROVED BASELINE v1.0  
+> **Approved on:** 2026-09-14  
+> **Stage:** 01 — Product & Clinical Domain Discovery  
 > **Purpose:** Xác định ranh giới sản phẩm được phép làm gì trước khi thiết kế model, workflow hoặc UI.
 
 ---
@@ -43,35 +44,21 @@ Do đó, intended use không phải câu marketing. Nó điều khiển:
 
 ## 2. Candidate intended use v0
 
-**[PROPOSAL]**
+**[APPROVED INTENDED USE]**
 
-> BioMarker Agent được đề xuất cho **non-time-critical informational review** của dữ liệu biomarker từ báo cáo xét nghiệm. Hệ thống tổ chức và giải thích dữ liệu đã được xác minh, cho phép so sánh theo thời gian khi có đủ dữ liệu, và cung cấp evidence-linked educational context. Hệ thống không được thiết kế để tự động thiết lập chẩn đoán, chỉ định điều trị, thay đổi thuốc, hoặc thay thế phán đoán của healthcare professional.
-
-Đây là candidate intended use để Stage 02–08 có safety boundary làm việc.
-
-Nó **chưa phải approved product claim**.
+> BioMarker Agent được thiết kế cho **non-time-critical informational review** của dữ liệu biomarker từ báo cáo xét nghiệm. Hệ thống tổ chức và giải thích dữ liệu đã được xác minh, cho phép so sánh theo thời gian khi có đủ dữ liệu, và cung cấp evidence-linked educational context. Hệ thống không được thiết kế để tự động thiết lập chẩn đoán, chỉ định điều trị, thay đổi thuốc, hoặc thay thế phán đoán của healthcare professional.
 
 ---
 
-## 3. Intended user chưa được khóa
+## 3. Intended user & Rollout decision
 
-**[TEAM DECISION REQUIRED — TD-01]**
+**[APPROVED DECISION — TD-01 & TD-01B]**
 
-FDA 2026 phân biệt rất mạnh giữa một số CDS dành cho healthcare professional và software đưa recommendation tới patient/caregiver. Hướng dẫn này chỉ có authority trực tiếp trong phạm vi Hoa Kỳ và không tự động quyết định classification cho sản phẩm ở jurisdiction khác.
-
-Do đó Stage 01 không được phép tự chọn:
-
-```text
-consumer product
-```
-
-hoặc:
-
-```text
-clinician CDS
-```
-
-chỉ để tiếp tục implementation.
+- **TD-01 (Primary User):** **Option A — Individual User / Patient**
+  - Người dùng chính là bệnh nhân / cá nhân tự theo dõi sức khỏe và đọc hiểu kết quả xét nghiệm của bản thân.
+  - *Ảnh hưởng lâm sàng:* Cung cấp giải thích dữ liệu ở mức độ dễ hiểu, không dùng biệt ngữ gây hoang mang, có dẫn chứng nguồn rõ ràng và luôn hướng dẫn người bệnh trao đổi trực tiếp với bác sĩ điều trị.
+- **TD-01B (Rollout Mode):** **Option A — Internal Pilot**
+  - Giai đoạn đầu triển khai dưới hình thức thử nghiệm nội bộ tại Vinmec trước khi mở rộng.
 
 Nguồn:
 
@@ -340,23 +327,18 @@ Classification phụ thuộc tối thiểu vào:
 - workflow;
 - level of automation.
 
-### Required decision
+### Approved decision
 
-**[TEAM DECISION REQUIRED — TD-02]**
+**[APPROVED DECISION — TD-02]**
 
-Target geography/jurisdiction phải được xác định trước khi product claim được freeze.
-
-### U.S. reference only
-
-FDA 2026 hiện nêu rằng software function cung cấp/support recommendation cho patient/caregiver có thể vẫn thuộc device definition, trong khi một số HCP CDS có thể thuộc exclusion khi thỏa các criteria cụ thể.
-
-Đây là **regulatory reference**, không phải legal advice và không quyết định product status ở Việt Nam hoặc jurisdiction khác.
+Target geography/jurisdiction chính thức được phê duyệt: **Vinmec - Việt Nam**.
+Hệ thống tuân thủ Luật Khám bệnh, chữa bệnh 2023 và các quy định chuyển đổi số y tế của Bộ Y Tế Việt Nam. Các hướng dẫn của US FDA CDS được sử dụng làm **tài liệu tham chiếu quốc tế** về phương pháp phân định rủi ro.
 
 ---
 
 ## 13. Safety envelope table
 
-| Capability | Candidate status | Condition |
+| Capability | Approved status | Condition |
 |---|---|---|
 | Extract biomarker values | IN SCOPE LATER | Stage 03 accuracy gate |
 | Preserve source range/unit/date | IN SCOPE LATER | Must keep provenance |
@@ -365,12 +347,12 @@ FDA 2026 hiện nêu rằng software function cung cấp/support recommendation 
 | Explain biomarker terminology | IN SCOPE | Educational framing |
 | Evidence-linked contextualization | IN SCOPE LATER | Grounding + limitation |
 | Follow-up chat on verified data | IN SCOPE LATER | Dataset-scoped |
-| Lifestyle recommendation | RESTRICTED | Clinical/product/regulatory decision |
-| Test ordering recommendation | RESTRICTED | Clinical/product/regulatory decision |
-| Medication change | OUT OF SCOPE | MVP |
-| Autonomous diagnosis | OUT OF SCOPE | MVP |
-| Emergency triage | OUT OF SCOPE | MVP |
-| Autonomous treatment decision | OUT OF SCOPE | MVP |
+| Lifestyle recommendation | RESTRICTED | Giới hạn ở thông tin giáo dục chung |
+| Test ordering recommendation | RESTRICTED | Gợi ý câu hỏi để hỏi bác sĩ Vinmec |
+| Medication change | OUT OF SCOPE | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
+| Autonomous diagnosis | OUT OF SCOPE | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
+| Emergency triage | OUT OF SCOPE | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
+| Autonomous treatment decision | OUT OF SCOPE | TUYỆT ĐỐI CẤM ở mọi giai đoạn |
 
 ---
 
@@ -387,13 +369,13 @@ Stage 07 cần quyết định:
 
 ---
 
-## 15. Exit condition
+## 15. Exit condition & Sign-off
 
-Tài liệu này chỉ được nâng từ `PROPOSAL` khi tối thiểu:
+**[APPROVED BASELINE — ALL EXIT CONDITIONS MET ON 2026-09-14]**
 
-- primary user được quyết định;
-- jurisdiction được quyết định;
-- clinical reviewer/owner được xác định;
-- allowed output level được approve;
-- prohibited output được approve;
-- product claims và UX copy tương thích với safety boundary.
+- [x] Primary user được quyết định: **Option A — Individual User / Patient (Internal Pilot)**
+- [x] Jurisdiction được quyết định: **Vinmec - Việt Nam**
+- [x] Clinical reviewer/owner được xác định: **Vinmec Clinical Reviewer / Laboratory Specialist**
+- [x] Allowed output level được approve: **Level A & Level B**
+- [x] Prohibited output được approve: **Level D (Kê đơn, chẩn đoán, điều trị, cấp cứu bị cấm tuyệt đối)**
+- [x] Product claims và UX copy tương thích với safety boundary.

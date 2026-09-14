@@ -1,26 +1,20 @@
 # BioMarker Agent — Users, Use Cases & Non-Goals
 
-> **Status:** PROPOSAL v0.1  
+> **Status:** APPROVED BASELINE v1.0  
+> **Approved on:** 2026-09-14  
 > **Stage:** 01  
 > **Purpose:** Tách “người dùng muốn đạt outcome gì” khỏi “hệ thống sẽ dùng công nghệ gì”.
 
 ---
 
-## 1. User model chưa được freeze
+## 1. User model chính thức
 
-**[TEAM DECISION REQUIRED]**
+**[APPROVED DECISION — TD-01 & TD-01B]**
 
-Primary user chưa được authoritative source xác nhận.
-
-Vì vậy tài liệu dùng các actor candidate:
-
-- **Individual User** — người xem dữ liệu của chính mình hoặc dữ liệu được phép xem.
-- **Healthcare Professional** — người có chuyên môn dùng output như một nguồn hỗ trợ review.
-- **Clinical Reviewer** — người review safety rules, wording và evaluation.
-- **Product/Admin Operator** — người quản lý product configuration ở mức được approve.
-- **External Lab/Clinical System** — nguồn dữ liệu trong tương lai, nếu integration được xác nhận.
-
-Không actor nào tự động có permission chỉ vì có một resource ID.
+- **Primary User:** **Individual User / Patient** (Bệnh nhân / Người dùng cá nhân theo dõi kết quả xét nghiệm của mình trong giai đoạn **Internal Pilot** tại Vinmec).
+- **Secondary Actor:** **Healthcare Professional / Clinician** (Bác sĩ điều trị - đối tượng mà người bệnh được khuyến khích trao đổi cùng với bản tóm tắt và câu hỏi do hệ thống gợi ý).
+- **Clinical Reviewer:** Bác sĩ/Chuyên gia xét nghiệm phụ trách thẩm định an toàn nội dung.
+- **External Clinical System:** Hệ thống LIS/EMR Vinmec trong các giai đoạn tích hợp sau.
 
 ---
 

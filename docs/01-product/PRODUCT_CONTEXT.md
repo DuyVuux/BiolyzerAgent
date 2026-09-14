@@ -1,6 +1,7 @@
 # BioMarker Agent — Product Context
 
-> **Status:** PROPOSAL v0.1  
+> **Status:** APPROVED BASELINE v1.0  
+> **Approved on:** 2026-09-14  
 > **Stage:** 01 — Product & Clinical Domain Discovery  
 > **Audience:** Product owner, technical lead, clinical reviewer, engineering team  
 > **Purpose:** Xác định BioMarker Agent đang giải bài toán gì trước khi quyết định data model, runtime, database hoặc tích hợp platform.
@@ -32,7 +33,7 @@ Stage 01 chỉ xác định **product problem và safety envelope**. Stage này 
 
 ## 2. Product statement
 
-**[PROPOSAL]**
+**[APPROVED PRODUCT CLAIM]**
 
 > BioMarker Agent là một sản phẩm hỗ trợ người dùng hiểu dữ liệu biomarker từ báo cáo xét nghiệm theo cách có cấu trúc, có provenance và có evidence; sản phẩm không được xem như một hệ thống tự động đưa ra chẩn đoán hoặc quyết định điều trị.
 
@@ -129,23 +130,17 @@ thay vì model “nhớ” dữ liệu lâm sàng chỉ từ chat history.
 ---
 
 ## 5. Candidate users
+ 
+### 5.1 Primary user & Rollout Mode
 
-### 5.1 Primary user
+**[APPROVED DECISION — TD-01 & TD-01B]**
 
-**[TEAM DECISION REQUIRED — TD-01]**
+Đã chính thức phê duyệt cấu trúc và lựa chọn:
 
-Chưa có source đủ mạnh để khóa primary user.
-
-Các option cần product owner quyết định:
-
-| Option | Mô tả | Ảnh hưởng |
-|---|---|---|
-| A | End user / patient tự xem kết quả | Tăng yêu cầu explainability, safety, consumer wording và regulatory review |
-| B | Healthcare professional | Có thể hỗ trợ review chuyên môn nhưng cần workflow và evidence transparency phù hợp |
-| C | Cả hai, với mode khác nhau | Scope lớn hơn; cần tách output policy và UX |
-| D | Internal pilot/research only | Giảm product surface ban đầu nhưng không xóa nghĩa vụ về data safety |
-
-**Baseline của Stage 01:** chưa khóa A/B/C/D.
+- **TD-01 (Primary User):** **Option A — Individual User / Patient**
+  - *Ý nghĩa:* Người dùng cá nhân/bệnh nhân tự xem và theo dõi kết quả xét nghiệm của mình. Hệ thống ưu tiên tối đa tính dễ hiểu (Explainability), an toàn y tế (Safety boundaries), ngôn ngữ thân thiện (Consumer-grade wording) nhưng có dẫn chứng khoa học chính xác.
+- **TD-01B (Initial Rollout Mode):** **Option A — Internal Pilot**
+  - *Ý nghĩa:* Triển khai thử nghiệm nội bộ trong phạm vi có kiểm soát trước khi mở rộng. Cho phép thẩm định chất lượng AI, quy trình xác minh (verification gate) và thu thập phản hồi chuyên môn trong môi trường an toàn trước khi công bố rộng rãi.
 
 ---
 
@@ -293,16 +288,17 @@ Stage 01 được xem là đạt product-discovery baseline khi team có thể t
 
 ---
 
-## 12. Open decisions quan trọng
+## 12. Approved product decisions
 
-| ID | Question | Status |
-|---|---|---|
-| TD-01 | Primary user là end user, HCP, cả hai hay internal pilot? | TEAM DECISION REQUIRED |
-| TD-02 | Geography/jurisdiction mục tiêu là gì? | TEAM DECISION REQUIRED |
-| TD-03 | Clinical owner/reviewer nào sign off safety wording? | TEAM DECISION REQUIRED |
-| TD-04 | Có cho phép lifestyle/follow-up recommendation không, và ở mức nào? | TEAM DECISION REQUIRED |
-| TD-05 | Có lưu report/dataset sau analysis không? | TEAM DECISION REQUIRED |
-| TD-06 | Có yêu cầu tích hợp clinical system ở MVP không? | OPEN QUESTION |
+| ID | Vấn đề / Quyết định | Lựa chọn chính thức | Trạng thái |
+|---|---|---|---|
+| **TD-01** | Primary User | **Option A — Individual User / Patient** (Bệnh nhân/người dùng tự theo dõi sức khỏe) | **APPROVED (2026-09-14)** |
+| **TD-01B** | Initial Rollout Mode | **Option A — Internal Pilot** (Triển khai thử nghiệm nội bộ trước khi mở rộng) | **APPROVED (2026-09-14)** |
+| **TD-02** | Geography & Jurisdiction | **Vinmec - Việt Nam** (Tuân thủ Luật Khám bệnh, chữa bệnh 2023 & quy chuẩn BYT) | **APPROVED (2026-09-14)** |
+| **TD-03** | Clinical Owner / Sign-off | **Vinmec Clinical Reviewer / Laboratory Specialist** phụ trách duyệt safety wording | **APPROVED (2026-09-14)** |
+| **TD-04** | Follow-up & Recommendation | Level A (Giải thích) & Level B (Evidence) được phép; Level C (Cảnh báo) kiểm soát; Level D (Kê đơn/Chẩn đoán) tuyệt đối cấm | **APPROVED (2026-09-14)** |
+| **TD-05** | Raw PDF Retention Policy | **Tiered Policy:** Dev/Stage 1-8: Ephemeral/Synthetic only (`var/uploads/`); Prod: Delegated storage to Vinmec EMR/Encrypted ObjectStore | **APPROVED (2026-09-14)** |
+| **TD-06** | Clinical System Integration | Defer đến Stage 10/15 khi pipeline cốt lõi hoàn tất | **DEFERRED (Stage 15)** |
 
 ---
 

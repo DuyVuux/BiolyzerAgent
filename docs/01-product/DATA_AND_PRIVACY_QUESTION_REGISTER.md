@@ -52,16 +52,15 @@ Exact classification taxonomy cần security/privacy owner approve ở Stage 14.
 
 Có lưu raw report sau processing không?
 
-Options:
+**[APPROVED DECISION — TD-05 Tiered Retention Policy]**
+- **Giai đoạn Phát triển (Development / Stage 01–08):**
+  - **Quy tắc tuyệt đối (Zero-PHI):** Không lưu file bệnh nhân thật. Chỉ dùng file synthetic ở `testdata/synthetic/lab-reports/`.
+  - **Ephemeral Processing:** File upload thử nghiệm cục bộ lưu tại `var/uploads/` (gitignored) và bị xóa sau khi hoàn tất trích xuất (`DEV_PURGE_UPLOADS_ON_COMPLETION=true`).
+- **Giai đoạn Sản phẩm tại Vinmec (Production / Stage 10+):**
+  - **Delegated Storage:** Báo cáo gốc được lưu trữ trong hạ tầng lưu trữ bảo mật của Vinmec (EMR/PACS/ObjectStore có mã hóa AES-256).
+  - BioMarker chỉ lưu trữ Document Hash (SHA-256) và URI liên kết để truy vết nguồn gốc, không tự ý nhân bản file PDF ra ngoài ranh giới bảo mật của bệnh viện.
 
-- delete after processing;
-- retain for user timeline;
-- retain only with explicit policy/consent;
-- external clinical system remains source of truth.
-
-**Status:** TEAM DECISION REQUIRED
-
-Reference product claims no data retention, nhưng BioMarker không tự adopt policy đó.
+**Status:** APPROVED (2026-09-14)
 
 ---
 
