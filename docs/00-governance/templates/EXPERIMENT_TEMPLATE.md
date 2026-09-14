@@ -50,9 +50,9 @@ Mandatory.
 
 ## Architecture Implication
 
-## Mia Comparison Trigger
+## ai-studio Comparison Trigger
 
-Which Mia subsystem becomes relevant after this result?
+Which ai-studio subsystem becomes relevant after this result?
 
 ## Artifacts
 

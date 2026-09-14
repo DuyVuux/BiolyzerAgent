@@ -8,11 +8,11 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 ## Stage 0 — Architecture Discovery Foundation
 
-**Question:** Chúng ta reasoning, dùng Sources và đối chiếu Mia như thế nào?
+**Question:** Chúng ta reasoning, dùng Sources và đối chiếu ai-studio như thế nào?
 
 **Output:** package hiện tại.
 
-**Mia exposure:** source discipline + high-level skeleton only.
+**ai-studio exposure:** source discipline + high-level skeleton only.
 
 ---
 
@@ -30,7 +30,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 - safety envelope;
 - clinical/regulatory open questions.
 
-**Mia exposure:** minimal. Không để generic platform định nghĩa clinical product.
+**ai-studio exposure:** minimal. Không để generic platform định nghĩa clinical product.
 
 ---
 
@@ -46,7 +46,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 - Dataset & provenance;
 - Claim/Evidence/Report relationship.
 
-**Mia exposure:** compare only generic artifact/state modeling after first-principles model.
+**ai-studio exposure:** compare only generic artifact/state modeling after first-principles model.
 
 ---
 
@@ -58,7 +58,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 **Experiment:** extraction corpus + metrics.
 
-**Mia exposure:** object store/artifact patterns only after ingestion needs appear.
+**ai-studio exposure:** object store/artifact patterns only after ingestion needs appear.
 
 ---
 
@@ -68,7 +68,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 **Outputs:** mapping/validation policy and benchmark.
 
-**Mia exposure:** schema/registry concepts only as reference.
+**ai-studio exposure:** schema/registry concepts only as reference.
 
 ---
 
@@ -78,7 +78,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 **Outputs:** dataset version, timeline, duplicate/change semantics.
 
-**Mia exposure:** canonical state/version concepts.
+**ai-studio exposure:** canonical state/version concepts.
 
 ---
 
@@ -88,7 +88,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 **Outputs:** query/retrieval/ranking/evidence bundle/claim linkage.
 
-**Mia exposure:** Knowledge/tool boundary only after domain pipeline derived.
+**ai-studio exposure:** Knowledge/tool boundary only after domain pipeline derived.
 
 ---
 
@@ -98,7 +98,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 **Outputs:** bounded reasoning workflow, safety checks, unsupported claim policy.
 
-**Mia exposure:** durable tool/model boundary, policies, structured pipeline concept.
+**ai-studio exposure:** durable tool/model boundary, policies, structured pipeline concept.
 
 ---
 
@@ -108,7 +108,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 **Outputs:** eval harness design, gold datasets, error taxonomy, safety/red-team cases.
 
-**Mia exposure:** exit gates/golden eval principles.
+**ai-studio exposure:** exit gates/golden eval principles.
 
 ---
 
@@ -120,7 +120,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 **Rule:** chưa queue/distributed nếu không có evidence.
 
-**Mia exposure:** Eino adapter + patterns after local candidate exists.
+**ai-studio exposure:** Eino adapter + patterns after local candidate exists.
 
 ---
 
@@ -130,7 +130,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 **Outputs:** state inventory, ownership, storage criteria.
 
-**Mia exposure:** PostgreSQL store/objectstore as alternatives/reference.
+**ai-studio exposure:** PostgreSQL store/objectstore as alternatives/reference.
 
 ---
 
@@ -140,7 +140,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 **Experiments:** kill process, duplicate request, partial external call, lost response.
 
-**Mia exposure:** durable invokers/tool effects/recovery tests after failures are observed.
+**ai-studio exposure:** durable invokers/tool effects/recovery tests after failures are observed.
 
 ---
 
@@ -150,7 +150,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 **Outputs:** measured decision matrix + ADR.
 
-**Mia exposure:** deep dive DBOS, worker, Harness, lease, fencing.
+**ai-studio exposure:** deep dive DBOS, worker, Harness, lease, fencing.
 
 ---
 
@@ -160,7 +160,7 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 
 **Outputs:** config lifecycle, pinning, immutable artifact decision, attestation decision.
 
-**Mia exposure:** compiler, canonical JSON, manifest, SHA-256, Ed25519, registry snapshots.
+**ai-studio exposure:** compiler, canonical JSON, manifest, SHA-256, Ed25519, registry snapshots.
 
 ---
 
@@ -178,19 +178,19 @@ Roadmap này phục vụ **build + learning**, không thay thế product deliver
 - upload/report/chat UX;
 - security negative tests.
 
-**Mia exposure:** Gateway/Auth/RBAC/API/SSE/UI patterns.
+**ai-studio exposure:** Gateway/Auth/RBAC/API/SSE/UI patterns.
 
 ---
 
-## Stage 15 — Mia Integration & Production Architecture Closure
+## Stage 15 — ai-studio Integration & Production Architecture Closure
 
-**Question:** final relationship giữa BioMarker và Mia là gì?
+**Question:** final relationship giữa BioMarker và ai-studio là gì?
 
 Evaluate:
 
 - standalone;
-- Mia capability;
-- domain service + Mia orchestration;
+- ai-studio capability;
+- domain service + ai-studio orchestration;
 - hybrid.
 
 **Outputs:**
@@ -202,7 +202,7 @@ Evaluate:
 - NFR plan;
 - integration sequence.
 
-**Mia exposure:** full-system comparison.
+**ai-studio exposure:** full-system comparison.
 
 ---
 

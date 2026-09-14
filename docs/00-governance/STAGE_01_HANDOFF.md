@@ -28,7 +28,7 @@ What requires clinician/human oversight?
 
 - product idea/reference: Biolyzer;
 - organization context;
-- expected Vinmec/Mia relationship nếu đã biết;
+- expected Vinmec/ai-studio relationship nếu đã biết;
 - target users;
 - target geography/jurisdiction nếu có;
 - sample report types nếu có;
@@ -52,7 +52,7 @@ không được tự bịa.
 1. authoritative user/team requirement;
 2. BioMarker product references;
 3. applicable clinical/regulatory standards/guidance;
-4. only then Mia high-level product/platform boundaries.
+4. only then ai-studio high-level product/platform boundaries.
 
 ## Do not open deeply yet
 
@@ -91,7 +91,7 @@ Trước khi bắt đầu Stage 1:
 
 - Artifact Gate Stage 0: PASS
 - Human learning gate Stage 0: recommended PASS
-- no assumption that BioMarker is already a Mia internal capability
+- no assumption that BioMarker is already a ai-studio internal capability
 - no selected runtime/db/queue
 
 ---

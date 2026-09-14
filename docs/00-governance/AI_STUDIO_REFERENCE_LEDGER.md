@@ -1,13 +1,13 @@
-# 10 — Mia Reference Ledger
+# 10 — ai-studio Reference Ledger
 
 ## Purpose
 
-Ledger này không phải backlog để copy Mia.
+Ledger này không phải backlog để copy ai-studio.
 
 Mỗi entry ghi:
 
 ```text
-Mia mechanism
+ai-studio mechanism
 → problem it appears to solve
 → assumptions
 → BioMarker evidence needed
@@ -23,9 +23,9 @@ Disposition:
 
 ---
 
-## MR-001 — PostgreSQL authoritative source of truth
+## AS-001 — PostgreSQL authoritative source of truth
 
-### Mia
+### ai-studio
 
 Skeleton mô tả PostgreSQL quản lý:
 
@@ -65,9 +65,9 @@ Không chọn DB ở Stage 0.
 
 ---
 
-## MR-002 — DBOS queue / execution journal
+## AS-002 — DBOS queue / execution journal
 
-### Mia mechanism
+### ai-studio mechanism
 
 Atomic acceptance + queue/journal + replay/recovery.
 
@@ -91,9 +91,9 @@ Stage 11 fault injection:
 
 ---
 
-## MR-003 — Lease + fencing token
+## AS-003 — Lease + fencing token
 
-### Mia mechanism
+### ai-studio mechanism
 
 Worker acquires lease; fencing prevents stale worker commits.
 
@@ -113,9 +113,9 @@ Stage 12 only if distributed worker model emerges.
 
 ---
 
-## MR-004 — Immutable signed manifest
+## AS-004 — Immutable signed manifest
 
-### Mia mechanism
+### ai-studio mechanism
 
 ```text
 ExecutionDefinition
@@ -145,9 +145,9 @@ Stage 13:
 
 ---
 
-## MR-005 — Eino as adapter, not authority
+## AS-005 — Eino as adapter, not authority
 
-### Mia mechanism
+### ai-studio mechanism
 
 Platform Harness controls lifecycle; Eino runs in-memory graph.
 
@@ -167,7 +167,7 @@ Stage 9 evaluates simplest runtime first.
 
 ---
 
-## MR-006 — DurableModelInvoker / DurableToolInvoker
+## AS-006 — DurableModelInvoker / DurableToolInvoker
 
 ### Problem solved
 
@@ -185,7 +185,7 @@ Evaluate Stage 7/11.
 
 ---
 
-## MR-007 — Scoped Ports
+## AS-007 — Scoped Ports
 
 ### Problem solved
 
@@ -203,7 +203,7 @@ Security design Stage 14.
 
 ---
 
-## MR-008 — Redis Streams for realtime SSE only
+## AS-008 — Redis Streams for realtime SSE only
 
 ### Problem solved
 
@@ -224,9 +224,9 @@ Product UX:
 
 ---
 
-## MR-009 — React pattern
+## AS-009 — React pattern
 
-### Mia
+### ai-studio
 
 `react@1` bounded reasoning/action loop.
 
@@ -242,7 +242,7 @@ Not a permanent rejection.
 
 ---
 
-## MR-010 — Structured Pipeline pattern
+## AS-010 — Structured Pipeline pattern
 
 ### Problem solved
 
@@ -271,9 +271,9 @@ Must derive workflow independently in Stages 3–9 before comparing implementati
 
 ---
 
-## MR-011 — Object Store abstraction
+## AS-011 — Object Store abstraction
 
-### Mia
+### ai-studio
 
 LocalFS + S3/MinIO adapters.
 
@@ -299,7 +299,7 @@ Stage 10:
 
 ---
 
-## MR-012 — Registry (models/tools/schemas/skills/policies/MCP)
+## AS-012 — Registry (models/tools/schemas/skills/policies/MCP)
 
 ### Problem solved
 
@@ -317,7 +317,7 @@ Avoid platform-building before actual multiplicity requires it.
 
 ---
 
-## MR-013 — Compiler
+## AS-013 — Compiler
 
 ### Problem solved
 
@@ -331,7 +331,7 @@ First establish whether authoring/runtime representations differ.
 
 ---
 
-## MR-014 — 15 exit gates / hardening tests
+## AS-014 — 15 exit gates / hardening tests
 
 ### Problem solved
 
@@ -356,7 +356,7 @@ BioMarker should develop gates gradually, domain-specific:
 
 ---
 
-## MR-015 — Frontend Visual Canvas / YAML Studio
+## AS-015 — Frontend Visual Canvas / YAML Studio
 
 ### Problem solved
 
@@ -370,7 +370,7 @@ Likely not a first-order domain problem.
 
 **REJECT FOR EARLY STAGES / DEFER PRODUCT NEED**
 
-If BioMarker later becomes configurable product inside Mia, reuse Mia Studio is more likely than rebuilding Studio.
+If BioMarker later becomes configurable product inside ai-studio, reuse ai-studio Studio is more likely than rebuilding Studio.
 
 ---
 

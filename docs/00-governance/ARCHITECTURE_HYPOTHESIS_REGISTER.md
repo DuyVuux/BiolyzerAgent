@@ -45,7 +45,7 @@ Giảm platform complexity để tập trung domain pipeline.
 **Evidence for**
 
 - chưa có confirmed workload/uptime/recovery requirement trong Stage 0;
-- historical Mia cũng từng defer generic async/distributed runtime khi chưa có use case.
+- historical ai-studio cũng từng defer generic async/distributed runtime khi chưa có use case.
 
 **Evidence against**
 
@@ -63,7 +63,7 @@ Bất kỳ điều nào:
 
 **If false**
 
-Stage 12 evaluate queue/durable workflow candidates, including Mia DBOS design.
+Stage 12 evaluate queue/durable workflow candidates, including ai-studio DBOS design.
 
 **Target Stage:** 11–12  
 **Status:** OPEN
@@ -180,7 +180,7 @@ Product use case không cần persistence/review/reproduction và safety authori
 
 **Statement**
 
-Chưa đủ evidence để chọn PostgreSQL cho BioMarker chỉ vì Mia dùng nó.
+Chưa đủ evidence để chọn PostgreSQL cho BioMarker chỉ vì ai-studio dùng nó.
 
 **Falsification**
 
@@ -206,7 +206,7 @@ Security/approval/supply-chain/offline worker requirements đòi cryptographic a
 
 ---
 
-## H-0010 — BioMarker không nên rebuild generic Mia Studio ở MVP
+## H-0010 — BioMarker không nên rebuild generic ai-studio Studio ở MVP
 
 **Statement**
 

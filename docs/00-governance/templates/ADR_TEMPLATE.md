@@ -18,7 +18,7 @@ YYYY-MM-DD
 - authority lane:
 - related open questions:
 - related hypotheses:
-- Mia references:
+- ai-studio references:
 
 ## Context
 

@@ -2,7 +2,7 @@
 
 > **Status:** PROPOSED TARGET SKELETON v0.1  
 > **Project:** BioMarker Agent  
-> **Purpose:** Định nghĩa skeleton chuẩn cho repository mới, phục vụ đồng thời **học kiến trúc**, **thực nghiệm**, **build sản phẩm**, **đánh giá AI/clinical quality**, và **tích hợp có kiểm soát với Mia Platform** về sau.  
+> **Purpose:** Định nghĩa skeleton chuẩn cho repository mới, phục vụ đồng thời **học kiến trúc**, **thực nghiệm**, **build sản phẩm**, **đánh giá AI/clinical quality**, và **tích hợp có kiểm soát với ai-studio Platform** về sau.  
 > **Important:** Tài liệu này là **target repository structure**, không có nghĩa mọi thư mục phải được tạo ngay từ Stage 0. Mỗi phần phải được materialize khi Stage tương ứng chứng minh cần.
 
 ---
@@ -29,7 +29,7 @@ experiment / benchmark
         ↓
 materialize minimum code structure
         ↓
-compare with Mia reference architecture
+compare with ai-studio reference architecture
         ↓
 KEEP / ADAPT / REJECT / DEFER
         ↓
@@ -48,7 +48,7 @@ Skeleton vì vậy phải đạt đồng thời các mục tiêu:
 6. **Evaluation-first** — `evals/` là first-class citizen, tách khỏi unit/integration test.
 7. **Clinical safety first-class** — Security và Clinical Safety là hai concern khác nhau.
 8. **AI-assisted nhưng engineer-owned** — repository có governance rõ cho AI coding agents.
-9. **Mia-compatible nhưng Mia-independent** — không khóa BioMarker vào implementation nội bộ của Mia trước Stage 15.
+9. **ai-studio-compatible nhưng ai-studio-independent** — không khóa BioMarker vào implementation nội bộ của ai-studio trước Stage 15.
 10. **Production path rõ nhưng không giả vờ production-ready.**
 
 ---
@@ -346,7 +346,7 @@ biomarker/
 │   │   ├── AI_ZIP_GENERATION_RULES.md
 │   │   ├── SOURCE_AUTHORITY_AND_CONFLICT_PROTOCOL.md
 │   │   ├── ARCHITECTURE_HYPOTHESIS_REGISTER.md
-│   │   ├── MIA_REFERENCE_LEDGER.md
+│   │   ├── AI_STUDIO_REFERENCE_LEDGER.md
 │   │   └── MASTER_ROADMAP.md
 │   │
 │   ├── 01-product/
@@ -370,7 +370,7 @@ biomarker/
 │   │   ├── DATA_FLOW.md
 │   │   ├── STATE_OWNERSHIP.md
 │   │   ├── RUNTIME_ARCHITECTURE.md
-│   │   └── MIA_INTEGRATION.md
+│   │   └── AI_STUDIO_INTEGRATION.md
 │   │
 │   ├── 04-security/
 │   │   ├── SECURITY_AND_PRIVACY.md
@@ -947,7 +947,7 @@ Không nhét canonical schemas vào:
 apps/api/internal/...
 ```
 
-vì Web, eval harness, fixtures hoặc future Mia integration đều có thể cần đọc chúng.
+vì Web, eval harness, fixtures hoặc future ai-studio integration đều có thể cần đọc chúng.
 
 Baseline:
 
@@ -1705,14 +1705,14 @@ BioMarker domain
 
 ---
 
-# 36. Where Mia integration belongs
+# 36. Where ai-studio integration belongs
 
-Không đưa Mia-specific types vào domain core.
+Không đưa ai-studio-specific types vào domain core.
 
 Tương lai:
 
 ```text
-internal/platform/mia/
+internal/platform/ai-studio/
 ```
 
 hoặc một adapter package tương đương.
@@ -1720,9 +1720,9 @@ hoặc một adapter package tương đương.
 Flow:
 
 ```text
-Mia contract
+ai-studio contract
     ↓
-Mia adapter
+ai-studio adapter
     ↓
 BioMarker application/domain
 ```
@@ -1756,7 +1756,7 @@ vẫn test/run độc lập.
 | **12** | `apps/worker` / durable infrastructure only if justified |
 | **13** | config/version/reproducibility contracts |
 | **14** | `apps/web`, OpenAPI, `packages/api-client`, security/API |
-| **15** | Mia adapter + deployment/operations closure |
+| **15** | ai-studio adapter + deployment/operations closure |
 
 ---
 
@@ -1784,7 +1784,7 @@ biomarker/
 │       ├── AI_ZIP_GENERATION_RULES.md
 │       ├── SOURCE_AUTHORITY_AND_CONFLICT_PROTOCOL.md
 │       ├── ARCHITECTURE_HYPOTHESIS_REGISTER.md
-│       ├── MIA_REFERENCE_LEDGER.md
+│       ├── AI_STUDIO_REFERENCE_LEDGER.md
 │       └── MASTER_ROADMAP.md
 │
 ├── experiments/
@@ -1830,7 +1830,7 @@ Mà vì:
 
 > **Stage hiện tại chưa chứng minh chúng cần.**
 
-Mia Reference Ledger sẽ giữ chúng như solutions cần nghiên cứu khi problem tương ứng xuất hiện.
+ai-studio Reference Ledger sẽ giữ chúng như solutions cần nghiên cứu khi problem tương ứng xuất hiện.
 
 ---
 
@@ -1991,7 +1991,7 @@ minimum runtime
         ↓
 platform capabilities earned by evidence
         ↓
-Mia integration
+ai-studio integration
 ```
 
 Không có bên nào “đúng tuyệt đối”.
@@ -2000,7 +2000,7 @@ Chúng đại diện cho hai maturity/problem contexts khác nhau.
 
 Mục tiêu của BioMarker là:
 
-> **đến cuối Stage 15, mọi complexity giống Mia mà BioMarker giữ lại đều phải có một lý do mà chính chúng ta đã khám phá và kiểm chứng.**
+> **đến cuối Stage 15, mọi complexity giống ai-studio mà BioMarker giữ lại đều phải có một lý do mà chính chúng ta đã khám phá và kiểm chứng.**
 
 ---
 
@@ -2036,7 +2036,7 @@ DEFER to Stage 12
 Database:
 DEFER to Stage 10
 
-Mia integration:
+ai-studio integration:
 DEFER architecture commitment to Stage 15
 
 Canonical contracts:
@@ -2107,7 +2107,7 @@ Các reference dưới đây chỉ hỗ trợ toolchain/workspace decisions; ch�
 | PostgreSQL | **DEFER — Stage 10** |
 | Worker / DBOS / durable queue | **DEFER — Stage 12** |
 | Manifest / attestation | **DEFER — Stage 13** |
-| Mia coupling | **DEFER — Stage 15** |
+| ai-studio coupling | **DEFER — Stage 15** |
 | `evals/` top-level | **RECOMMENDED CORE** |
 | `experiments/` top-level | **RECOMMENDED CORE** |
 | Security separate from clinical safety | **RECOMMENDED CORE** |

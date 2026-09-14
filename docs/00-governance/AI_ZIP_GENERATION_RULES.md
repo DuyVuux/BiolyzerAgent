@@ -10,7 +10,7 @@
 ### 1.1. Root-Relative Path Principle (Tuyệt đối không bọc folder ngoài)
 * **FORBIDDEN (CẤM):** Không được bọc các file bên trong một thư mục gốc ảo như `stage-01-product-discovery/docs/...`.
 * **MANDATORY (BẮT BUỘC):** Mọi đường dẫn trong file zip phải bắt đầu tương đối trực tiếp từ **Monorepo Root**.
-* **Kiểm tra Unzip:** Khi giải nén lệnh `unzip stage-XX.zip -d /workspace/projects/MialyzerAgent/`, các file phải rơi chính xác vào cây thư mục của dự án:
+* **Kiểm tra Unzip:** Khi giải nén lệnh `unzip stage-XX.zip -d /workspace/projects/BiolyzerAgent/`, các file phải rơi chính xác vào cây thư mục của dự án:
   - `docs/01-product/PRODUCT_CONTEXT.md` (ĐÚNG)
   - `stage-01/docs/01-product/PRODUCT_CONTEXT.md` (SAI)
 

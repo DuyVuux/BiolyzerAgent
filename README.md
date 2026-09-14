@@ -26,7 +26,7 @@ In accordance with our architecture principles, folders and components are mater
 | **Stage 3–8** | Ingestion, normalization, evidence, safety & evals | Queued |
 | **Stage 9** | Go production runtime & backend API | Queued |
 | **Stage 14** | Web frontend & client package | Queued |
-| **Stage 15** | Controlled Mia Platform integration | Queued |
+| **Stage 15** | Controlled ai-studio Platform integration | Queued |
 
 See [MASTER_ROADMAP.md](./docs/00-governance/MASTER_ROADMAP.md) for full 16-stage roadmap details.
 

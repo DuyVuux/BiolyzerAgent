@@ -1,24 +1,24 @@
-# MIA-CMP-XXXX — <Concern>
+# AI-STUDIO-CMP-XXXX — <Concern>
 
 ## BioMarker preliminary design
 
-Write this **before** reading the detailed Mia implementation.
+Write this **before** reading the detailed ai-studio implementation.
 
 ## BioMarker requirement
 
 ## BioMarker evidence
 
-## Mia subsystem
+## ai-studio subsystem
 
 Path / artifact:
 
-## What problem does Mia solve?
+## What problem does ai-studio solve?
 
 Explain in plain language before describing code.
 
-## Mia mechanism
+## ai-studio mechanism
 
-## Mia assumptions
+## ai-studio assumptions
 
 Examples:
 
@@ -39,9 +39,9 @@ Examples:
 
 ## Complexity delta
 
-What does Mia handle that BioMarker currently does not need?
+What does ai-studio handle that BioMarker currently does not need?
 
-What does BioMarker need that Mia does not model?
+What does BioMarker need that ai-studio does not model?
 
 ## Disposition
 

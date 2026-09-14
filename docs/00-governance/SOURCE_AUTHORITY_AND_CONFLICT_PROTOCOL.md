@@ -6,8 +6,8 @@ BioMarker có ít nhất bốn loại nguồn:
 
 1. nguồn yêu cầu của chính BioMarker;
 2. chuẩn clinical/safety/regulatory;
-3. Mia semantic/design documents;
-4. Mia current implementation skeleton.
+3. ai-studio semantic/design documents;
+4. ai-studio current implementation skeleton.
 
 Nếu xếp tất cả vào một danh sách "file A > file B > file C", ta gặp category error.
 
@@ -119,31 +119,31 @@ Experiment performance không có quyền ghi đè lane này.
 
 ---
 
-## Lane C — Mia / Platform Integration Authority
+## Lane C — ai-studio / Platform Integration Authority
 
-Chỉ active khi BioMarker thực sự phải integrate với Mia concern tương ứng.
+Chỉ active khi BioMarker thực sự phải integrate với ai-studio concern tương ứng.
 
 Precedence:
 
 ```text
-Accepted/approved Mia external integration contract
+Accepted/approved ai-studio external integration contract
 >
-Approved Mia platform decision
+Approved ai-studio platform decision
 >
-Canonical Mia semantic contract
+Canonical ai-studio semantic contract
 >
-Proposed Mia contract
+Proposed ai-studio contract
 >
-Current Mia implementation behavior
+Current ai-studio implementation behavior
 >
-Historical Mia proposal
+Historical ai-studio proposal
 >
 Inference from code
 ```
 
 Quan trọng:
 
-> Internal Mia implementation chỉ trở thành BioMarker constraint nếu integration contract yêu cầu.
+> Internal ai-studio implementation chỉ trở thành BioMarker constraint nếu integration contract yêu cầu.
 
 ---
 
@@ -238,7 +238,7 @@ Evidence lane có thể thay architecture hypothesis nhưng không tự sửa pr
 
 ## Lane G — Reference Architecture
 
-Mia skeleton thuộc lane này **mặc định**.
+ai-studio skeleton thuộc lane này **mặc định**.
 
 Reference answers:
 
@@ -286,7 +286,7 @@ Interpretation:
 
 ## C3 — Scope difference
 
-Mia general platform cần feature mà BioMarker MVP chưa cần.
+ai-studio general platform cần feature mà BioMarker MVP chưa cần.
 
 Không phải conflict.
 
@@ -334,9 +334,9 @@ Engineer proposal không thắng.
 
 ---
 
-# 6. Mia-specific rule
+# 6. ai-studio-specific rule
 
-Historical Mia docs explicitly used:
+Historical ai-studio docs explicitly used:
 
 ```text
 PROPOSAL ≠ APPROVED DECISION
@@ -348,10 +348,10 @@ Current skeleton, ngược lại, là evidence của implementation.
 Khi đối chiếu:
 
 ```text
-Mia historical doc
+ai-studio historical doc
 → why / semantic intent / unresolved decisions
 
-Mia skeleton
+ai-studio skeleton
 → how / implementation mechanics / later maturity evidence
 
 BioMarker
@@ -362,7 +362,7 @@ BioMarker
 
 # 7. Example: DBOS
 
-Historical Mia runtime spec từng defer:
+Historical ai-studio runtime spec từng defer:
 
 - generic async job platform;
 - distributed queue topology;
@@ -380,7 +380,7 @@ NOT:
 BioMarker must use DBOS.
 
 BUT:
-Mia later acquired requirements/evidence that justified a durable execution mechanism.
+ai-studio later acquired requirements/evidence that justified a durable execution mechanism.
 ```
 
 BioMarker action:
@@ -400,7 +400,7 @@ if hypothesis false, evaluate DBOS and alternatives
 
 # 8. Example: signed manifest
 
-Mia skeleton:
+ai-studio skeleton:
 
 ```text
 definition
@@ -429,7 +429,7 @@ Decision nằm Stage 13.
 
 Nếu AI viết:
 
-> "Mia uses PostgreSQL, therefore BioMarker will use PostgreSQL."
+> "ai-studio uses PostgreSQL, therefore BioMarker will use PostgreSQL."
 
 → violation.
 
