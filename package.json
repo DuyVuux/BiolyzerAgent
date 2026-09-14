@@ -1,0 +1,24 @@
+{
+  "name": "biomarker",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@11.10.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint:js": "turbo run lint",
+    "lint:go": "test -f go.mod && go vet ./... || true",
+    "lint": "pnpm lint:js && pnpm lint:go",
+    "typecheck": "turbo run typecheck",
+    "test:js": "turbo run test",
+    "test:go": "test -f go.mod && go test ./... || true",
+    "test": "pnpm test:js && pnpm test:go",
+    "check": "pnpm lint && pnpm typecheck && pnpm test"
+  },
+  "devDependencies": {
+    "turbo": "2.10.12"
+  }
+}

@@ -1,0 +1,33 @@
+# Node
+node_modules/
+.pnpm-store/
+.turbo/
+dist/
+coverage/
+
+# Go
+*.test
+*.out
+
+# App build
+**/.out/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Local runtime data
+var/
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# OS
+.DS_Store
+
+# Generated local reports if policy says non-committed
+evals/reports/local/
