@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/evidence/evidence-claim.schema.json",
+  "title": "BioMarker EvidenceClaim",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "claim_id",
+    "claim_text",
+    "proposition_key",
+    "status",
+    "links"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "claim_id": {
+      "type": "string"
+    },
+    "claim_text": {
+      "type": "string"
+    },
+    "proposition_key": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "supported",
+        "conflicted",
+        "unsupported",
+        "context_only",
+        "claim_identity_conflict"
+      ]
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_id",
+          "passage_id",
+          "relation"
+        ],
+        "properties": {
+          "source_id": {
+            "type": "string"
+          },
+          "passage_id": {
+            "type": "string"
+          },
+          "relation": {
+            "enum": [
+              "supports",
+              "contradicts",
+              "context_only",
+              "not_entailed"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

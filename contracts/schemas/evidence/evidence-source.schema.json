@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/evidence/evidence-source.schema.json",
+  "title": "BioMarker EvidenceSource",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_id",
+    "canonical_locator",
+    "identifiers",
+    "title",
+    "source_type",
+    "content_digest",
+    "integrity_state",
+    "post_publication_state"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonical_locator": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identifiers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "publisher": {
+      "type": "string"
+    },
+    "publication_date": {
+      "type": "string"
+    },
+    "source_type": {
+      "enum": [
+        "guideline",
+        "practice_guideline",
+        "consensus_statement",
+        "evidence_synthesis",
+        "systematic_review",
+        "meta_analysis",
+        "randomized_controlled_trial",
+        "clinical_trial",
+        "observational_study",
+        "case_report",
+        "review",
+        "other"
+      ]
+    },
+    "version": {
+      "type": "string"
+    },
+    "content_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "raw_content_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "integrity_state": {
+      "enum": [
+        "verified",
+        "incomplete",
+        "identity_conflict"
+      ]
+    },
+    "post_publication_state": {
+      "enum": [
+        "active",
+        "corrected",
+        "expression_of_concern",
+        "retracted",
+        "unknown"
+      ]
+    },
+    "passages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "passage_id",
+          "locator",
+          "content_digest",
+          "proposition_key",
+          "relation_direction"
+        ],
+        "properties": {
+          "passage_id": {
+            "type": "string"
+          },
+          "locator": {
+            "type": "string"
+          },
+          "content_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "text": {
+            "type": "string"
+          },
+          "proposition_key": {
+            "type": "string"
+          },
+          "relation_direction": {
+            "enum": [
+              "supports",
+              "contradicts",
+              "context_only"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

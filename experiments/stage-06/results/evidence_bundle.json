@@ -1,0 +1,211 @@
+{
+  "schema_version": "1.0",
+  "bundle_id": "evidence-f4454a7ff65ce583",
+  "experimental_content_sha256": "f4454a7ff65ce5838fce013e47f0179d59a7bca0af41301f6059809ed1701405",
+  "question_id": "q-synth-001",
+  "question_text": "Does synthetic marker pattern P have an association with synthetic outcome O?",
+  "timeline_snapshot_id": "timeline-synthetic-001",
+  "retrieval_policy_version": "evidence-retrieval-policy-v1",
+  "processing_profile": {
+    "profile_id": "evidence-profile-v1",
+    "retrieval_policy": {
+      "policy_id": "evidence-retrieval-policy",
+      "version": "1.0",
+      "digest": "5432e8f8e289660ffb54ccbdbd6d4b186a6459604ee4085217d62d908f5bee3d"
+    },
+    "source_selection_policy": {
+      "policy_id": "evidence-selection-policy",
+      "version": "1.0",
+      "digest": "e7c40c2061f8718c40f175f01546905d12c3c8216f11af3ae3aac6d98190c99b"
+    },
+    "claim_schema": {
+      "schema_id": "https://schemas.biomarker.local/evidence/evidence-claim.schema.json",
+      "version": "1.0",
+      "digest": "98cc747b4e211828ec0ad7859bb617734e34ce47883f0870423d2105591f5f56"
+    },
+    "entailment_policy": {
+      "policy_id": "claim-entailment-and-conflict-policy",
+      "version": "1.0",
+      "digest": "7b966dea60158fb62a75604cee5cdecbac527ed10920501e3f5941e9b6358678"
+    }
+  },
+  "query_intents": [
+    {
+      "query_intent_id": "qi-1",
+      "provider_class": "biomedical_index",
+      "query_text": "synthetic marker P outcome O systematic review",
+      "filters": {
+        "human": true
+      }
+    },
+    {
+      "query_intent_id": "qi-2",
+      "provider_class": "doi_metadata",
+      "query_text": "synthetic marker P outcome O",
+      "filters": {}
+    }
+  ],
+  "retrieval_attempt_ids": [
+    "a1",
+    "a2",
+    "a3"
+  ],
+  "selected_sources": [
+    {
+      "schema_version": "1.0",
+      "source_id": "doi:10.0000/synth.obs.1",
+      "canonical_locator": "doi:10.0000/synth.obs.1",
+      "identifiers": {
+        "doi": "10.0000/synth.obs.1"
+      },
+      "title": "Synthetic observational study",
+      "publisher": "Synthetic Publisher",
+      "publication_date": "2025-05-10",
+      "source_type": "observational_study",
+      "version": "1",
+      "content_digest": "896ed5ded443685ca4ff00d57fe4fbd5eb149b3f38fd628a5c976f9aafb281f4",
+      "integrity_state": "verified",
+      "post_publication_state": "active",
+      "passages": [
+        {
+          "passage_id": "doi:10.0000/synth.obs.1:p1",
+          "locator": "results:p2",
+          "content_digest": "057eb2a78fb7bd40f62e333e65e6f362ecde98d391acde8e7455ad89bf882fc2",
+          "text": "Synthetic data did not support the proposed association.",
+          "proposition_key": "P_ASSOC_O",
+          "relation_direction": "contradicts"
+        }
+      ],
+      "raw_content_sha256": "0ef56bb853033fff131048da1467f8334de419f8229195528ef1219591dbde67"
+    },
+    {
+      "schema_version": "1.0",
+      "source_id": "doi:10.0000/synth.old.1",
+      "canonical_locator": "doi:10.0000/synth.old.1",
+      "identifiers": {
+        "doi": "10.0000/synth.old.1"
+      },
+      "title": "Synthetic retracted source",
+      "publisher": "Synthetic Publisher",
+      "publication_date": "2022-01-01",
+      "source_type": "observational_study",
+      "version": "1",
+      "content_digest": "368d7e71dcea74b1375c5d7ae5a06f94b603c108e5dd73fd1616ff787163550a",
+      "integrity_state": "verified",
+      "post_publication_state": "retracted",
+      "passages": [
+        {
+          "passage_id": "doi:10.0000/synth.old.1:p1",
+          "locator": "results",
+          "content_digest": "881ad6417ebd5f8edfe2c04953bc73c298301870696ef16bdf5a9a4806bc8335",
+          "text": "Synthetic retracted evidence claimed the association.",
+          "proposition_key": "P_ASSOC_O",
+          "relation_direction": "supports"
+        }
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "source_id": "doi:10.0000/synth.review.1",
+      "canonical_locator": "doi:10.0000/synth.review.1",
+      "identifiers": {
+        "doi": "10.0000/synth.review.1",
+        "pmid": "SYNTH1001"
+      },
+      "title": "Synthetic systematic review of marker P and outcome O",
+      "publisher": "Synthetic Publisher",
+      "publication_date": "2026-01-01",
+      "source_type": "systematic_review",
+      "version": "1",
+      "content_digest": "446d6ab99878eb6652421fac18767485c01a71d70d9b3204d5a4cb8eaf5595cf",
+      "integrity_state": "verified",
+      "post_publication_state": "active",
+      "passages": [
+        {
+          "passage_id": "doi:10.0000/synth.review.1:p1",
+          "locator": "abstract:p1",
+          "content_digest": "0eecdd0861321bc8100883a183013897ab57317292c8f5531549ad8ce20d629a",
+          "text": "Synthetic evidence reports an association between marker P and outcome O.",
+          "proposition_key": "P_ASSOC_O",
+          "relation_direction": "supports"
+        }
+      ],
+      "raw_content_sha256": "96ce95c8e5feafc5572799823befdd1c10b6cad1f5da7be3e0899789ab287816"
+    },
+    {
+      "schema_version": "1.0",
+      "source_id": "pmid:SYNTH1003",
+      "canonical_locator": "pmid:SYNTH1003",
+      "identifiers": {
+        "pmid": "SYNTH1003"
+      },
+      "title": "Synthetic unrelated study",
+      "publisher": "Synthetic Publisher",
+      "publication_date": "2024-01-01",
+      "source_type": "clinical_trial",
+      "version": "1",
+      "content_digest": "18d9d3be8c0ee4d50f86b5b427f7a4957597d3182b0c97515a9f87b0634b5f82",
+      "integrity_state": "verified",
+      "post_publication_state": "active",
+      "passages": [
+        {
+          "passage_id": "pmid:SYNTH1003:p1",
+          "locator": "abstract",
+          "content_digest": "f0ba9cf7dc91d5050daaf697e448b68fa9e3835883f3df14e81e28e84a42c050",
+          "text": "This synthetic source addresses a different outcome.",
+          "proposition_key": "P_OTHER",
+          "relation_direction": "supports"
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "schema_version": "1.0",
+      "claim_id": "c1",
+      "claim_text": "Synthetic marker P is associated with synthetic outcome O.",
+      "proposition_key": "P_ASSOC_O",
+      "status": "conflicted",
+      "links": [
+        {
+          "source_id": "doi:10.0000/synth.obs.1",
+          "passage_id": "doi:10.0000/synth.obs.1:p1",
+          "relation": "contradicts"
+        },
+        {
+          "source_id": "doi:10.0000/synth.old.1",
+          "passage_id": "doi:10.0000/synth.old.1:p1",
+          "relation": "not_entailed"
+        },
+        {
+          "source_id": "doi:10.0000/synth.review.1",
+          "passage_id": "doi:10.0000/synth.review.1:p1",
+          "relation": "supports"
+        },
+        {
+          "source_id": "pmid:SYNTH1003",
+          "passage_id": "pmid:SYNTH1003:p1",
+          "relation": "not_entailed"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "claim_id": "c1",
+      "supporting_source_ids": [
+        "doi:10.0000/synth.review.1"
+      ],
+      "contradicting_source_ids": [
+        "doi:10.0000/synth.obs.1"
+      ]
+    }
+  ],
+  "limitations": [
+    "Synthetic Stage-06 entailment uses structured proposition keys.",
+    "Publication type is not treated as certainty of evidence.",
+    "Closed dependency scope enforced under EVID-017.",
+    "Late retrieval cannot mutate frozen bundle under EVID-018."
+  ],
+  "status": "conflicted"
+}

@@ -6,8 +6,8 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![Monorepo](https://img.shields.io/badge/Monorepo-pnpm%20%7C%20Turbo-orange.svg)](./pnpm-workspace.yaml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](./package.json)
-[![Python Tests](https://img.shields.io/badge/Pytest-29%20passed-brightgreen.svg)](./experiments/)
-[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2005%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
+[![Python Tests](https://img.shields.io/badge/Pytest-43%20passed-brightgreen.svg)](./experiments/)
+[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2006%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
 
 [English](./README.md) | **Tiếng Việt**
 
@@ -19,13 +19,14 @@
 2. [Bài toán Lâm sàng & Khung An toàn (Safety Envelope)](#2-bài-toán-lâm-sàng--khung-an-toàn-safety-envelope)
 3. [Đường ống Xử lý Dữ liệu Lâm sàng Toàn trình](#3-đường-ống-xử-lý-dữ-liệu-lâm-sàng-toàn-trình)
 4. [Kỷ luật Kiến trúc 16 Giai đoạn (16-Stage Discipline)](#4-kỷ-luật-kiến-trúc-16-giai-đoạn-16-stage-discipline)
-5. [Đào sâu vào các Stage đã hoàn thành (00–05)](#5-đào-sâu-vào-các-stage-đã-hoàn-thành-0005)
+5. [Đào sâu vào các Stage đã hoàn thành (00–06)](#5-đào-sâu-vào-các-stage-đã-hoàn-thành-0006)
    - [Stage 00: Nền tảng Kiến trúc & Quản trị](#stage-00-nền-tảng-kiến-trúc--quản-trị)
    - [Stage 01: Bối cảnh Sản phẩm & Khung An toàn](#stage-01-bối-cảnh-sản-phẩm--khung-an-toàn)
    - [Stage 02: Mô hình Miền Dấu ấn Sinh học](#stage-02-mô-hình-miền-dấu-ấn-sinh-học)
    - [Stage 03: Khảo sát Trích xuất Xét nghiệm (Ingestion)](#stage-03-khảo-sát-trích-xuất-xét-nghiệm-ingestion)
    - [Stage 04: Chuẩn hóa & Danh pháp Lâm sàng](#stage-04-chuẩn-hóa--danh-pháp-lâm-sàng)
    - [Stage 05: Mô hình Chuỗi Thời gian (Longitudinal Model)](#stage-05-mô-hình-chuỗi-thời-gian-longitudinal-model)
+   - [Stage 06: Công cụ Bằng chứng Khoa học (Scientific Evidence Engine)](#stage-06-công-cụ-bằng-chứng-khoa-học-scientific-evidence-engine)
 6. [Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn](#6-các-bất-biến-miền-nghiệp-vụ-cốt-lõi--rào-chắn-an-toàn)
 7. [Bản đồ Cấu trúc Repository](#7-bản-đồ-cấu-trúc-repository)
 8. [Cài đặt & Xác minh Hệ thống](#8-cài-đặt--xác-minh-hệ-thống)
@@ -97,8 +98,8 @@ flowchart LR
 
     PDF["Báo cáo Xét nghiệm Thô<br/>(PDF Kỹ thuật số / Bản Scan)"]:::step -->|Stage 03 Ingestion| EXT["Quan sát Trích xuất Chuẩn<br/>(Tên địa phương, Kết quả, Đơn vị gốc)"]:::step
     EXT -->|Stage 04 Normalization| NORM["Quan sát Đã Chuẩn hóa<br/>(Mã LOINC v2.83, Đơn vị UCUM, Mức so sánh)"]:::step
-    NORM -->|Stage 05 Longitudinal| TIME["Dòng thời gian Bệnh nhân<br/>(Lineage, 3 đồng hồ, Snapshot bất biến)"]:::currentStep
-    TIME -->|Stage 06 Evidence| EVID["Căn cứ Bằng chứng Khoa học<br/>(Trích dẫn Y văn, Hướng dẫn Y khoa)"]:::futureStep
+    NORM -->|Stage 05 Longitudinal| TIME["Dòng thời gian Bệnh nhân<br/>(Lineage, 3 đồng hồ, Snapshot bất biến)"]:::step
+    TIME -->|Stage 06 Evidence| EVID["Căn cứ Bằng chứng Khoa học<br/>(PubMed/Crossref, Claims & Frozen Bundle)"]:::currentStep
     EVID -->|Stage 07 Safety| SAFE["Cổng An toàn Xác định<br/>(Giới hạn Rủi ro, Bác bỏ Suy đoán)"]:::futureStep
     SAFE -->|Stage 08–09 Runtime| API["Lõi Dịch vụ Go Backend<br/>(Clean Architecture, Native API)"]:::futureStep
     API -->|Stage 14 UI| WEB["Giao diện Bác sĩ Trực quan<br/>(React / TypeScript Interactive UI)"]:::futureStep
@@ -125,8 +126,8 @@ flowchart TD
         S2 --> S3["Stage 03: Khảo sát Trích xuất Xét nghiệm (Ingestion)<br/><b>[HOÀN THÀNH]</b>"]:::done
         S3 --> S4["Stage 04: Chuẩn hóa & Danh pháp Lâm sàng (LOINC/UCUM)<br/><b>[HOÀN THÀNH]</b>"]:::done
         S4 --> S5["Stage 05: Mô hình Chuỗi Thời gian (Longitudinal Model)<br/><b>[HOÀN THÀNH]</b>"]:::done
-        S5 --> S6["Stage 06: Công cụ Bằng chứng Khoa học<br/><b>[TIẾP THEO / ĐANG THỰC HIỆN]</b>"]:::current
-        S6 --> S7["Stage 07: Lập luận & Cổng An toàn Lâm sàng<br/><i>Rào chắn Rủi ro & Bác bỏ Suy đoán</i>"]:::queued
+        S5 --> S6["Stage 06: Công cụ Bằng chứng Khoa học<br/><b>[HOÀN THÀNH]</b>"]:::done
+        S6 --> S7["Stage 07: Lập luận & Cổng An toàn Lâm sàng<br/><b>[TIẾP THEO / SẴN SÀNG]</b>"]:::current
         S7 --> S8["Stage 08: Kiến trúc Đánh giá & Chất lượng (Evals)<br/><i>Bộ Tiêu chí Lâm sàng & Red-teaming</i>"]:::queued
     end
 
@@ -159,7 +160,7 @@ flowchart TD
 | **03** | Khảo sát Trích xuất Xét nghiệm | Tập dữ liệu PDF/OCR benchmark, độ chính xác bộ parser | **HOÀN THÀNH** | [`docs/03-ingestion/`](./docs/03-ingestion/) |
 | **04** | Chuẩn hóa Danh pháp Lâm sàng | Mapping LOINC v2.83, chuẩn hóa UCUM, 4 lớp so sánh | **HOÀN THÀNH** | [`docs/04-normalization/`](./docs/04-normalization/) |
 | **05** | Mô hình Chuỗi Thời gian (Longitudinal) | Timeline bệnh nhân, 3 đồng hồ, phân giải trùng lặp, snapshot | **HOÀN THÀNH** | [`docs/05-longitudinal/`](./docs/05-longitudinal/) |
-| **06** | Công cụ Bằng chứng Khoa học | Truy xuất y văn PubMed, liên kết căn cứ với nhận định | **ĐANG THỰC HIỆN** | [`docs/06-evidence/`](./docs/00-governance/MASTER_ROADMAP.md#stage-6--scientific-evidence-engine) |
+| **06** | Công cụ Bằng chứng Khoa học | Truy xuất y văn PubMed/Crossref, đóng băng gói bằng chứng, quản lý rút bài & xung đột | **HOÀN THÀNH** | [`docs/06-evidence/`](./docs/06-evidence/) |
 | **07** | Lập luận & Cổng An toàn Lâm sàng | Quy trình suy luận có kiểm soát, cổng kiểm soát rủi ro | Chờ kích hoạt | Stage 7 Roadmap Gate |
 | **08** | Kiến trúc Đánh giá & Chất lượng | Bộ dữ liệu đánh giá vàng, tiêu chí chấm điểm, red-team | Chờ kích hoạt | Stage 8 Roadmap Gate |
 | **09** | Go Runtime Đơn tiến trình | Động cơ Go thuần, Clean Architecture, CLI/API | Chờ kích hoạt | Stage 9 Roadmap Gate |
@@ -172,7 +173,7 @@ flowchart TD
 
 ---
 
-## 5. Đào sâu vào các Stage đã hoàn thành (00–05)
+## 5. Đào sâu vào các Stage đã hoàn thành (00–06)
 
 ### Stage 00: Nền tảng Kiến trúc & Quản trị
 Xác lập hiến chương quản trị và ranh giới monorepo polyglot:
@@ -267,6 +268,78 @@ flowchart TD
     KindCheck -->|Comparator: <5, >10| Comp_Out["Chỉ lưu lịch sử phân ngưỡng"]
 ```
 
+### Stage 06: Công cụ Bằng chứng Khoa học (Scientific Evidence Engine)
+Xây dựng cỗ máy bằng chứng khoa học có khả năng truy vết, kiểm toán và đóng băng bất biến, liên kết các câu hỏi lâm sàng về dấu ấn sinh học với y văn chính thống được bình duyệt (PubMed, Crossref) mà không bị trôi dạt dữ liệu (ambient retrieval drift):
+
+#### 1. Đặt vấn đề Lâm sàng & Thất bại của RAG Truyền thống
+Các hệ thống Retrieval-Augmented Generation (RAG) ngây thơ khi áp dụng vào y tế thường gặp phải các rủi ro nguy hiểm:
+- **Ảo giác trích dẫn (Citation Hallucination):** Gán ghép các bài báo có vẻ liên quan mà không chứng minh được quan hệ suy luận logic (*citation ≠ entailment*).
+- **Sử dụng nghiên cứu đã bị rút (Retracted Literature):** Vô tình trích dẫn các ấn phẩm khoa học đã bị đính chính hoặc thu hồi do sai sót số liệu hoặc gian lận nghiên cứu.
+- **Trôi dạt bằng chứng thời gian thực (Ambient Retrieval Drift):** Tìm kiếm tự do trên web trong lúc suy luận lâm sàng, khiến cùng một bệnh án nhưng hai thời điểm khác nhau lại cho ra hai kết luận y khoa trái ngược.
+- **Xóa bỏ bất đồng y văn bằng biểu quyết đa số:** Tự ý gộp hoặc bỏ qua các nghiên cứu đối lập, che giấu sự thiếu đồng thuận trong giới y khoa.
+
+Stage 06 giải quyết triệt để các vấn đề trên thông qua kỷ luật kiến trúc 4 tầng thực thể, hợp đồng dữ liệu máy thẩm quyền tối cao và bộ rào chắn an toàn tất định.
+
+#### 2. Mô hình Phân tách 4 Tầng Thực thể Tuyệt đối
+$$\text{RetrievalAttempt} \neq \text{EvidenceSource} \neq \text{EvidenceClaim} \neq \text{EvidenceBundleSnapshot}$$
+
+1. **`RetrievalAttempt` (Lần truy xuất vật lý):** Đại diện cho một lần tương tác mạng cụ thể tới các dịch vụ chỉ mục bên ngoài (NCBI E-utilities / PubMed API, Crossref API). Bản ghi này lưu vết mã trạng thái HTTP, độ trễ, query intent tối thiểu hóa PHI và thời điểm hoàn tất `completed_at`. Mọi lần thử lại mạng (retries) chỉ tạo thêm các bản ghi `RetrievalAttempt` mới mà tuyệt đối không nhân bản danh tính nguồn y văn.
+2. **`EvidenceSource` (Nguồn y văn khoa học):** Đại diện cho bài báo khoa học, hướng dẫn lâm sàng (clinical guideline) hoặc ấn phẩm y tế chính thức. Được định danh bằng các định danh bền vững (`DOI`, `PMID`). Quản lý song song mã băm byte nhị phân vật lý (`raw_content_sha256`) và mã băm cấu trúc chuẩn hóa (`content_digest`).
+3. **`EvidenceClaim` (Nhận định y khoa cấu trúc):** Mệnh đề lâm sàng cụ thể được trích xuất từ đoạn văn y văn (`EvidencePassage`). Một nhận định chỉ có giá trị khi có quan hệ suy luận tường minh với nguồn: `supports` (ủng hộ), `contradicts` (phản bác), `context_only` (bối cảnh) hoặc `not_entailed` (không liên quan / bác bỏ).
+4. **`EvidenceBundleSnapshot` (Gói bằng chứng đóng băng bất biến):** Tập hợp hoàn chỉnh các nguồn tài liệu, các nhận định và sổ cái xung đột phục vụ trực tiếp cho một câu hỏi lâm sàng. Gói bằng chứng được đóng băng với mã băm SHA-256 xác định (`evidence-[sha256:16]`), đảm bảo Stage 07 suy luận trên một không gian bằng chứng cố định và hoàn toàn không truy xuất mạng tự do.
+
+#### 3. Bộ Hợp đồng Dữ liệu Thẩm quyền Tối cao (`contracts/schemas/evidence/`)
+- [`contracts/schemas/evidence/evidence-bundle.schema.json`](./contracts/schemas/evidence/evidence-bundle.schema.json): Quy định cấu trúc gói bằng chứng, hồ sơ xử lý `EvidenceProcessingProfile` và mốc thời gian đóng băng `frozen_at`.
+- [`contracts/schemas/evidence/evidence-claim.schema.json`](./contracts/schemas/evidence/evidence-claim.schema.json): Quy định cấu trúc nhận định y khoa, quan hệ entailment và trạng thái xung đột `claim_identity_conflict`.
+- [`contracts/schemas/evidence/evidence-source.schema.json`](./contracts/schemas/evidence/evidence-source.schema.json): Quy định cấu trúc nguồn y văn, quản lý định danh bền vững, mã băm kép (`raw_content_sha256`, `content_digest`) và vòng đời bài báo (`active`, `corrected`, `retracted`, `expression_of_concern`).
+- [`contracts/schemas/evidence/retrieval-attempt.schema.json`](./contracts/schemas/evidence/retrieval-attempt.schema.json): Quy định cấu trúc vết tương tác mạng vật lý, cơ chế bảo vệ quyền riêng tư và thời gian hoàn tất `completed_at`.
+
+#### 4. Bốn Trụ cột Kỹ thuật An toàn (Surgical Hardening v0.2)
+1. **Bao đóng Snapshot & Chốt Hồ sơ Xử lý (Profile Closure - Invariants `EVID-018`, `EVID-020`):**
+   - Manifest gói bằng chứng chốt cứng cấu hình `EvidenceProcessingProfile` bao gồm: mã băm SHA-256 của chính sách truy xuất (`retrieval_policy`), chính sách suy luận xung đột (`entailment_policy`), chính sách bài báo bị rút (`retraction_policy`), schema descriptor và phiên bản cỗ máy (`stage-06-v0.2`).
+   - Mốc thời gian `frozen_at` khóa chặt gói bằng chứng. Bất kỳ kết quả truy xuất hoặc nguồn tài liệu nào hoàn tất sau mốc này (`completed_at > frozen_at`) đều bị cô lập hoàn toàn (`frozen_at_isolation = True`), không thể làm biến đổi gói đã chốt.
+   - Mọi thay đổi về chính sách hoặc schema đều sinh ra một Bundle Snapshot ID hoàn toàn mới.
+2. **Tách biệt Mã Băm Nhị phân Vật lý & Digest Cấu trúc (Invariant `EVID-017`):**
+   - Phân tách rõ ràng giữa mã băm byte nhị phân thô (`raw_content_sha256`) của tài liệu tải về (PDF/XML/HTML bytes) và mã băm `content_digest` tính trên chuỗi JSON cấu trúc chuẩn hóa sau khi parse.
+   - Cho phép kiểm tra toàn vẹn chuỗi lưu ký bằng chứng (chain of custody) hoàn toàn độc lập với phiên bản của bộ trích xuất (parser).
+3. **Sổ cái Claim Lũy suy & Khóa Va chạm Cứng (Invariant `EVID-019`):**
+   - Triển khai lớp `ClaimRegistry` trong sổ cái nhận định.
+   - Khi cùng một tiến trình trích xuất lặp lại cùng `claim_id` với mệnh đề giống hệt nhau, hệ thống ghi nhận dạng lũy suy (`idempotent replay`).
+   - Nếu phát hiện cùng `claim_id` nhưng nội dung mệnh đề (`proposition`) hoặc định hướng mâu thuẫn, hệ thống tự động khóa đóng (fail-closed) với trạng thái `claim_identity_conflict`, loại bỏ claim này khỏi việc hỗ trợ suy luận lâm sàng.
+4. **Bảo toàn Xung đột Y văn & Chặn Bài báo Bị rút (Invariants `EVID-007`, `EVID-010`):**
+   - Khi y văn có quan điểm trái chiều, cả nguồn ủng hộ lẫn phản bác đều được lưu giữ trong sổ cái xung đột (`status: conflicted`). Nghiêm cấm tuyệt đối việc dùng biểu quyết đa số để xóa bỏ quan điểm thiểu số.
+   - Các bài báo bị rút (`retracted`) bị cấm hoàn toàn không được làm bằng chứng khẳng định (`retracted_positive_support_rate = 0.0`), chỉ lưu giữ cho lịch sử kiểm toán.
+
+#### 5. Sơ đồ Luồng Xử lý Bằng chứng Khoa học
+```mermaid
+flowchart TD
+    Q["EvidenceQuestion & QueryIntent\n(Tối thiểu hóa ngữ cảnh bệnh nhân - EVID-016)"] --> RA["RetrievalAttempt(s)\n(Gọi vật lý tới PubMed/Crossref API)"]
+    RA --> ES["EvidenceSource Registry\n(DOI/PMID, raw_content_sha256, content_digest, lifecycle)"]
+    ES --> CollCheck{"Cùng danh tính, đổi digest?"}
+    CollCheck -->|Không có metadata revision| FailClosed["Fail Closed: identity_conflict\n(Loại bỏ khỏi bundle được xác minh - EVID-005)"]
+    CollCheck -->|Hợp lệ hoặc có explicit version| Passages["EvidencePassage Locator\n(Section / Abstract / Mệnh đề cấu trúc)"]
+    Passages --> EntailCheck{"Quan hệ Claim - Nguồn (EVID-003)"}
+    EntailCheck -->|Supports| Sup["supports\n(Kiểm tra: chặn nếu là retracted - EVID-007)"]
+    EntailCheck -->|Contradicts| Con["contradicts\n(Bảo toàn trong sổ cái xung đột - EVID-010)"]
+    EntailCheck -->|Context only| Ctx["context_only"]
+    EntailCheck -->|Không liên quan| NotEnt["not_entailed\n(Bác bỏ nhận định không căn cứ)"]
+    Sup & Con & Ctx --> FreezeCheck{"Kiểm tra completed_at <= frozen_at?"}
+    FreezeCheck -->|Truy xuất muộn| LateIso["Cách ly kết quả muộn\n(EVID-018: frozen_at_isolation)"]
+    FreezeCheck -->|Hợp lệ| Bundle["EvidenceBundleSnapshot\n(Đóng băng SHA-256 xác định, bao đóng profile - EVID-020)"]
+    Bundle --> Stg7["Stage 07 Lập luận & Cổng An toàn Lâm sàng\n(Zero Ambient Retrieval)"]
+```
+
+#### 6. Kết quả Benchmark & Đo lường Toàn diện (18/18 Kịch bản)
+Toàn bộ 18 kịch bản kiểm thử lâm sàng tự động (`SC-0601` đến `SC-0618`) đạt tỷ lệ vượt qua tuyệt đối:
+- **Tỷ lệ vượt qua kịch bản (`scenario_pass_rate`):** `1.0` (100% pass trên toàn bộ 18 kịch bản).
+- **Tỷ lệ gom nhầm nguồn (`false_source_merge_rate`):** `0.0` (Không có hiện tượng nhân bản hoặc hợp nhất sai nguồn).
+- **Tỷ lệ chấp nhận nhận định không căn cứ (`unsupported_claim_acceptance_rate`):** `0.0` (Không chấp nhận trích dẫn gán ghép).
+- **Tỷ lệ nghiên cứu bị rút hỗ trợ tích cực (`retracted_positive_support_rate`):** `0.0` (100% nghiên cứu bị rút bị chặn).
+- **Tính tất định của Bundle Snapshot (`bundle_determinism`):** `true` (Mã băm SHA-256 hoàn toàn ổn định và tái lập).
+- **Cách ly truy xuất muộn (`late_retrieval_isolated`):** `true` (Không làm biến đổi bundle đã chốt).
+- **Bao đóng hồ sơ xử lý (`bundle_closure_enforced`):** `true` (Gắn chặt chính sách và schema).
+- **Bộ kiểm thử đơn vị (`pytest experiments/`):** 14/14 tests Stage 06 vượt qua, đóng góp vào tổng số 43/43 tests toàn monorepo.
+
 ---
 
 ## 6. Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn
@@ -289,6 +362,26 @@ flowchart TD
 | **LONG-014** | Timeline snapshot có tính chất bất biến hoàn toàn. | Dữ liệu lịch sử đã được bác sĩ ký duyệt không bao giờ bị sửa đổi đè tại chỗ. |
 | **LONG-015** | Cache và materialized view không bao giờ trở thành bên ghi chính thống. | Ngăn chặn việc tầng đệm hiệu năng làm sai lệch cơ sở dữ liệu lâm sàng chuẩn. |
 | **LONG-016** | Xung đột danh tính nguồn tự động đóng (Fail-closed). | Tái sử dụng danh tính với payload khác nhau mà không có quan hệ revision là xung đột cứng. |
+| **EVID-001** | `RetrievalAttempt` ≠ `EvidenceSource`. | Thử lại mạng không làm nhân bản danh tính khoa học của bài báo. |
+| **EVID-002** | `EvidenceSource` ≠ `EvidenceClaim`. | Một ấn phẩm không đồng nhất với các nhận định rút ra từ ấn phẩm đó. |
+| **EVID-003** | `EvidenceClaim` yêu cầu quan hệ nguồn tường minh trước khi dùng. | Bác bỏ việc trích dẫn gán ghép hoặc các nhận định không có căn cứ y văn. |
+| **EVID-004** | URL đơn thuần không đủ làm danh tính nguồn bằng chứng. | Ưu tiên định danh ổn định (DOI, PMID, locator chính thức). |
+| **EVID-005** | Cùng danh tính + khác digest không có version giải trình sẽ fail-closed. | Ngăn chặn việc nội dung bị biến dạng ngầm hoặc cập nhật không kiểm soát. |
+| **EVID-006** | Thử lại không làm nhân bản nguồn canonical. | Nhiều lần tương tác vật lý đều gom về một nguồn chuẩn duy nhất. |
+| **EVID-007** | Bài báo bị rút không được phép âm thầm hỗ trợ claim tích cực. | Triệt tiêu thông tin y khoa sai lệch từ các nghiên cứu đã bị rút lại. |
+| **EVID-008** | Thứ hạng tìm kiếm không phải là độ chắc chắn bằng chứng. | Mức độ ưu tiên tìm kiếm không đồng nghĩa với thẩm quyền y khoa. |
+| **EVID-009** | Loại hình xuất bản không phải là độ chắc chắn GRADE. | Nhãn Systematic Review không mặc nhiên đảm bảo độ chắc chắn cao. |
+| **EVID-010** | Xung đột bằng chứng bắt buộc phải được bảo toàn. | Giữ nguyên quan điểm trái chiều; nghiêm cấm xóa bỏ bằng biểu quyết đa số. |
+| **EVID-011** | Gói bằng chứng đã đóng băng không được tìm kiếm tự do bên ngoài. | Loại bỏ hiện tượng trôi dạt bằng chứng và đảm bảo khả năng kiểm toán. |
+| **EVID-012** | Định danh gói bằng chứng có tính tất định. | JSON chuẩn hóa có sắp xếp + băm SHA-256 không phụ thuộc thứ tự đầu vào. |
+| **EVID-013** | Thay đổi chính sách tìm kiếm sẽ sinh ra gói snapshot mới. | Thay đổi tham số chính sách dẫn đến một bản ghi snapshot độc lập. |
+| **EVID-014** | Lưu vết snapshot dòng thời gian khi trả lời câu hỏi diễn tiến. | Neo giữ tìm kiếm bằng chứng vào trạng thái dòng thời gian cụ thể của bệnh nhân. |
+| **EVID-015** | Kết quả tìm kiếm cục bộ không được âm thầm đưa vào bundle đã xác minh. | Các lần tìm kiếm bị lỗi hoặc ngắt quãng được đánh dấu `incomplete` và cách ly. |
+| **EVID-016** | Truy vấn gửi ra ngoài phải tối thiểu hóa dữ liệu bệnh nhân. | Tuân thủ tuyệt đối chuẩn HIPAA/GDPR về bảo mật thông tin sức khỏe cá nhân. |
+| **EVID-017** | Mã băm file thô ≠ digest nội dung chuẩn hóa. | Băm byte nhị phân (`raw_content_sha256`) bảo toàn tính nguyên vẹn vật lý; `content_digest` cấu trúc xác minh nội dung chuẩn hóa. |
+| **EVID-018** | Kết quả truy xuất muộn sau khi đóng băng không được vào snapshot. | Các attempt hoặc source hoàn tất sau `frozen_at` sẽ bị fail-closed và không thể sửa đổi gói đã chốt. |
+| **EVID-019** | Xung đột danh tính nhận định tự động khóa (Fail-closed). | Trích xuất trùng lặp claim ID nhưng khác nội dung mệnh đề sẽ bị cô lập ở trạng thái `claim_identity_conflict`. |
+| **EVID-020** | Bao đóng hồ sơ xử lý (Processing Profile Closure). | Mã băm chính sách, mã băm schema và phiên bản engine được chốt cứng bên trong manifest của bundle. |
 
 ---
 
@@ -299,22 +392,26 @@ flowchart TD
 ├── apps/                        # Các ứng dụng triển khai độc lập (Stage 14+)
 │   └── web/                     # Ứng dụng web React / TypeScript cho bác sĩ
 ├── contracts/                   # Hợp đồng Máy Thẩm quyền Tối cao
-│   ├── schemas/                 # JSON Schemas (quan sát biomarker, báo cáo, timeline)
+│   ├── schemas/                 # JSON Schemas (quan sát biomarker, báo cáo, timeline, evidence)
+│   │   ├── clinical/            # Schema báo cáo xét nghiệm, quan sát, timeline
+│   │   └── evidence/            # Schema evidence bundle, claim, source, retrieval attempt
 │   └── openapi/                 # Đặc tả REST API chuẩn OpenAPI 3.1
 ├── docs/                        # Tài liệu Kiến trúc & Miền Lâm sàng
-│   ├── 00-governance/           # Quy tắc quản trị, lộ trình, giao thức xung đột
+│   ├── 00-governance/           # Quy tắc quản trị, lộ trình, văn bản bàn giao stage, giao thức xung đột
 │   ├── 01-product/              # Bối cảnh sản phẩm, khung an toàn, ranh giới cấm
 │   ├── 02-domain/               # Mô hình miền, bất biến, lát cắt nước tiểu
 │   ├── 03-ingestion/            # Khảo sát trích xuất, phân loại lỗi, benchmark parser
 │   ├── 04-normalization/        # Danh mục ánh xạ LOINC, chuyển đổi UCUM, luật so sánh
-│   └── 05-longitudinal/         # Mô hình timeline, chính sách dedup, 3 đồng hồ, mã băm
+│   ├── 05-longitudinal/         # Mô hình timeline, chính sách dedup, 3 đồng hồ, mã băm
+│   └── 06-evidence/             # Cỗ máy bằng chứng, chính sách truy xuất, rút bài, entailment, xếp hạng
 ├── evals/                       # Hệ thống Đánh giá Chất lượng Hạng nhất
 │   ├── benchmarks/              # Bộ dữ liệu lâm sàng chuẩn vàng & tiêu chí chấm điểm
 │   └── harnesses/               # Động cơ chấm điểm tự động & kịch bản red-teaming
 ├── experiments/                 # Mã Thực nghiệm & Thăm dò Kỹ thuật
 │   ├── stage-03/                # Benchmark trích xuất PDF & bộ parser tổng hợp
 │   ├── stage-04/                # Bộ kiểm thử chuẩn hóa LOINC & chuyển đổi UCUM
-│   └── stage-05/                # Bộ kiểm thử lineage, trật tự thời gian và snapshot
+│   ├── stage-05/                # Bộ kiểm thử lineage, trật tự thời gian và snapshot
+│   └── stage-06/                # Bộ kiểm thử sổ cái bằng chứng, va chạm danh tính và bundle
 ├── internal/                    # Triển khai Miền Lõi bằng Go (Stage 09+)
 │   ├── domain/                  # Mô hình nghiệp vụ thuần túy (Không phụ thuộc bên thứ ba)
 │   ├── ports/                   # Giao diện Inbound/Outbound (Clean Architecture)
@@ -322,6 +419,11 @@ flowchart TD
 ├── packages/                    # Các thư viện tiện ích TypeScript dùng chung
 ├── testdata/                    # Dữ liệu Kiểm thử Lâm sàng Tổng hợp
 │   └── synthetic/               # Bộ dữ liệu nhân tạo tuyệt đối (KHÔNG CHỨA PHI THẬT)
+│       ├── stage-02/            # Fixture dữ liệu nước tiểu chuẩn hóa
+│       ├── stage-03/            # Tập tin kiểm thử PDF đa định dạng & scan mờ
+│       ├── stage-04/            # Ca kiểm thử chuẩn hóa và chuyển đổi đơn vị
+│       ├── stage-05/            # Ca kiểm thử trật tự thời gian và trùng lặp
+│       └── stage-06/            # Ca kiểm thử truy xuất bằng chứng, rút bài và va chạm
 ├── AGENTS.md                    # Hướng dẫn bắt buộc dành cho AI Coding Agents
 ├── BIOMARKER_PROJECT_SKELETON_V0.1.md # Bản thiết kế kiến trúc khung tổng thể
 └── package.json                 # Cấu hình workspace Monorepo (pnpm 11 + Turbo)
@@ -352,16 +454,17 @@ pnpm check
 
 ### Chạy Kiểm thử Miền Nghiệp vụ qua từng Stage
 ```bash
-# Thực thi toàn bộ test suite thực nghiệm (Stages 03, 04, 05)
+# Thực thi toàn bộ test suite thực nghiệm (Stages 03, 04, 05, 06)
 pytest experiments/
 ```
 
-Toàn bộ 29 test case miền nghiệp vụ hoàn thành trong `<0.1s`:
+Toàn bộ 43 test case miền nghiệp vụ hoàn thành trong `<0.1s`:
 ```text
-experiments/stage-03/tests/test_parser.py ......                         [ 20%]
-experiments/stage-04/tests/test_normalization.py .........               [ 51%]
-experiments/stage-05/tests/test_longitudinal.py ..............           [100%]
-============================== 29 passed in 0.06s ==============================
+experiments/stage-03/tests/test_parser.py ......                         [ 13%]
+experiments/stage-04/tests/test_normalization.py .........               [ 34%]
+experiments/stage-05/tests/test_longitudinal.py ..............           [ 67%]
+experiments/stage-06/tests/test_evidence.py ..............               [100%]
+============================== 43 passed in 0.08s ==============================
 ```
 
 ---

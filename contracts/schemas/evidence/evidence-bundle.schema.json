@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/evidence/evidence-bundle.schema.json",
+  "title": "BioMarker EvidenceBundleSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "bundle_id",
+    "experimental_content_sha256",
+    "question_id",
+    "question_text",
+    "processing_profile",
+    "query_intents",
+    "retrieval_attempt_ids",
+    "selected_sources",
+    "claims",
+    "conflicts",
+    "limitations",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "bundle_id": {
+      "type": "string",
+      "pattern": "^evidence-[a-f0-9]{16}$"
+    },
+    "experimental_content_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "question_id": {
+      "type": "string"
+    },
+    "question_text": {
+      "type": "string"
+    },
+    "timeline_snapshot_id": {
+      "type": "string"
+    },
+    "frozen_at": {
+      "type": "string"
+    },
+    "retrieval_policy_version": {
+      "type": "string"
+    },
+    "processing_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_id",
+        "retrieval_policy",
+        "source_selection_policy",
+        "claim_schema",
+        "entailment_policy"
+      ],
+      "properties": {
+        "profile_id": {
+          "type": "string"
+        },
+        "retrieval_policy": {
+          "$ref": "#/$defs/PolicyDescriptor"
+        },
+        "source_selection_policy": {
+          "$ref": "#/$defs/PolicyDescriptor"
+        },
+        "claim_schema": {
+          "$ref": "#/$defs/SchemaDescriptor"
+        },
+        "entailment_policy": {
+          "$ref": "#/$defs/PolicyDescriptor"
+        },
+        "claim_extractor": {
+          "$ref": "#/$defs/PolicyDescriptor"
+        },
+        "entailment_model": {
+          "$ref": "#/$defs/PolicyDescriptor"
+        }
+      }
+    },
+    "query_intents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "query_intent_id",
+          "provider_class",
+          "query_text"
+        ],
+        "properties": {
+          "query_intent_id": {
+            "type": "string"
+          },
+          "provider_class": {
+            "type": "string"
+          },
+          "query_text": {
+            "type": "string"
+          },
+          "filters": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "retrieval_attempt_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "selected_sources": {
+      "type": "array",
+      "items": {
+        "$ref": "evidence-source.schema.json"
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "$ref": "evidence-claim.schema.json"
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim_id",
+          "supporting_source_ids",
+          "contradicting_source_ids"
+        ],
+        "properties": {
+          "claim_id": {
+            "type": "string"
+          },
+          "supporting_source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "contradicting_source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "enum": [
+        "verified",
+        "conflicted",
+        "incomplete"
+      ]
+    }
+  },
+  "$defs": {
+    "PolicyDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_id",
+        "version",
+        "digest"
+      ],
+      "properties": {
+        "policy_id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "SchemaDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "version",
+        "digest"
+      ],
+      "properties": {
+        "schema_id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    }
+  }
+}

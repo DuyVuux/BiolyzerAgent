@@ -1,0 +1,106 @@
+{
+  "metrics": {
+    "scenario_pass_rate": 1.0,
+    "false_source_merge_rate": 0.0,
+    "unsupported_claim_acceptance_rate": 0.0,
+    "retracted_positive_support_rate": 0.0,
+    "bundle_determinism": true,
+    "source_collision_fail_closed": true,
+    "claim_collision_fail_closed": true,
+    "conflict_preserved": true,
+    "late_retrieval_isolated": true,
+    "bundle_closure_enforced": true
+  },
+  "scenarios": [
+    {
+      "scenario": "retry_does_not_duplicate_source",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "same_identity_same_digest_idempotent",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "same_identity_different_digest_conflict",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "explicit_source_version_preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "partial_attempt_not_verified",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "retracted_source_not_positive_support",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "supported_claim_linked",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "contradiction_preserved",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "unrelated_citation_not_entailed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "unsupported_claim_rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "retrieval_order_bundle_deterministic",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "policy_change_new_bundle",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "timeline_change_new_bundle",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "late_retrieval_cannot_mutate_frozen_bundle",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "claim_identity_same_payload_idempotent",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "claim_identity_different_payload_conflict",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "processing_profile_change_yields_new_bundle",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "raw_artifact_digest_independent_from_envelope",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

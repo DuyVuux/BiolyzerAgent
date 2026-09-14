@@ -1,0 +1,204 @@
+{
+  "synthetic_only": true,
+  "question": {
+    "question_id": "q-synth-001",
+    "question_text": "Does synthetic marker pattern P have an association with synthetic outcome O?",
+    "timeline_snapshot_id": "timeline-synthetic-001"
+  },
+  "query_intents": [
+    {
+      "query_intent_id": "qi-1",
+      "provider_class": "biomedical_index",
+      "query_text": "synthetic marker P outcome O systematic review",
+      "filters": {
+        "human": true
+      }
+    },
+    {
+      "query_intent_id": "qi-2",
+      "provider_class": "doi_metadata",
+      "query_text": "synthetic marker P outcome O",
+      "filters": {}
+    }
+  ],
+  "sources": [
+    {
+      "logical_ref": "src-review",
+      "canonical_locator": "doi:10.0000/synth.review.1",
+      "identifiers": {
+        "doi": "10.0000/synth.review.1",
+        "pmid": "SYNTH1001"
+      },
+      "title": "Synthetic systematic review of marker P and outcome O",
+      "publisher": "Synthetic Publisher",
+      "publication_date": "2026-01-01",
+      "source_type": "systematic_review",
+      "version": "1",
+      "content": "Synthetic body A. Proposition P_ASSOC_O supported.",
+      "raw_bytes": "PDF_RAW_BINARY_STREAM_FOR_SRC_REVIEW",
+      "post_publication_state": "active",
+      "passages": [
+        {
+          "locator": "abstract:p1",
+          "text": "Synthetic evidence reports an association between marker P and outcome O.",
+          "proposition_key": "P_ASSOC_O",
+          "relation_direction": "supports"
+        }
+      ]
+    },
+    {
+      "logical_ref": "src-observe",
+      "canonical_locator": "doi:10.0000/synth.obs.1",
+      "identifiers": {
+        "doi": "10.0000/synth.obs.1"
+      },
+      "title": "Synthetic observational study",
+      "publisher": "Synthetic Publisher",
+      "publication_date": "2025-05-10",
+      "source_type": "observational_study",
+      "version": "1",
+      "content": "Synthetic body B. Proposition P_ASSOC_O contradicted.",
+      "raw_bytes": "PDF_RAW_BINARY_STREAM_FOR_SRC_OBSERVE",
+      "post_publication_state": "active",
+      "passages": [
+        {
+          "locator": "results:p2",
+          "text": "Synthetic data did not support the proposed association.",
+          "proposition_key": "P_ASSOC_O",
+          "relation_direction": "contradicts"
+        }
+      ]
+    },
+    {
+      "logical_ref": "src-unrelated",
+      "canonical_locator": "pmid:SYNTH1003",
+      "identifiers": {
+        "pmid": "SYNTH1003"
+      },
+      "title": "Synthetic unrelated study",
+      "publisher": "Synthetic Publisher",
+      "publication_date": "2024-01-01",
+      "source_type": "clinical_trial",
+      "version": "1",
+      "content": "Synthetic body C. Different proposition.",
+      "post_publication_state": "active",
+      "passages": [
+        {
+          "locator": "abstract",
+          "text": "This synthetic source addresses a different outcome.",
+          "proposition_key": "P_OTHER",
+          "relation_direction": "supports"
+        }
+      ]
+    },
+    {
+      "logical_ref": "src-retracted",
+      "canonical_locator": "doi:10.0000/synth.old.1",
+      "identifiers": {
+        "doi": "10.0000/synth.old.1"
+      },
+      "title": "Synthetic retracted source",
+      "publisher": "Synthetic Publisher",
+      "publication_date": "2022-01-01",
+      "source_type": "observational_study",
+      "version": "1",
+      "content": "Synthetic retracted body. Proposition P_ASSOC_O supported.",
+      "post_publication_state": "retracted",
+      "passages": [
+        {
+          "locator": "results",
+          "text": "Synthetic retracted evidence claimed the association.",
+          "proposition_key": "P_ASSOC_O",
+          "relation_direction": "supports"
+        }
+      ]
+    },
+    {
+      "logical_ref": "src-late",
+      "canonical_locator": "doi:10.0000/synth.late.1",
+      "identifiers": {
+        "doi": "10.0000/synth.late.1",
+        "pmid": "SYNTH1009"
+      },
+      "title": "Synthetic late retrieved source arriving after bundle freeze",
+      "publisher": "Synthetic Publisher",
+      "publication_date": "2026-03-01",
+      "source_type": "clinical_trial",
+      "version": "1",
+      "content": "Synthetic late retrieved content.",
+      "raw_bytes": "PDF_RAW_BINARY_STREAM_FOR_SRC_LATE",
+      "post_publication_state": "active",
+      "passages": [
+        {
+          "locator": "abstract:p1",
+          "text": "Synthetic late retrieved evidence reports additional context.",
+          "proposition_key": "P_ASSOC_O",
+          "relation_direction": "supports"
+        }
+      ]
+    }
+  ],
+  "attempts": [
+    {
+      "attempt_id": "a1",
+      "query_intent_id": "qi-1",
+      "provider": "synthetic-pubmed",
+      "status": "partial",
+      "started_at": "2026-09-14T09:55:00Z",
+      "completed_at": "2026-09-14T10:00:00Z",
+      "result_source_refs": [
+        "src-review"
+      ],
+      "error_class": "PARTIAL_RESPONSE"
+    },
+    {
+      "attempt_id": "a2",
+      "query_intent_id": "qi-1",
+      "provider": "synthetic-pubmed",
+      "status": "succeeded",
+      "started_at": "2026-09-14T10:00:00Z",
+      "completed_at": "2026-09-14T10:05:00Z",
+      "result_source_refs": [
+        "src-review",
+        "src-observe",
+        "src-unrelated",
+        "src-retracted"
+      ]
+    },
+    {
+      "attempt_id": "a3",
+      "query_intent_id": "qi-2",
+      "provider": "synthetic-crossref",
+      "status": "succeeded",
+      "started_at": "2026-09-14T10:05:00Z",
+      "completed_at": "2026-09-14T10:10:00Z",
+      "result_source_refs": [
+        "src-review",
+        "src-observe"
+      ]
+    },
+    {
+      "attempt_id": "a4_late",
+      "query_intent_id": "qi-1",
+      "provider": "synthetic-pubmed",
+      "status": "succeeded",
+      "started_at": "2026-09-14T10:15:00Z",
+      "completed_at": "2026-09-14T10:20:00Z",
+      "result_source_refs": [
+        "src-late"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "c1",
+      "claim_text": "Synthetic marker P is associated with synthetic outcome O.",
+      "proposition_key": "P_ASSOC_O"
+    },
+    {
+      "claim_id": "c2",
+      "claim_text": "Synthetic marker P certainly causes synthetic outcome O.",
+      "proposition_key": "P_CAUSES_O"
+    }
+  ]
+}

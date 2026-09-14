@@ -6,8 +6,8 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![Monorepo](https://img.shields.io/badge/Monorepo-pnpm%20%7C%20Turbo-orange.svg)](./pnpm-workspace.yaml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](./package.json)
-[![Python Tests](https://img.shields.io/badge/Pytest-29%20passed-brightgreen.svg)](./experiments/)
-[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2005%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
+[![Python Tests](https://img.shields.io/badge/Pytest-43%20passed-brightgreen.svg)](./experiments/)
+[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2006%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
 
 **English** | [Tiếng Việt](./README.vi.md)
 
@@ -19,13 +19,14 @@
 2. [Clinical Problem & Safety Envelope](#2-clinical-problem--safety-envelope)
 3. [End-to-End Clinical Processing Pipeline](#3-end-to-end-clinical-processing-pipeline)
 4. [The 16-Stage Architectural Discipline](#4-the-16-stage-architectural-discipline)
-5. [Deep Dive into Completed Stages (00–05)](#5-deep-dive-into-completed-stages-0005)
+5. [Deep Dive into Completed Stages (00–06)](#5-deep-dive-into-completed-stages-0006)
    - [Stage 00: Architecture Foundation & Governance](#stage-00-architecture-foundation--governance)
    - [Stage 01: Product Context & Safety Envelope](#stage-01-product-context--safety-envelope)
    - [Stage 02: Canonical Biomarker Domain Model](#stage-02-canonical-biomarker-domain-model)
    - [Stage 03: Lab Ingestion Characterization](#stage-03-lab-ingestion-characterization)
    - [Stage 04: Normalization & Clinical Terminology](#stage-04-normalization--clinical-terminology)
    - [Stage 05: Longitudinal Biomarker Model](#stage-05-longitudinal-biomarker-model)
+   - [Stage 06: Scientific Evidence Engine](#stage-06-scientific-evidence-engine)
 6. [Core Domain Invariants & Safety Guardrails](#6-core-domain-invariants--safety-guardrails)
 7. [Repository Layout & Navigation Map](#7-repository-layout--navigation-map)
 8. [Getting Started & Verification](#8-getting-started--verification)
@@ -97,8 +98,8 @@ flowchart LR
 
     PDF["Lab Document<br/>(Digital PDF / Scan)"]:::step -->|Stage 03 Ingestion| EXT["Canonical Observations<br/>(Local names, values, raw units)"]:::step
     EXT -->|Stage 04 Normalization| NORM["Normalized Observations<br/>(LOINC v2.83, UCUM units, Comparability)"]:::step
-    NORM -->|Stage 05 Longitudinal| TIME["Patient Timelines<br/>(Lineage resolution, 3 clocks, snapshots)"]:::currentStep
-    TIME -->|Stage 06 Evidence| EVID["Evidence Grounding<br/>(PubMed citations, guideline bundles)"]:::futureStep
+    NORM -->|Stage 05 Longitudinal| TIME["Patient Timelines<br/>(Lineage resolution, 3 clocks, snapshots)"]:::step
+    TIME -->|Stage 06 Evidence| EVID["Evidence Grounding<br/>(PubMed/Crossref, Claims & Frozen Bundle)"]:::currentStep
     EVID -->|Stage 07 Safety| SAFE["Deterministic Safety Gates<br/>(Bounded reasoning, claim rejection)"]:::futureStep
     SAFE -->|Stage 08–09 Runtime| API["Go Backend Core<br/>(Clean Architecture, Native API)"]:::futureStep
     API -->|Stage 14 UI| WEB["Physician Web Portal<br/>(React / TypeScript Interactive UI)"]:::futureStep
@@ -125,8 +126,8 @@ flowchart TD
         S2 --> S3["Stage 03: Lab Ingestion Characterization<br/><b>[COMPLETED]</b>"]:::done
         S3 --> S4["Stage 04: Normalization & Clinical Terminology<br/><b>[COMPLETED]</b>"]:::done
         S4 --> S5["Stage 05: Longitudinal Biomarker Model<br/><b>[COMPLETED]</b>"]:::done
-        S5 --> S6["Stage 06: Scientific Evidence Engine<br/><b>[NEXT / IN PROGRESS]</b>"]:::current
-        S6 --> S7["Stage 07: Reasoning & Clinical Safety<br/><i>Deterministic Risk Gates & Non-Goals</i>"]:::queued
+        S5 --> S6["Stage 06: Scientific Evidence Engine<br/><b>[COMPLETED]</b>"]:::done
+        S6 --> S7["Stage 07: Reasoning & Clinical Safety<br/><b>[NEXT / READY]</b>"]:::current
         S7 --> S8["Stage 08: Evaluation & Quality Architecture<br/><i>Clinical Benchmarks & Red-Teaming</i>"]:::queued
     end
 
@@ -159,7 +160,7 @@ flowchart TD
 | **03** | Ingestion Characterization | PDF/OCR benchmark corpus, parser accuracy, zero-guess gate | **COMPLETED** | [`docs/03-ingestion/`](./docs/03-ingestion/) |
 | **04** | Terminology Normalization | LOINC v2.83 mapping, UCUM normalization, comparability classes | **COMPLETED** | [`docs/04-normalization/`](./docs/04-normalization/) |
 | **05** | Longitudinal Biomarker Model | Dataset timeline, 3 clocks chronology, deduplication, snapshots | **COMPLETED** | [`docs/05-longitudinal/`](./docs/05-longitudinal/) |
-| **06** | Scientific Evidence Engine | Evidence retrieval, claim citation linkage, guideline bundles | **IN PROGRESS** | [`docs/06-evidence/`](./docs/00-governance/MASTER_ROADMAP.md#stage-6--scientific-evidence-engine) |
+| **06** | Scientific Evidence Engine | Evidence retrieval, claim citation linkage, guideline bundles | **COMPLETED** | [`docs/06-evidence/`](./docs/06-evidence/) |
 | **07** | Reasoning & Clinical Safety | Bounded reasoning workflow, deterministic risk gates | Queued | Stage 7 Roadmap Gate |
 | **08** | Evaluation Architecture | Clinical benchmark datasets, scoring rubrics, red-team harness | Queued | Stage 8 Roadmap Gate |
 | **09** | Single-Process Go Runtime | Native Go domain engine, clean architecture, unified CLI/API | Queued | Stage 9 Roadmap Gate |
@@ -267,6 +268,48 @@ flowchart TD
     KindCheck -->|Comparator: <5, >10| Comp_Out["Preserve threshold history"]
 ```
 
+### Stage 06: Scientific Evidence Engine
+Establishes traceable, frozen evidence packages linking clinical biomarker questions to peer-reviewed literature without ambient retrieval drift:
+- **Four-Layer Entity Separation:**
+  $$\text{RetrievalAttempt} \neq \text{EvidenceSource} \neq \text{EvidenceClaim} \neq \text{EvidenceBundleSnapshot}$$
+  - Physical interaction retries create new `RetrievalAttempt` instances without duplicating canonical scientific sources.
+  - A citation does not equal entailment (`citation ≠ entailment`). Every claim requires an explicit relation (`supports`, `contradicts`, `context_only`, `not_entailed`).
+- **Source Identity & Fail-Closed Collision Policy:**
+  - Stable canonical locators (`DOI`, `PMID`).
+  - Strict tracking of SHA-256 `content_digest` and explicit versioning.
+  - Unexpected content changes under the same unversioned identity trigger `identity_conflict` and fail closed (`source_collision_fail_closed = True`).
+- **Post-Publication Lifecycle & Retraction Safeguard:**
+  - Distinct tracking of `active`, `corrected`, `retracted`, and `expression_of_concern`.
+  - Retracted publications are barred from serving as positive claim support (`retracted_positive_support_rate = 0.0`), preserved only for provenance and audit history.
+- **First-Class Conflict Preservation:**
+  - When medical literature disagrees, both supporting and contradicting sources are preserved in the bundle (`status: conflicted`). No majority-vote consensus erasure.
+- **Appraisal Boundaries:**
+  - Publication types (guidelines, systematic reviews, RCTs, observational studies) are used for search prioritization, not as certainty scores (no informal modified GRADE scores).
+- **Frozen Bundle Snapshot Closure:**
+  - Generates immutable snapshots identified by deterministic SHA-256 hashes (`evidence-[sha256:16]`), ensuring Stage 07 reasons over a frozen evidence package with zero ambient web retrieval.
+  - Bundle manifest explicitly pins the `EvidenceProcessingProfile` (policy digests, schema digests, engine version, and `frozen_at` timestamp).
+  - Late retrieval attempts or sources completed after `frozen_at` are rejected and cannot mutate the frozen bundle (`frozen_at_isolation = True`).
+- **Claim Registry & Collision Policy:**
+  - Enforces idempotent re-extraction of identical claims. Conflicting claims under the same claim identity fail closed with status `claim_identity_conflict`.
+- **Byte-Exact Raw Artifact Digest Separation:**
+  - Separates physical raw payload hash (`raw_content_sha256`) from canonical structured `content_digest`.
+
+```mermaid
+flowchart TD
+    Q["EvidenceQuestion & QueryIntent\n(Privacy-bounded external search)"] --> RA["RetrievalAttempt(s)\n(Physical calls to PubMed/Crossref)"]
+    RA --> ES["EvidenceSource Registry\n(DOI/PMID, content digest, version, lifecycle)"]
+    ES --> CollCheck{"Same identity, changed digest?"}
+    CollCheck -->|No version metadata| FailClosed["Fail Closed: identity_conflict\n(Excluded from verified bundle)"]
+    CollCheck -->|Valid or explicit version| Passages["EvidencePassage Locator\n(Section / Abstract / Structured proposition)"]
+    Passages --> EntailCheck{"Claim-Source Relation"}
+    EntailCheck -->|Supports| Sup["supports\n(Check: blocked if retracted)"]
+    EntailCheck -->|Contradicts| Con["contradicts\n(Preserved in conflict ledger)"]
+    EntailCheck -->|Context only| Ctx["context_only"]
+    EntailCheck -->|Unrelated| NotEnt["not_entailed\n(Unsupported claims rejected)"]
+    Sup & Con & Ctx --> Bundle["EvidenceBundleSnapshot\n(Deterministic SHA-256 freeze, profile closure, no ambient retrieval)"]
+    Bundle --> Stg7["Stage 07 Reasoning & Clinical Safety"]
+```
+
 ---
 
 ## 6. Core Domain Invariants & Safety Guardrails
@@ -291,6 +334,26 @@ The system enforces deterministic domain rules across all processing layers:
 | **LONG-014** | Timeline snapshots are strictly immutable. | Historical states referenced by physician reports are never updated in place. |
 | **LONG-015** | Caches and materialized views must never act as canonical writers. | Prevents performance cache layers from corrupting canonical clinical records. |
 | **LONG-016** | Identity collision fails closed. | Reusing source identity with conflicting payloads without revision lineage triggers hard conflict. |
+| **EVID-001** | `RetrievalAttempt` ≠ `EvidenceSource`. | Network retries do not duplicate scientific identity. |
+| **EVID-002** | `EvidenceSource` ≠ `EvidenceClaim`. | A publication is not identical to assertions derived from it. |
+| **EVID-003** | `EvidenceClaim` requires explicit source relation before use. | Rejects citation-by-proximity or ungrounded assertions. |
+| **EVID-004** | URL alone is insufficient source identity. | Prefers stable identifiers (DOI, PMID, canonical locators). |
+| **EVID-005** | Same identity + different unversioned digest fails closed. | Prevents silent content corruption or unacknowledged updates. |
+| **EVID-006** | Retries do not duplicate canonical sources. | Multiple physical attempts reconcile to one canonical source. |
+| **EVID-007** | Retracted source cannot silently support an active claim. | Eliminates medical misinformation from retracted studies. |
+| **EVID-008** | Search ranking is not evidence certainty. | Search priority does not equal scientific authority. |
+| **EVID-009** | Publication type is not GRADE certainty. | Systematic review label does not guarantee high certainty. |
+| **EVID-010** | Evidence conflict is preserved. | Contradictions are retained; majority-vote deletion is barred. |
+| **EVID-011** | Frozen bundle cannot ambient-retrieve new evidence. | Eliminates evidence drift and enables reproducible audit. |
+| **EVID-012** | Deterministic bundle identity. | Order-independent canonical JSON + SHA-256 hashing. |
+| **EVID-013** | Retrieval policy change yields a new bundle snapshot. | Policy changes trigger distinct audit snapshots. |
+| **EVID-014** | Timeline snapshot provenance is pinned for longitudinal questions. | Binds evidence retrieval to specific patient timeline states. |
+| **EVID-015** | Partial retrieval cannot enter a verified bundle silently. | Incomplete attempts are marked `incomplete` and isolated. |
+| **EVID-016** | Queries sent externally must minimize patient-derived context. | Strict PHI minimization for external biomedical index queries. |
+| **EVID-017** | Raw content digest ≠ structured content digest. | Raw bytes hash (`raw_content_sha256`) preserves byte-exact provenance; structured `content_digest` verifies canonical normalized payload. |
+| **EVID-018** | Late retrieval after bundle closure cannot enter snapshot. | Attempts or sources completing after `frozen_at` fail-closed and cannot mutate a frozen bundle. |
+| **EVID-019** | Claim identity conflict fails closed. | Multiple extractions producing the same claim ID with conflicting propositions fail-closed (`claim_identity_conflict`). |
+| **EVID-020** | Processing profile closure. | Policy descriptors, schema descriptors, and engine version are pinned inside the immutable bundle manifest. |
 
 ---
 
@@ -301,22 +364,26 @@ The system enforces deterministic domain rules across all processing layers:
 ├── apps/                        # Deployable applications (Stage 14+)
 │   └── web/                     # Physician-facing React / TypeScript web app
 ├── contracts/                   # Canonical Machine Contracts
-│   ├── schemas/                 # JSON Schemas (biomarker observation, reports, timelines)
+│   ├── schemas/                 # JSON Schemas (biomarker observation, reports, timelines, evidence)
+│   │   ├── clinical/            # Lab report, observation, timeline schemas
+│   │   └── evidence/            # Evidence bundle, claim, source, and retrieval attempt schemas
 │   └── openapi/                 # OpenAPI 3.1 REST specifications
 ├── docs/                        # Human & Clinical Architectural Documentation
-│   ├── 00-governance/           # Architecture rules, roadmap, conflict resolution protocols
+│   ├── 00-governance/           # Architecture rules, roadmap, stage handoffs, conflict protocols
 │   ├── 01-product/              # Intended use, safety envelope, clinical non-goals
 │   ├── 02-domain/               # Biomarker domain model, invariants, urinalysis vertical slice
 │   ├── 03-ingestion/            # Ingestion characterization, failure taxonomy, parser benchmark
 │   ├── 04-normalization/        # LOINC mapping catalog, UCUM conversion, comparability rules
-│   └── 05-longitudinal/         # Timeline models, deduplication policies, chronology, snapshot hashing
+│   ├── 05-longitudinal/         # Timeline models, deduplication policies, chronology, snapshot hashing
+│   └── 06-evidence/             # Evidence engine, retrieval policies, retraction, entailment, ranking
 ├── evals/                       # Top-Level Evaluation & Quality Harness
 │   ├── benchmarks/              # Golden clinical test datasets & evaluation rubrics
 │   └── harnesses/               # Automated scoring engines & clinical red-teaming scripts
 ├── experiments/                 # Disposable Proof-of-Concept & Characterization Code
 │   ├── stage-03/                # Ingestion extraction benchmarks & synthetic parser tests
 │   ├── stage-04/                # LOINC normalization & UCUM conversion test suite
-│   └── stage-05/                # Longitudinal lineage, chronology, and snapshot tests
+│   ├── stage-05/                # Longitudinal lineage, chronology, and snapshot tests
+│   └── stage-06/                # Scientific evidence registry, claim ledger, and bundle tests
 ├── internal/                    # Core Go Domain Implementations (Stage 09+)
 │   ├── domain/                  # Pure business models and invariant checks (Zero 3rd-party dependencies)
 │   ├── ports/                   # Inbound/outbound interfaces (Clean Architecture)
@@ -324,6 +391,11 @@ The system enforces deterministic domain rules across all processing layers:
 ├── packages/                    # Shared TypeScript libraries & utility packages
 ├── testdata/                    # Synthetic & De-identified Clinical Test Fixtures
 │   └── synthetic/               # Fully generated test datasets (ZERO real patient PHI)
+│       ├── stage-02/            # Canonical domain urinalysis fixtures
+│       ├── stage-03/            # Multi-format PDF and scanner degraded test files
+│       ├── stage-04/            # Normalization and unit conversion test cases
+│       ├── stage-05/            # Longitudinal chronology and duplicate test cases
+│       └── stage-06/            # Evidence retrieval, retraction, and collision cases
 ├── AGENTS.md                    # Strict operational guidelines for AI coding agents
 ├── BIOMARKER_PROJECT_SKELETON_V0.1.md # Master architecture blueprint
 └── package.json                 # Monorepo workspace configuration (pnpm 11 + Turbo)
@@ -354,16 +426,17 @@ pnpm check
 
 ### Running Stage-Gated Domain Tests
 ```bash
-# Execute Python domain characterization test suites (Stages 03, 04, 05)
+# Execute Python domain characterization test suites (Stages 03, 04, 05, 06)
 pytest experiments/
 ```
 
-All 29 stage-gated domain tests execute in `<0.1s`:
+All 43 stage-gated domain tests execute in `<0.1s`:
 ```text
-experiments/stage-03/tests/test_parser.py ......                         [ 20%]
-experiments/stage-04/tests/test_normalization.py .........               [ 51%]
-experiments/stage-05/tests/test_longitudinal.py ..............           [100%]
-============================== 29 passed in 0.06s ==============================
+experiments/stage-03/tests/test_parser.py ......                         [ 13%]
+experiments/stage-04/tests/test_normalization.py .........               [ 34%]
+experiments/stage-05/tests/test_longitudinal.py ..............           [ 67%]
+experiments/stage-06/tests/test_evidence.py ..............               [100%]
+============================== 43 passed in 0.08s ==============================
 ```
 
 ---

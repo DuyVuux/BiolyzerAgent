@@ -1,0 +1,44 @@
+{
+  "synthetic_only": true,
+  "scenarios": [
+    {
+      "id": "retry_does_not_duplicate_source"
+    },
+    {
+      "id": "same_identity_same_digest_idempotent"
+    },
+    {
+      "id": "same_identity_different_digest_conflict"
+    },
+    {
+      "id": "explicit_source_version_preserved"
+    },
+    {
+      "id": "partial_attempt_not_verified"
+    },
+    {
+      "id": "retracted_source_not_positive_support"
+    },
+    {
+      "id": "supported_claim_linked"
+    },
+    {
+      "id": "contradiction_preserved"
+    },
+    {
+      "id": "unrelated_citation_not_entailed"
+    },
+    {
+      "id": "unsupported_claim_rejected"
+    },
+    {
+      "id": "retrieval_order_bundle_deterministic"
+    },
+    {
+      "id": "policy_change_new_bundle"
+    },
+    {
+      "id": "timeline_change_new_bundle"
+    }
+  ]
+}

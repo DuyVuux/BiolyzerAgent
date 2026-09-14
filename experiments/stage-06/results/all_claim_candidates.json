@@ -1,0 +1,60 @@
+[
+  {
+    "schema_version": "1.0",
+    "claim_id": "c1",
+    "claim_text": "Synthetic marker P is associated with synthetic outcome O.",
+    "proposition_key": "P_ASSOC_O",
+    "status": "conflicted",
+    "links": [
+      {
+        "source_id": "doi:10.0000/synth.obs.1",
+        "passage_id": "doi:10.0000/synth.obs.1:p1",
+        "relation": "contradicts"
+      },
+      {
+        "source_id": "doi:10.0000/synth.old.1",
+        "passage_id": "doi:10.0000/synth.old.1:p1",
+        "relation": "not_entailed"
+      },
+      {
+        "source_id": "doi:10.0000/synth.review.1",
+        "passage_id": "doi:10.0000/synth.review.1:p1",
+        "relation": "supports"
+      },
+      {
+        "source_id": "pmid:SYNTH1003",
+        "passage_id": "pmid:SYNTH1003:p1",
+        "relation": "not_entailed"
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "claim_id": "c2",
+    "claim_text": "Synthetic marker P certainly causes synthetic outcome O.",
+    "proposition_key": "P_CAUSES_O",
+    "status": "unsupported",
+    "links": [
+      {
+        "source_id": "doi:10.0000/synth.obs.1",
+        "passage_id": "doi:10.0000/synth.obs.1:p1",
+        "relation": "not_entailed"
+      },
+      {
+        "source_id": "doi:10.0000/synth.old.1",
+        "passage_id": "doi:10.0000/synth.old.1:p1",
+        "relation": "not_entailed"
+      },
+      {
+        "source_id": "doi:10.0000/synth.review.1",
+        "passage_id": "doi:10.0000/synth.review.1:p1",
+        "relation": "not_entailed"
+      },
+      {
+        "source_id": "pmid:SYNTH1003",
+        "passage_id": "pmid:SYNTH1003:p1",
+        "relation": "not_entailed"
+      }
+    ]
+  }
+]
