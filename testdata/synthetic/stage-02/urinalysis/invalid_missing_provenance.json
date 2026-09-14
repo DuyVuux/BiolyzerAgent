@@ -1,0 +1,294 @@
+{
+  "schema_version": "1.0",
+  "dataset_snapshot_id": "ds-synth-invalid-missing-provenance",
+  "subject_ref": "subject-synthetic-001",
+  "created_at": "2026-09-14T03:00:00Z",
+  "verification_status": "partially_verified",
+  "source_documents": [
+    {
+      "schema_version": "1.0",
+      "document_id": "doc-synth-001",
+      "media_type": "application/pdf",
+      "integrity": {
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "provenance": {
+        "source_system_label": "synthetic-stage-02-fixture",
+        "received_at": "2026-09-14T02:55:00Z"
+      },
+      "retention_class": "ephemeral_development"
+    }
+  ],
+  "reports": [
+    {
+      "schema_version": "1.0",
+      "report_id": "report-synth-ua-001",
+      "subject_ref": "subject-synthetic-001",
+      "source_document_id": "doc-synth-001",
+      "report_type": {
+        "local_name": "Synthetic Urinalysis Panel",
+        "canonical": {
+          "system": "http://loinc.org",
+          "code": "24356-8",
+          "display": "Urinalysis complete panel - Urine",
+          "version": "2.83"
+        }
+      },
+      "status": "final",
+      "effective_at": "2026-09-13T23:30:00Z",
+      "issued_at": "2026-09-14T00:00:00Z",
+      "diagnostic_service_label": "Synthetic Laboratory",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "observation_ids": [
+        "obs-synth-ph",
+        "obs-synth-le",
+        "obs-synth-glu",
+        "obs-synth-rbc",
+        "obs-synth-cast"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-synth-ph",
+      "report_id": "report-synth-ua-001",
+      "subject_ref": "subject-synthetic-001",
+      "local_test_name": "Synthetic pH-like measurement",
+      "status": "final",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "result": {
+        "kind": "quantity",
+        "value": 6.0,
+        "source_text": "6.0"
+      },
+      "source_reference_ranges": [
+        {
+          "range_id": "range-ph-1",
+          "origin": "source_report",
+          "raw_text": "SYNTHETIC-REFERENCE-TEXT",
+          "parsed": {
+            "kind": "textual",
+            "text": "Synthetic structural range only; not clinical guidance."
+          }
+        }
+      ],
+      "verification": {
+        "status": "verified",
+        "verified_by_role": "developer",
+        "verified_at": "2026-09-14T03:01:00Z"
+      },
+      "data_quality": {
+        "extraction_confidence": 1.0,
+        "issues": []
+      }
+    },
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-synth-le",
+      "report_id": "report-synth-ua-001",
+      "subject_ref": "subject-synthetic-001",
+      "local_test_name": "Synthetic ordinal strip marker",
+      "status": "final",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "result": {
+        "kind": "ordinal",
+        "source_text": "1+",
+        "normalized_code": "1_plus",
+        "rank": 2
+      },
+      "source_reference_ranges": [
+        {
+          "range_id": "range-le-1",
+          "origin": "source_report",
+          "raw_text": "Negative",
+          "parsed": {
+            "kind": "categorical_expected",
+            "expected_source_values": [
+              "Negative"
+            ]
+          }
+        }
+      ],
+      "source_interpretations": [
+        {
+          "raw_text": "ABN",
+          "normalized_code": "abnormal"
+        }
+      ],
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "extraction_confidence": 0.99,
+        "issues": []
+      },
+      "provenance": {
+        "source_document_id": "doc-synth-001",
+        "source_locator": {
+          "page": 1,
+          "row_label": "Synthetic ordinal strip marker",
+          "field_label": "Result",
+          "raw_text": "Synthetic ordinal strip marker | 1+ | ABN"
+        },
+        "extraction_method": "manual"
+      }
+    },
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-synth-glu",
+      "report_id": "report-synth-ua-001",
+      "subject_ref": "subject-synthetic-001",
+      "local_test_name": "Synthetic categorical marker",
+      "status": "final",
+      "mapping_status": "candidate",
+      "canonical_test": {
+        "system": "http://loinc.org",
+        "code": "50555-2",
+        "display": "Glucose [Presence] in Urine by Automated test strip",
+        "version": "2.83"
+      },
+      "specimen": {
+        "source_text": "Urine"
+      },
+      "result": {
+        "kind": "categorical",
+        "source_text": "Negative",
+        "normalized_code": "negative"
+      },
+      "source_reference_ranges": [
+        {
+          "range_id": "range-glu-1",
+          "origin": "source_report",
+          "raw_text": "Negative",
+          "parsed": {
+            "kind": "categorical_expected",
+            "expected_source_values": [
+              "Negative"
+            ]
+          }
+        }
+      ],
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "extraction_confidence": 0.98,
+        "issues": [
+          "ambiguous_test_identity"
+        ]
+      },
+      "provenance": {
+        "source_document_id": "doc-synth-001",
+        "source_locator": {
+          "page": 1,
+          "row_label": "Synthetic categorical marker",
+          "field_label": "Result",
+          "raw_text": "Synthetic categorical marker | Negative"
+        },
+        "extraction_method": "manual"
+      }
+    },
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-synth-rbc",
+      "report_id": "report-synth-ua-001",
+      "subject_ref": "subject-synthetic-001",
+      "local_test_name": "Synthetic microscopic cell count",
+      "status": "final",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine sediment"
+      },
+      "method": {
+        "source_text": "Synthetic microscopy"
+      },
+      "result": {
+        "kind": "interval",
+        "low": 0,
+        "high": 2,
+        "unit_source": "/HPF",
+        "unit_ucum": "/[HPF]",
+        "source_text": "0-2 /HPF"
+      },
+      "source_reference_ranges": [
+        {
+          "range_id": "range-rbc-1",
+          "origin": "source_report",
+          "raw_text": "SYNTHETIC-RANGE",
+          "parsed": {
+            "kind": "numeric_interval",
+            "low": 0,
+            "high": 9,
+            "unit_source": "/HPF",
+            "unit_ucum": "/[HPF]"
+          }
+        }
+      ],
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "extraction_confidence": 0.97,
+        "issues": []
+      },
+      "provenance": {
+        "source_document_id": "doc-synth-001",
+        "source_locator": {
+          "page": 1,
+          "row_label": "Synthetic microscopic cell count",
+          "field_label": "Result",
+          "raw_text": "Synthetic microscopic cell count | 0-2 /HPF"
+        },
+        "extraction_method": "manual"
+      }
+    },
+    {
+      "schema_version": "1.0",
+      "observation_id": "obs-synth-cast",
+      "report_id": "report-synth-ua-001",
+      "subject_ref": "subject-synthetic-001",
+      "local_test_name": "Synthetic comparator microscopy marker",
+      "status": "final",
+      "mapping_status": "unmapped",
+      "specimen": {
+        "source_text": "Urine sediment"
+      },
+      "result": {
+        "kind": "quantity",
+        "value": 5,
+        "comparator": "<",
+        "unit_source": "/LPF",
+        "unit_ucum": "/[LPF]",
+        "source_text": "<5 /LPF"
+      },
+      "verification": {
+        "status": "unverified"
+      },
+      "data_quality": {
+        "extraction_confidence": 0.96,
+        "issues": [
+          "missing_reference_range"
+        ]
+      },
+      "provenance": {
+        "source_document_id": "doc-synth-001",
+        "source_locator": {
+          "page": 1,
+          "row_label": "Synthetic comparator microscopy marker",
+          "field_label": "Result",
+          "raw_text": "Synthetic comparator microscopy marker | <5 /LPF"
+        },
+        "extraction_method": "manual"
+      }
+    }
+  ]
+}

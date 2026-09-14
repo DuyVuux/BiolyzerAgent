@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/clinical/lab-report.schema.json",
+  "title": "BioMarker LabReport",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "subject_ref",
+    "source_document_id",
+    "report_type",
+    "status",
+    "observation_ids"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "report_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "subject_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "source_document_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "report_type": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "local_name"
+      ],
+      "properties": {
+        "local_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "canonical": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "system",
+            "code"
+          ],
+          "properties": {
+            "system": {
+              "type": "string",
+              "minLength": 1
+            },
+            "code": {
+              "type": "string",
+              "minLength": 1
+            },
+            "display": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "registered",
+        "partial",
+        "preliminary",
+        "modified",
+        "final",
+        "amended",
+        "corrected",
+        "appended",
+        "cancelled",
+        "entered_in_error",
+        "unknown"
+      ]
+    },
+    "effective_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "diagnostic_service_label": {
+      "type": "string",
+      "maxLength": 300
+    },
+    "specimen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_text"
+      ],
+      "properties": {
+        "source_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonical_code": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "system",
+            "code"
+          ],
+          "properties": {
+            "system": {
+              "type": "string"
+            },
+            "code": {
+              "type": "string"
+            },
+            "display": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "source_conclusion_text": {
+      "type": "string",
+      "maxLength": 10000
+    },
+    "observation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  }
+}

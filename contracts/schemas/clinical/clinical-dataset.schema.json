@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/clinical/clinical-dataset.schema.json",
+  "title": "BioMarker ClinicalDatasetSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_snapshot_id",
+    "subject_ref",
+    "created_at",
+    "verification_status",
+    "source_documents",
+    "reports",
+    "observations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "dataset_snapshot_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "subject_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "partially_verified",
+        "verified",
+        "rejected"
+      ]
+    },
+    "source_documents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "source-document.schema.json"
+      }
+    },
+    "reports": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "lab-report.schema.json"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "biomarker-observation.schema.json"
+      }
+    }
+  }
+}

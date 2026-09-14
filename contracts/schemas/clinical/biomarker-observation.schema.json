@@ -1,0 +1,608 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/clinical/biomarker-observation.schema.json",
+  "title": "BioMarker BiomarkerObservation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "observation_id",
+    "report_id",
+    "subject_ref",
+    "local_test_name",
+    "status",
+    "mapping_status",
+    "result",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "observation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "report_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "subject_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "local_test_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "registered",
+        "preliminary",
+        "final",
+        "amended",
+        "corrected",
+        "cancelled",
+        "entered_in_error",
+        "unknown"
+      ]
+    },
+    "mapping_status": {
+      "type": "string",
+      "enum": [
+        "unmapped",
+        "candidate",
+        "validated",
+        "not_applicable"
+      ]
+    },
+    "canonical_test": {
+      "$ref": "#/$defs/canonicalCode"
+    },
+    "specimen": {
+      "$ref": "#/$defs/contextCode"
+    },
+    "method": {
+      "$ref": "#/$defs/contextCode"
+    },
+    "effective_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "result": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/quantityValue"
+        },
+        {
+          "$ref": "#/$defs/intervalValue"
+        },
+        {
+          "$ref": "#/$defs/ordinalValue"
+        },
+        {
+          "$ref": "#/$defs/categoricalValue"
+        },
+        {
+          "$ref": "#/$defs/textValue"
+        }
+      ]
+    },
+    "source_reference_ranges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/referenceRange"
+      }
+    },
+    "source_interpretations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sourceInterpretation"
+      }
+    },
+    "derived_range_assessment": {
+      "$ref": "#/$defs/derivedRangeAssessment"
+    },
+    "verification": {
+      "$ref": "#/$defs/verification"
+    },
+    "data_quality": {
+      "$ref": "#/$defs/dataQuality"
+    },
+    "provenance": {
+      "$ref": "#/$defs/observationProvenance"
+    }
+  },
+  "$defs": {
+    "canonicalCode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "system",
+        "code"
+      ],
+      "properties": {
+        "system": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "contextCode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_text"
+      ],
+      "properties": {
+        "source_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonical": {
+          "$ref": "#/$defs/canonicalCode"
+        }
+      }
+    },
+    "quantityValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "value"
+      ],
+      "properties": {
+        "kind": {
+          "const": "quantity"
+        },
+        "value": {
+          "type": "number"
+        },
+        "comparator": {
+          "type": "string",
+          "enum": [
+            "<",
+            "<=",
+            ">",
+            ">="
+          ]
+        },
+        "unit_source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit_ucum": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "intervalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source_text"
+      ],
+      "anyOf": [
+        {
+          "required": [
+            "low"
+          ]
+        },
+        {
+          "required": [
+            "high"
+          ]
+        }
+      ],
+      "properties": {
+        "kind": {
+          "const": "interval"
+        },
+        "low": {
+          "type": "number"
+        },
+        "high": {
+          "type": "number"
+        },
+        "unit_source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit_ucum": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ordinalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source_text"
+      ],
+      "properties": {
+        "kind": {
+          "const": "ordinal"
+        },
+        "source_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalized_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rank": {
+          "type": "integer"
+        }
+      }
+    },
+    "categoricalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source_text"
+      ],
+      "properties": {
+        "kind": {
+          "const": "categorical"
+        },
+        "source_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalized_code": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "textValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source_text"
+      ],
+      "properties": {
+        "kind": {
+          "const": "text"
+        },
+        "source_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10000
+        }
+      }
+    },
+    "numericRangeParsed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "anyOf": [
+        {
+          "required": [
+            "low"
+          ]
+        },
+        {
+          "required": [
+            "high"
+          ]
+        }
+      ],
+      "properties": {
+        "kind": {
+          "const": "numeric_interval"
+        },
+        "low": {
+          "type": "number"
+        },
+        "high": {
+          "type": "number"
+        },
+        "unit_source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit_ucum": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "categoricalRangeParsed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "expected_source_values"
+      ],
+      "properties": {
+        "kind": {
+          "const": "categorical_expected"
+        },
+        "expected_source_values": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "textualRangeParsed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "text"
+      ],
+      "properties": {
+        "kind": {
+          "const": "textual"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "referenceRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "range_id",
+        "origin",
+        "raw_text"
+      ],
+      "properties": {
+        "range_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "origin": {
+          "const": "source_report"
+        },
+        "raw_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parsed": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/numericRangeParsed"
+            },
+            {
+              "$ref": "#/$defs/categoricalRangeParsed"
+            },
+            {
+              "$ref": "#/$defs/textualRangeParsed"
+            }
+          ]
+        },
+        "applies_to_text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "sourceInterpretation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw_text"
+      ],
+      "properties": {
+        "raw_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalized_code": {
+          "type": "string",
+          "enum": [
+            "high",
+            "low",
+            "abnormal",
+            "normal",
+            "critical",
+            "positive",
+            "negative",
+            "other"
+          ]
+        }
+      }
+    },
+    "derivedRangeAssessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "reference_range_id",
+        "rule_version"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "below",
+            "within",
+            "above",
+            "indeterminate",
+            "not_applicable"
+          ]
+        },
+        "reference_range_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule_version": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "unverified",
+            "verified",
+            "corrected",
+            "rejected"
+          ]
+        },
+        "verified_by_role": {
+          "type": "string",
+          "enum": [
+            "physician",
+            "clinical_reviewer",
+            "developer",
+            "automated_check"
+          ]
+        },
+        "verified_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "correction_note": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      }
+    },
+    "dataQuality": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extraction_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "issues": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "missing_unit",
+              "ambiguous_unit",
+              "missing_reference_range",
+              "ambiguous_reference_range",
+              "missing_effective_time",
+              "ambiguous_test_identity",
+              "low_extraction_confidence",
+              "source_conflict",
+              "unsupported_value_format"
+            ]
+          }
+        }
+      }
+    },
+    "sourceLocator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw_text"
+      ],
+      "properties": {
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "section": {
+          "type": "string"
+        },
+        "row_label": {
+          "type": "string"
+        },
+        "field_label": {
+          "type": "string"
+        },
+        "raw_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bounding_box": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "observationProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_document_id",
+        "source_locator"
+      ],
+      "properties": {
+        "source_document_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_locator": {
+          "$ref": "#/$defs/sourceLocator"
+        },
+        "extraction_method": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "parser",
+            "ocr",
+            "hybrid",
+            "unknown"
+          ]
+        },
+        "extractor_name": {
+          "type": "string"
+        },
+        "extractor_version": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
