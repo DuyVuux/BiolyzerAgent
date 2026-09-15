@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/runtime/runtime-execution-request.schema.json",
+  "title": "BioMarker RuntimeExecutionRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "turn_id",
+    "idempotency_key",
+    "input"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "turn_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "correlation_id": {
+      "type": "string"
+    },
+    "deadline_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clinical_snapshot_id",
+        "evidence_bundle",
+        "clinical_refs",
+        "policies",
+        "user_question"
+      ],
+      "properties": {
+        "clinical_snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeline_snapshot_id": {
+          "type": "string"
+        },
+        "evidence_bundle": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "bundle_id",
+            "status",
+            "processing_profile_digest",
+            "claims"
+          ],
+          "properties": {
+            "bundle_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "status": {
+              "enum": [
+                "verified",
+                "conflicted",
+                "incomplete"
+              ]
+            },
+            "processing_profile_digest": {
+              "type": "string",
+              "minLength": 1
+            },
+            "claims": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "status"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "enum": [
+                      "supported",
+                      "conflicted",
+                      "unsupported",
+                      "context_only",
+                      "claim_identity_conflict"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "clinical_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "type",
+              "verification_state",
+              "reconciliation_state",
+              "terminology_state"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "verification_state": {
+                "enum": [
+                  "verified",
+                  "corrected",
+                  "unverified",
+                  "rejected"
+                ]
+              },
+              "reconciliation_state": {
+                "enum": [
+                  "resolved",
+                  "reconciliation_required"
+                ]
+              },
+              "terminology_state": {
+                "enum": [
+                  "validated",
+                  "candidate",
+                  "unmapped",
+                  "not_applicable"
+                ]
+              },
+              "source_signal": {
+                "enum": [
+                  "none",
+                  "abnormal",
+                  "critical"
+                ]
+              }
+            }
+          }
+        },
+        "policies": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reasoning_policy_digest",
+            "safety_policy_digest"
+          ],
+          "properties": {
+            "reasoning_policy_digest": {
+              "type": "string",
+              "minLength": 1
+            },
+            "safety_policy_digest": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "user_question": {
+          "type": "string"
+        },
+        "known_missing_context": {
+          "type": "boolean"
+        },
+        "critical_value_policy_state": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

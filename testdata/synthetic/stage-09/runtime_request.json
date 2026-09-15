@@ -1,0 +1,41 @@
+{
+  "synthetic_only": true,
+  "request": {
+    "schema_version": "1.0",
+    "turn_id": "turn-synth-001",
+    "idempotency_key": "idem-synth-001",
+    "correlation_id": "corr-synth-001",
+    "deadline_ms": 1000,
+    "input": {
+      "clinical_snapshot_id": "clinical-synth-001",
+      "timeline_snapshot_id": "timeline-synth-001",
+      "evidence_bundle": {
+        "bundle_id": "evidence-synth-001",
+        "status": "verified",
+        "processing_profile_digest": "profile-synth",
+        "claims": [
+          {
+            "id": "claim-synth-001",
+            "status": "supported"
+          }
+        ]
+      },
+      "clinical_refs": [
+        {
+          "id": "obs-synth-001",
+          "type": "observation",
+          "verification_state": "verified",
+          "reconciliation_state": "resolved",
+          "terminology_state": "validated",
+          "source_signal": "none"
+        }
+      ],
+      "policies": {
+        "reasoning_policy_digest": "reasoning-synth",
+        "safety_policy_digest": "safety-synth"
+      },
+      "user_question": "Provide a bounded synthetic explanation.",
+      "critical_value_policy_state": "disabled_pending_approved_clinical_policy"
+    }
+  }
+}

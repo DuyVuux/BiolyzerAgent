@@ -1,0 +1,10 @@
+{
+  "name": "@biomarker/api",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "cd ../.. && go run ./apps/api",
+    "build": "cd ../.. && go build -o ./apps/api/.out/api ./apps/api",
+    "test": "cd ../.. && go test ./..."
+  }
+}
