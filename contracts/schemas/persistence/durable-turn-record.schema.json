@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/persistence/durable-turn-record.schema.json",
+  "title": "BioMarker DurableTurnRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "turn_id",
+    "idempotency_key",
+    "request_digest",
+    "provenance",
+    "status",
+    "revision"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "turn_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clinical_snapshot_id",
+        "evidence_bundle_id",
+        "reasoning_policy_digest",
+        "safety_policy_digest"
+      ],
+      "properties": {
+        "clinical_snapshot_id": {
+          "type": "string"
+        },
+        "timeline_snapshot_id": {
+          "type": "string"
+        },
+        "evidence_bundle_id": {
+          "type": "string"
+        },
+        "reasoning_policy_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "safety_policy_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "accepted",
+        "completed",
+        "failed",
+        "cancelled",
+        "recovery_required",
+        "needs_reconciliation"
+      ]
+    },
+    "result": {
+      "type": "object"
+    },
+    "result_ref": {
+      "$ref": "artifact-ref.schema.json"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "recovery_reason": {
+      "type": "string"
+    },
+    "reconciliation_reason": {
+      "type": "string"
+    }
+  }
+}

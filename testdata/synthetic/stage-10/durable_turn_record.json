@@ -1,0 +1,28 @@
+{
+  "synthetic_only": true,
+  "schema_version": "1.0",
+  "turn_id": "turn-synthetic-stage10-001",
+  "idempotency_key": "idem-synthetic-stage10-001",
+  "request_digest": "1111111111111111111111111111111111111111111111111111111111111111",
+  "provenance": {
+    "clinical_snapshot_id": "clinical-synthetic-001",
+    "timeline_snapshot_id": "timeline-synthetic-001",
+    "evidence_bundle_id": "evidence-synthetic-001",
+    "reasoning_policy_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "safety_policy_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "status": "completed",
+  "revision": 2,
+  "result_ref": {
+    "bucket": "runtime",
+    "object_key": "turn-synthetic-stage10-001/result.json",
+    "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "size_bytes": 72,
+    "content_type": "application/json"
+  },
+  "result": {
+    "schema_version": "1.0",
+    "turn_id": "turn-synthetic-stage10-001",
+    "status": "completed"
+  }
+}

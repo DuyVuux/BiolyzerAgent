@@ -1,0 +1,9 @@
+{
+  "completed_survives_restart": true,
+  "restart_replay_workflow_calls": 0,
+  "incomplete_requires_recovery": true,
+  "incomplete_reexecution_calls": 0,
+  "semantic_digest_ignores_transport_noise": true,
+  "canonical_record_file_count": 2,
+  "elapsed_ms": 0
+}

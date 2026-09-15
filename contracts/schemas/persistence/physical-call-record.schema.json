@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.biomarker.local/persistence/physical-call-record.schema.json",
+  "title": "BioMarker PhysicalCallRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "call_id",
+    "turn_id",
+    "epoch",
+    "kind",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "call_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "turn_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "epoch": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "kind": {
+      "enum": [
+        "model",
+        "tool",
+        "ingestion",
+        "evidence"
+      ]
+    },
+    "status": {
+      "enum": [
+        "reserved",
+        "in_flight",
+        "succeeded",
+        "failed",
+        "outcome_unknown"
+      ]
+    },
+    "request_ref": {
+      "$ref": "artifact-ref.schema.json"
+    },
+    "response_ref": {
+      "$ref": "artifact-ref.schema.json"
+    },
+    "tokens_in": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "tokens_out": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "error_code": {
+      "type": "string"
+    }
+  }
+}
