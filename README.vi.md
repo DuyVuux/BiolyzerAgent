@@ -6,8 +6,9 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![Monorepo](https://img.shields.io/badge/Monorepo-pnpm%20%7C%20Turbo-orange.svg)](./pnpm-workspace.yaml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](./package.json)
+[![Go Tests](https://img.shields.io/badge/Go%20Tests-17%20passed%20(race%20clean)-brightgreen.svg)](./internal/)
 [![Python Tests](https://img.shields.io/badge/Pytest-82%20passed-brightgreen.svg)](./evals/)
-[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2008%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
+[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2009%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
 
 [English](./README.md) | **Tiếng Việt**
 
@@ -19,7 +20,7 @@
 2. [Bài toán Lâm sàng & Khung An toàn (Safety Envelope)](#2-bài-toán-lâm-sàng--khung-an-toàn-safety-envelope)
 3. [Đường ống Xử lý Dữ liệu Lâm sàng Toàn trình](#3-đường-ống-xử-lý-dữ-liệu-lâm-sàng-toàn-trình)
 4. [Kỷ luật Kiến trúc 16 Giai đoạn (16-Stage Discipline)](#4-kỷ-luật-kiến-trúc-16-giai-đoạn-16-stage-discipline)
-5. [Đào sâu vào các Stage đã hoàn thành (00–08)](#5-đào-sâu-vào-các-stage-đã-hoàn-thành-0008)
+5. [Đào sâu vào các Stage đã hoàn thành (00–09)](#5-đào-sâu-vào-các-stage-đã-hoàn-thành-0009)
    - [Stage 00: Nền tảng Kiến trúc & Quản trị](#stage-00-nền-tảng-kiến-trúc--quản-trị)
    - [Stage 01: Bối cảnh Sản phẩm & Khung An toàn](#stage-01-bối-cảnh-sản-phẩm--khung-an-toàn)
    - [Stage 02: Mô hình Miền Dấu ấn Sinh học](#stage-02-mô-hình-miền-dấu-ấn-sinh-học)
@@ -29,6 +30,7 @@
    - [Stage 06: Công cụ Bằng chứng Khoa học (Scientific Evidence Engine)](#stage-06-công-cụ-bằng-chứng-khoa-học-scientific-evidence-engine)
    - [Stage 07: Lập luận & Cổng An toàn Lâm sàng Tất định (Reasoning & Clinical Safety Engine)](#stage-07-lập-luận--cổng-an-toàn-lâm-sàng-tất-định-reasoning--clinical-safety-engine)
    - [Stage 08: Kiến trúc Đánh giá & Đảm bảo Chất lượng (Evaluation & Quality Architecture)](#stage-08-kiến-trúc-đánh-giá--đảm-bảo-chất-lượng-evaluation--quality-architecture)
+   - [Stage 09: Go Runtime Đơn tiến trình & Adapter Eino](#stage-09-go-runtime-đơn-tiến-trình--adapter-eino)
 6. [Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn](#6-các-bất-biến-miền-nghiệp-vụ-cốt-lõi--rào-chắn-an-toàn)
 7. [Bản đồ Cấu trúc Repository](#7-bản-đồ-cấu-trúc-repository)
 8. [Cài đặt & Xác minh Hệ thống](#8-cài-đặt--xác-minh-hệ-thống)
@@ -135,8 +137,8 @@ flowchart TD
     end
 
     subgraph PhaseC["CHẶNG C: Khám phá Runtime & Nền tảng (Stages 9–13)"]
-        S8 --> S9["Stage 09: Go Runtime Đơn tiến trình<br/><code>internal/</code>, Clean Architecture<br/><b>[TIẾP THEO / SẴN SÀNG]</b>"]:::current
-        S9 --> S10["Stage 10: Quản lý Trạng thái & Lưu trữ (PostgreSQL)"]:::queued
+        S8 --> S9["Stage 09: Go Runtime Đơn tiến trình<br/><code>internal/</code>, Clean Architecture<br/><b>[HOÀN THÀNH]</b>"]:::done
+        S9 --> S10["Stage 10: Quản lý Trạng thái & Lưu trữ (PostgreSQL)<br/><b>[TIẾP THEO / SẴN SÀNG]</b>"]:::current
         S10 --> S11["Stage 11: Xử lý Lỗi, Thử lại & Phục hồi"]:::queued
         S11 --> S12["Stage 12: Quyết định Hạ tầng Phân tán (ADR)"]:::queued
         S12 --> S13["Stage 13: Cấu hình, Đánh phiên bản & Chứng thực"]:::queued
@@ -524,6 +526,39 @@ Tái lập và chạy kiểm chuẩn 24 ca test Stage 07 trên harness thật v�
 - **Quét Ranh giới AST (Boundary Checks):** `Passed` (0 forbidden imports, 0 eval/exec, 0 tautological asserts)
 - **Bộ kiểm thử đơn vị (`pytest evals/`):** 17/17 tests passed, nâng tổng số tests toàn monorepo lên **82/82 passed** trong **0.14s**.
 
+### Stage 09: Go Runtime Đơn tiến trình & Adapter Eino (Single-Process Runtime)
+Xây dựng runtime thực thi đơn tiến trình tất định, tinh gọn, điều phối pipeline lập luận lâm sàng và các cổng an toàn mà không sử dụng sớm hạ tầng phân tán:
+
+#### 1. Câu hỏi Kiến trúc Cốt lõi
+> *"Runtime đơn giản nhất và đủ để thực thi pipeline lập luận lâm sàng và cổng an toàn tất định là gì?"*
+
+#### 2. Cấu trúc Phân tầng Hexagonal / Clean Architecture
+- **Composition Root (`apps/api`):** Máy chủ HTTP (`/healthz`, `/v1/runtime/execute`), điều phối dependency injection giữa runtime, ledger, evaluator và router. Package `@biomarker/api` tích hợp trực tiếp vào monorepo.
+- **Miền Nghiệp vụ Thuần khiết (`internal/analysis`):** Chứa các thực thể cốt lõi (`ExecutionRequest`, `ExecutionResult`, `ReasoningCandidate`, `Statement`) và các giao diện cổng trừu tượng (`Runtime`, `Workflow`, `ModelGenerator`, `SafetyEvaluator`, `TurnLedger`). Hoàn toàn độc lập với bên thứ ba.
+- **Cổng An toàn Lâm sàng Tất định (`internal/safety`):** Bộ thẩm định an toàn thực thi các rào chắn của Stage 07 (cấm chẩn đoán, cấm điều trị, cấm hành động mở, bắt buộc neo vào quan sát và bằng chứng).
+- **Sổ cái Thực thi trong Bộ nhớ (`internal/platform/runtime/local`):** Triển khai `TurnLedger` thread-safe bằng `sync.RWMutex`, lập chỉ mục bằng mã băm SHA-256 của payload. Bảo đảm idempotency và loại trừ trùng lặp nội bộ tiến trình.
+- **Bộ Chuyển đổi Đồ thị Eino (`internal/platform/runtime/eino`):** Adapter đóng gói thư viện CloudWeGo Eino `v0.9.19`. Biên dịch đồ thị luồng một lần duy nhất lúc khởi động; tuyệt đối bị cô lập sau adapter.
+- **Bộ xử lý Giao thức HTTP (`internal/platform/httpapi`):** Trình xử lý HTTP nghiêm ngặt, tự động từ chối trường không xác định (`DisallowUnknownFields`) và ánh xạ lỗi sang mã trạng thái chuẩn.
+
+#### 3. Các Nâng cấp Kỹ thuật Vượt trội
+1. **Kiểm định Phễu Đầu ra (Output-Shape Preflight Validation - `ValidateReasoningCandidate`):** Thẩm định cấu trúc ứng viên (phiên bản schema, candidate ID, danh sách statements, class, text) trước khi chuyển sang cổng an toàn lâm sàng. Loại bỏ sớm các lỗi định dạng của mô hình.
+2. **Kiểm tra Hủy Context tại Ranh giới Nút (Node-Boundary Cancellation):** Kiểm tra `ctx.Err()` trước khi gọi generator nhằm triệt tiêu lãng phí tài nguyên khi request đã quá hạn (deadline timeout) hoặc client hủy kết nối.
+3. **Lan truyền Phạm vi Vận hành qua Context (`ContextWithScope`):** Truyền tải metadata (`TurnID`, `IdempotencyKey`, `CorrelationID`, `DeadlineMS`) qua `context.Context` mà không làm ô nhiễm các thực thể miền nghiệp vụ.
+4. **Bộ Quét Ranh giới Kiến trúc Tự động bằng AST (`stage09_boundary_test.go`):** Quét AST tĩnh bảo đảm:
+   - Thư viện CloudWeGo Eino không rò rỉ ra ngoài `internal/platform/runtime/eino/`.
+   - Tuyệt đối không import các hạ tầng phân tán hoãn lại (Redis, Postgres, DBOS, Celery, Kafka).
+5. **Vá Lỗi Nuốt Lỗi trong Root `package.json`:** Sửa đổi `test ! -f go.mod || go vet/test ./...`, bảo đảm toàn bộ lỗi Go vet/test đều kích hoạt mã lỗi CI trong `pnpm check`.
+
+#### 4. Bất biến & Cam kết Ranh giới
+- **Cùng Turn + Cùng Payload:** Chính xác một lần sinh ngữ nghĩa (`exactly_once_in_process`).
+- **Cùng Turn + Payload Sai lệch:** Lập tức ngắt an toàn (`fail closed` với lỗi `conflict`).
+- **Bàn giao Sang Stage 10:** Ledger hoàn toàn nằm trên RAM; tính bền vững qua các lần khởi động lại (`cross-restart dedupe`, `durable recovery`) không thuộc phạm vi Stage 09 và được bàn giao chính thức cho Stage 10.
+
+#### 5. Kết quả Đo lường & Kiểm thử Thực tế
+- **Kiểm thử Đơn vị & Tích hợp Go:** 17/17 Go tests vượt qua với cơ chế kiểm tra race condition (`go test -race ./...`).
+- **Kiểm thử Ranh giới AST:** 0 vi phạm import rò rỉ Eino, 0 import hạ tầng phân tán.
+- **Thực nghiệm Đo lường Đồng thời (`experiments/stage-09-runtime`):** 64 requests đồng thời trùng lặp hoàn thành trong 2ms với đúng duy nhất 1 lần gọi luồng ngữ nghĩa (`semantic_workflow_calls: 1`).
+
 ---
 
 ## 6. Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn
@@ -603,14 +638,16 @@ Tái lập và chạy kiểm chuẩn 24 ca test Stage 07 trên harness thật v�
 
 ```text
 /workspace/projects/MialyzerAgent/
-├── apps/                        # Các ứng dụng triển khai độc lập (Stage 14+)
-│   └── web/                     # Ứng dụng web React / TypeScript cho bác sĩ
+├── apps/                        # Các ứng dụng triển khai độc lập
+│   ├── api/                     # Composition root Go HTTP của Stage 09 (@biomarker/api)
+│   └── web/                     # Ứng dụng web React / TypeScript cho bác sĩ (Stage 14+)
 ├── contracts/                   # Hợp đồng Máy Thẩm quyền Tối cao
-│   ├── schemas/                 # JSON Schemas (quan sát biomarker, báo cáo, timeline, evidence, analysis, evaluation)
+│   ├── schemas/                 # JSON Schemas (biomarker, timeline, evidence, analysis, evaluation, runtime)
 │   │   ├── clinical/            # Schema báo cáo xét nghiệm, quan sát, timeline
 │   │   ├── evidence/            # Schema evidence bundle, claim, source, retrieval attempt
 │   │   ├── analysis/            # Schema suy luận, cổng an toàn, phát biểu lâm sàng, đầu ra bác sĩ
-│   │   └── evaluation/          # Schema ca kiểm chuẩn, kết quả đánh giá, model manifest, hội chẩn lâm sàng
+│   │   ├── evaluation/          # Schema ca kiểm chuẩn, kết quả đánh giá, model manifest, hội chẩn lâm sàng
+│   │   └── runtime/             # Schema yêu cầu & kết quả thực thi runtime Stage 09
 │   └── openapi/                 # Đặc tả REST API chuẩn OpenAPI 3.1
 ├── docs/                        # Tài liệu Kiến trúc & Miền Lâm sàng
 │   ├── 00-governance/           # Quy tắc quản trị, lộ trình, văn bản bàn giao stage, giao thức xung đột
@@ -621,7 +658,8 @@ Tái lập và chạy kiểm chuẩn 24 ca test Stage 07 trên harness thật v�
 │   ├── 05-longitudinal/         # Mô hình timeline, chính sách dedup, 3 đồng hồ, mã băm
 │   ├── 06-evidence/             # Cỗ máy bằng chứng, chính sách truy xuất, rút bài, entailment, xếp hạng
 │   ├── 07-reasoning-safety/     # Kiến trúc suy luận, 9 cổng an toàn tất định, mô hình phát biểu, rào chắn
-│   └── 08-evaluation/           # Kiến trúc đánh giá, quy chuẩn thống kê, đối kháng, biến hình & hội chẩn
+│   ├── 08-evaluation/           # Kiến trúc đánh giá, quy chuẩn thống kê, đối kháng, biến hình & hội chẩn
+│   └── 09-runtime/              # Kiến trúc đơn tiến trình, adapter Eino, ledger bộ nhớ, tích hợp an toàn
 ├── evals/                       # Hệ thống Đánh giá Chất lượng Hạng nhất
 │   └── stage-08/                # Động cơ đánh giá Stage 08, ma trận nhầm lẫn, metamorphic & thống kê
 │       ├── results/             # Kết quả đánh giá, lát cắt phân khúc, bản ghi EvaluationRun
@@ -636,11 +674,18 @@ Tái lập và chạy kiểm chuẩn 24 ca test Stage 07 trên harness thật v�
 │   ├── stage-04/                # Bộ kiểm thử chuẩn hóa LOINC & chuyển đổi UCUM
 │   ├── stage-05/                # Bộ kiểm thử lineage, trật tự thời gian và snapshot
 │   ├── stage-06/                # Bộ kiểm thử sổ cái bằng chứng, va chạm danh tính và bundle
-│   └── stage-07/                # Cỗ máy an toàn tất định, đánh giá ứng viên suy luận & benchmark an toàn
-├── internal/                    # Triển khai Miền Lõi bằng Go (Stage 09+)
-│   ├── domain/                  # Mô hình nghiệp vụ thuần túy (Không phụ thuộc bên thứ ba)
-│   ├── ports/                   # Giao diện Inbound/Outbound (Clean Architecture)
-│   └── service/                 # Dịch vụ điều phối nghiệp vụ
+│   ├── stage-07/                # Cỗ máy an toàn tất định, đánh giá ứng viên suy luận & benchmark an toàn
+│   └── stage-09-runtime/        # Benchmark đo lường deduplication đồng thời 64 luồng trong cùng tiến trình
+├── internal/                    # Triển khai Miền Lõi & Nền tảng bằng Go (Stage 09+)
+│   ├── analysis/                # Mô hình miền, bộ thẩm định request/candidate, và abstract ports
+│   ├── safety/                  # Bộ thẩm định an toàn lâm sàng tất định (quy tắc Stage 07)
+│   └── platform/                # Các adapters hạ tầng nền tảng (Clean Architecture)
+│       ├── httpapi/             # Trình xử lý HTTP nghiêm ngặt tự động kiểm tra JSON
+│       ├── model/               # Bộ sinh giả lập xác định (Deterministic Generator)
+│       └── runtime/             # Runtime in-memory cục bộ, context scope bridge và Eino workflow adapter
+├── tests/                       # Kiểm thử Kiến trúc & Tích hợp Go
+│   ├── architecture/            # Quét ranh giới AST (cô lập Eino & cấm import hạ tầng phân tán)
+│   └── integration/             # Kiểm thử tích hợp toàn trình runtime đơn tiến trình
 ├── packages/                    # Các thư viện tiện ích TypeScript dùng chung
 ├── testdata/                    # Dữ liệu Kiểm thử Lâm sàng Tổng hợp
 │   └── synthetic/               # Bộ dữ liệu nhân tạo tuyệt đối (KHÔNG CHỨA PHI THẬT)
@@ -650,9 +695,12 @@ Tái lập và chạy kiểm chuẩn 24 ca test Stage 07 trên harness thật v�
 │       ├── stage-05/            # Ca kiểm thử trật tự thời gian và trùng lặp
 │       ├── stage-06/            # Ca kiểm thử truy xuất bằng chứng, rút bài và va chạm
 │       ├── stage-07/            # Ca kiểm thử ứng viên suy luận, vi phạm hành vi cấm & rào chắn
-│       └── stage-08/            # Ca kiểm chuẩn độc lập (evaluation_cases) & ca biến hình (metamorphic_cases)
+│       ├── stage-08/            # Ca kiểm chuẩn độc lập (evaluation_cases) & ca biến hình (metamorphic_cases)
+│       └── stage-09/            # Fixture yêu cầu thực thi runtime tổng hợp
 ├── AGENTS.md                    # Hướng dẫn bắt buộc dành cho AI Coding Agents
 ├── BIOMARKER_PROJECT_SKELETON_V0.1.md # Bản thiết kế kiến trúc khung tổng thể
+├── go.mod                       # Root Go module (Go 1.27+, CloudWeGo Eino v0.9.19)
+├── go.sum                       # Mã băm toàn vẹn Go
 └── package.json                 # Cấu hình workspace Monorepo (pnpm 11 + Turbo)
 ```
 
@@ -664,7 +712,7 @@ Tái lập và chạy kiểm chuẩn 24 ca test Stage 07 trên harness thật v�
 - **Node.js**: `>=22.0.0` (Ghim chính xác trong `.node-version`)
 - **pnpm**: `11.10.0`
 - **Python**: `>=3.11` (cho các bộ kiểm thử thực nghiệm và đánh giá chất lượng)
-- **Go**: `1.27+` (bắt buộc từ Stage 9)
+- **Go**: `1.27+` (bắt buộc từ Stage 09)
 
 ### Thiết lập Workspace & Kiểm tra Toàn vẹn
 ```bash
@@ -675,28 +723,26 @@ cd BioMarkerAgent
 # Cài đặt các gói phụ thuộc
 pnpm install
 
-# Chạy kiểm tra toàn bộ workspace (lint, typecheck, test)
+# Chạy kiểm tra toàn bộ workspace (linter, typecheck, test runners cho cả JS và Go)
 pnpm check
 ```
 
-### Chạy Toàn bộ Bộ Kiểm thử Miền Nghiệp vụ & Đánh giá Chất lượng
+### Chạy Toàn bộ Bộ Kiểm thử Toàn Monorepo (Python + Go)
+
 ```bash
-# Thực thi toàn bộ test suite thực nghiệm và kiểm chuẩn (Stages 03 - 08)
+# 1. Thực thi toàn bộ test suite thực nghiệm và kiểm chuẩn Python (Stages 03 - 08)
 pytest experiments/ evals/
+
+# 2. Thực thi kiểm thử đơn vị, tích hợp và quét ranh giới AST Go kèm kiểm tra race (Stage 09)
+go test -race ./...
+
+# 3. Chạy smoke benchmark đo lường trùng lặp đồng thời 64 requests trong một tiến trình
+go run ./experiments/stage-09-runtime
 ```
 
-Toàn bộ 82 test case miền nghiệp vụ và kiểm thử đánh giá hoàn thành trong `<0.15s`:
-```text
-experiments/stage-03/tests/test_parser.py ......                         [  7%]
-experiments/stage-04/tests/test_normalization.py .........               [ 18%]
-experiments/stage-05/tests/test_longitudinal.py ..............           [ 35%]
-experiments/stage-06/tests/test_evidence.py ..............               [ 52%]
-experiments/stage-07/tests/test_safety.py ......................         [ 79%]
-evals/stage-08/tests/test_ast_boundaries.py ....                         [ 84%]
-evals/stage-08/tests/test_evaluator.py .........                         [ 95%]
-evals/stage-08/tests/test_stats.py ....                                  [100%]
-============================== 82 passed in 0.14s ==============================
-```
+Toàn bộ 99 test cases toàn hệ thống hoàn thành với kết quả 100% PASS:
+- **82 Python tests:** Ingestion, chuẩn hóa thuật ngữ, timeline diễn tiến, gói bằng chứng, cổng an toàn và harness đánh giá Stage 08.
+- **17 Go tests:** Kiểm định miền, preflight validation cho ứng viên, bộ xử lý HTTP, evaluator an toàn, ledger deduplication, workflow adapter Eino, và kiểm tra tĩnh AST ranh giới kiến trúc.
 
 ### Thực thi Runner Tái lập Đánh giá Stage 08
 ```bash

@@ -6,8 +6,9 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![Monorepo](https://img.shields.io/badge/Monorepo-pnpm%20%7C%20Turbo-orange.svg)](./pnpm-workspace.yaml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](./package.json)
+[![Go Tests](https://img.shields.io/badge/Go%20Tests-17%20passed%20(race%20clean)-brightgreen.svg)](./internal/)
 [![Python Tests](https://img.shields.io/badge/Pytest-82%20passed-brightgreen.svg)](./evals/)
-[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2008%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
+[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2009%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
 
 **English** | [Tiếng Việt](./README.vi.md)
 
@@ -19,7 +20,7 @@
 2. [Clinical Problem & Safety Envelope](#2-clinical-problem--safety-envelope)
 3. [End-to-End Clinical Processing Pipeline](#3-end-to-end-clinical-processing-pipeline)
 4. [The 16-Stage Architectural Discipline](#4-the-16-stage-architectural-discipline)
-5. [Deep Dive into Completed Stages (00–08)](#5-deep-dive-into-completed-stages-0008)
+5. [Deep Dive into Completed Stages (00–09)](#5-deep-dive-into-completed-stages-0009)
    - [Stage 00: Architecture Foundation & Governance](#stage-00-architecture-foundation--governance)
    - [Stage 01: Product Context & Safety Envelope](#stage-01-product-context--safety-envelope)
    - [Stage 02: Canonical Biomarker Domain Model](#stage-02-canonical-biomarker-domain-model)
@@ -29,6 +30,7 @@
    - [Stage 06: Scientific Evidence Engine](#stage-06-scientific-evidence-engine)
    - [Stage 07: Reasoning & Deterministic Clinical Safety Engine](#stage-07-reasoning--deterministic-clinical-safety-engine)
    - [Stage 08: Evaluation & Quality Architecture](#stage-08-evaluation--quality-architecture)
+   - [Stage 09: Single-Process Runtime & Eino Workflow Adapter](#stage-09-single-process-runtime--eino-workflow-adapter)
 6. [Core Domain Invariants & Safety Guardrails](#6-core-domain-invariants--safety-guardrails)
 7. [Repository Layout & Navigation Map](#7-repository-layout--navigation-map)
 8. [Getting Started & Verification](#8-getting-started--verification)
@@ -135,8 +137,8 @@ flowchart TD
     end
 
     subgraph PhaseC["PHASE C: Runtime & Platform Discovery (Stages 9–13)"]
-        S8 --> S9["Stage 09: Single-Process Go Runtime<br/><code>internal/</code>, Clean Architecture<br/><b>[NEXT / READY]</b>"]:::current
-        S9 --> S10["Stage 10: State & Persistence Architecture<br/>PostgreSQL, Immutability, Transactions"]:::queued
+        S8 --> S9["Stage 09: Single-Process Go Runtime<br/><code>internal/</code>, Clean Architecture<br/><b>[COMPLETED]</b>"]:::done
+        S9 --> S10["Stage 10: State & Persistence Architecture<br/>PostgreSQL, Immutability, Transactions<br/><b>[NEXT / READY]</b>"]:::current
         S10 --> S11["Stage 11: Failure, Retry & Idempotency"]:::queued
         S11 --> S12["Stage 12: Distributed Execution Decision (ADR)"]:::queued
         S12 --> S13["Stage 13: Configuration, Versioning & Attestation"]:::queued
@@ -367,6 +369,30 @@ Establishes an independent, multi-layered clinical quality and safety evaluation
 - **Machine Contracts:** Immutable versioned schemas for `EvaluationCase`, `EvaluationRun`, `ModelEvaluationManifest`, and `ClinicalAdjudication`.
 - **Measured Results:** 24/24 evaluation cases passed, 0 observed escapes, 100% metamorphic pass rate, 9/9 unit tests passed.
 
+### Stage 09: Single-Process Runtime & Eino Workflow Adapter
+Establishes the minimal, deterministic single-process execution runtime powering the domain pipeline without premature distributed infrastructure:
+- **Architectural Question Answered:**
+  *"What is the simplest sufficient runtime to execute the clinical reasoning pipeline and deterministic safety gates?"*
+- **Hexagonal / Clean Architecture Topology:**
+  - `apps/api`: Thin composition root hosting HTTP server (`/healthz`, `/v1/runtime/execute`), wires runtime, ledger, evaluator, and adapters.
+  - `internal/analysis`: Pure Go domain models (`ExecutionRequest`, `ExecutionResult`, `ReasoningCandidate`) and abstract ports (`Runtime`, `Workflow`, `ModelGenerator`, `SafetyEvaluator`, `TurnLedger`). Zero 3rd-party dependencies.
+  - `internal/safety`: Deterministic clinical evaluator enforcing Stage 07 restrictions (no ungrounded assertions, no diagnosis, no ambient actions).
+  - `internal/platform/runtime/local`: Thread-safe in-memory `TurnLedger` (`sync.RWMutex`) indexing turns by SHA-256 payload digest. Enforces idempotent execution within process life.
+  - `internal/platform/runtime/eino`: Encapsulated graph/chain adapter using CloudWeGo Eino `v0.9.19`. Compiles runnable workflow once at startup; strictly barred from leaking outside this adapter.
+  - `internal/platform/httpapi`: Strict JSON-decoding HTTP handler (`DisallowUnknownFields`) mapping errors to standardized status codes.
+- **Key Production-Grade Enhancements:**
+  1. *Candidate Output-Shape Preflight Validation (`ValidateReasoningCandidate`):* Validates candidate identity, statement non-emptiness, classes, and texts before invoking clinical safety evaluation. Malformed model payloads fail fast upfront.
+  2. *Node-Boundary Context Cancellation Check:* Verifies `ctx.Err()` at node boundaries before invoking the generator, avoiding compute waste on canceled or timed-out requests.
+  3. *Process-Local Runtime Scope Bridge (`ContextWithScope`):* Injects runtime execution metadata (`TurnID`, `IdempotencyKey`, `CorrelationID`, `DeadlineMS`) into `context.Context` without polluting domain models.
+  4. *AST Boundary Static Enforcement Tests (`stage09_boundary_test.go`):* Automated AST scans verify that Eino imports remain 100% behind `internal/platform/runtime/eino/` and guarantee zero premature imports of deferred distributed technologies (Redis, Postgres, DBOS, Celery, Kafka).
+  5. *CI Quality Gate Hardening:* Root `package.json` scripts updated to `test ! -f go.mod || go vet/test ./...`, preventing any swallowed Go test failures during `pnpm check`.
+- **Invariants & Key Guarantees:**
+  - *Same Turn + Same Payload:* Exactly one semantic generation (`duplicate_collapsed`).
+  - *Same Turn + Altered Payload:* Fails closed immediately (`conflict`).
+  - *Concurrent Duplicate Execution:* 64 concurrent identical requests yield exactly 1 semantic workflow call in 2ms.
+  - *Important Non-Guarantee (Handoff to Stage 10):* Ledger is memory-only (`CROSS_RESTART_DEDUPE = NOT PROVIDED`). Durability across process restarts is handed off to Stage 10 (State & Persistence).
+- **Measured Results:** 17/17 Go tests passing with `-race` enabled, 0 AST leaks, 100% monorepo `pnpm check` pass rate.
+
 ---
 
 ## 6. Core Domain Invariants & Safety Guardrails
@@ -448,14 +474,16 @@ The system enforces deterministic domain rules across all processing layers:
 
 ```text
 /workspace/projects/MialyzerAgent/
-├── apps/                        # Deployable applications (Stage 14+)
-│   └── web/                     # Physician-facing React / TypeScript web app
+├── apps/                        # Deployable applications
+│   ├── api/                     # Stage 09 Go HTTP composition root (@biomarker/api)
+│   └── web/                     # Physician-facing React / TypeScript web app (Stage 14+)
 ├── contracts/                   # Canonical Machine Contracts
-│   ├── schemas/                 # JSON Schemas (biomarker, timeline, evidence, analysis, evaluation)
+│   ├── schemas/                 # JSON Schemas (biomarker, timeline, evidence, analysis, evaluation, runtime)
 │   │   ├── clinical/            # Lab report, observation, timeline schemas
 │   │   ├── evidence/            # Evidence bundle, claim, source, and retrieval schemas
 │   │   ├── analysis/            # Reasoning candidate, safety decision, output schemas
-│   │   └── evaluation/          # EvaluationCase, EvaluationRun, ModelManifest schemas
+│   │   ├── evaluation/          # EvaluationCase, EvaluationRun, ModelManifest schemas
+│   │   └── runtime/             # Stage 09 RuntimeExecutionRequest & RuntimeExecutionResult schemas
 │   └── openapi/                 # OpenAPI 3.1 REST specifications
 ├── docs/                        # Human & Clinical Architectural Documentation
 │   ├── 00-governance/           # Architecture rules, roadmap, stage handoffs, conflict protocols
@@ -466,7 +494,8 @@ The system enforces deterministic domain rules across all processing layers:
 │   ├── 05-longitudinal/         # Timeline models, deduplication policies, chronology, snapshot hashing
 │   ├── 06-evidence/             # Evidence engine, retrieval policies, retraction, entailment, ranking
 │   ├── 07-reasoning-safety/     # Bounded reasoning, 9 deterministic safety gates, statement model
-│   └── 08-evaluation/           # Evaluation architecture, statistical policy, metamorphic tests
+│   ├── 08-evaluation/           # Evaluation architecture, statistical policy, metamorphic tests
+│   └── 09-runtime/              # Single-process architecture, Eino adapter, in-memory ledger, safety integration
 ├── evals/                       # Top-Level Evaluation & Quality Harness
 │   └── stage-08/                # Materialized Stage 08 evaluation suite, metrics, metamorphic engine
 │       ├── results/             # Benchmark artifacts, slices, EvaluationRun JSON payloads
@@ -481,11 +510,18 @@ The system enforces deterministic domain rules across all processing layers:
 │   ├── stage-04/                # LOINC normalization & UCUM conversion test suite
 │   ├── stage-05/                # Longitudinal lineage, chronology, and snapshot tests
 │   ├── stage-06/                # Scientific evidence registry, claim ledger, and bundle tests
-│   └── stage-07/                # 9 deterministic safety gates, candidate evaluation & benchmark
-├── internal/                    # Core Go Domain Implementations (Stage 09+)
-│   ├── domain/                  # Pure business models and invariant checks (Zero 3rd-party dependencies)
-│   ├── ports/                   # Inbound/outbound interfaces (Clean Architecture)
-│   └── service/                 # Domain orchestration services
+│   ├── stage-07/                # 9 deterministic safety gates, candidate evaluation & benchmark
+│   └── stage-09-runtime/        # Stage 09 in-process deduplication concurrency benchmark (64 threads)
+├── internal/                    # Core Go Domain & Platform Implementations (Stage 09+)
+│   ├── analysis/                # Domain models, request/candidate validators, and abstract ports
+│   ├── safety/                  # Deterministic clinical safety evaluator (Stage 07 core restrictions)
+│   └── platform/                # Platform adapters (Clean Architecture)
+│       ├── httpapi/             # Lightweight HTTP handler with strict JSON decoding
+│       ├── model/               # Deterministic local model generator
+│       └── runtime/             # In-memory local runtime, scope bridge, and Eino workflow adapter
+├── tests/                       # Go Architecture & Integration Tests
+│   ├── architecture/            # AST boundary scanner (Eino containment & zero distributed infra)
+│   └── integration/             # End-to-end single-process runtime integration tests
 ├── packages/                    # Shared TypeScript libraries & utility packages
 ├── testdata/                    # Synthetic & De-identified Clinical Test Fixtures
 │   └── synthetic/               # Fully generated test datasets (ZERO real patient PHI)
@@ -495,9 +531,12 @@ The system enforces deterministic domain rules across all processing layers:
 │       ├── stage-05/            # Longitudinal chronology and duplicate test cases
 │       ├── stage-06/            # Evidence retrieval, retraction, and collision cases
 │       ├── stage-07/            # Reasoning candidate fixtures & safety benchmark cases
-│       └── stage-08/            # Independent evaluation cases & metamorphic cases
+│       ├── stage-08/            # Independent evaluation cases & metamorphic cases
+│       └── stage-09/            # Synthetic runtime execution request fixture
 ├── AGENTS.md                    # Strict operational guidelines for AI coding agents
 ├── BIOMARKER_PROJECT_SKELETON_V0.1.md # Master architecture blueprint
+├── go.mod                       # Root Go module (Go 1.27+, CloudWeGo Eino v0.9.19)
+├── go.sum                       # Go cryptographic checksums
 └── package.json                 # Monorepo workspace configuration (pnpm 11 + Turbo)
 ```
 
@@ -509,7 +548,7 @@ The system enforces deterministic domain rules across all processing layers:
 - **Node.js**: `>=22.0.0` (Pinned in `.node-version`)
 - **pnpm**: `11.10.0`
 - **Python**: `>=3.11` (for stage characterization benchmarks and evaluation harness)
-- **Go**: `1.27+` (required from Stage 9)
+- **Go**: `1.27+` (required from Stage 09)
 
 ### Installation & Workspace Verification
 ```bash
@@ -520,28 +559,26 @@ cd BioMarkerAgent
 # Install workspace dependencies
 pnpm install
 
-# Run full repository integrity checks (linter, typechecker, test runners)
+# Run full repository integrity checks (linter, typechecker, test runners for JS and Go)
 pnpm check
 ```
 
-### Running All Domain & Evaluation Test Suites
+### Running All Test Suites (Python + Go)
+
 ```bash
-# Execute Python domain and evaluation test suites (Stages 03 to 08)
+# 1. Execute Python domain and evaluation test suites (Stages 03 to 08)
 pytest experiments/ evals/
+
+# 2. Execute Go unit, integration, and AST architecture tests with race detection (Stage 09)
+go test -race ./...
+
+# 3. Run Stage 09 single-process concurrency smoke test (64 concurrent requests)
+go run ./experiments/stage-09-runtime
 ```
 
-All 82 stage-gated tests execute in `<0.15s`:
-```text
-experiments/stage-03/tests/test_parser.py ......                         [  7%]
-experiments/stage-04/tests/test_normalization.py .........               [ 18%]
-experiments/stage-05/tests/test_longitudinal.py ..............           [ 35%]
-experiments/stage-06/tests/test_evidence.py ..............               [ 52%]
-experiments/stage-07/tests/test_safety.py ......................         [ 79%]
-evals/stage-08/tests/test_ast_boundaries.py ....                         [ 84%]
-evals/stage-08/tests/test_evaluator.py .........                         [ 95%]
-evals/stage-08/tests/test_stats.py ....                                  [100%]
-============================== 82 passed in 0.14s ==============================
-```
+All 99 stage-gated tests execute with 100% clean passes:
+- **82 Python tests:** Ingestion, normalization, longitudinal chronology, evidence closure, deterministic safety, and Stage 08 evaluation harness.
+- **17 Go tests:** Domain validation, preflight candidate validation, HTTP handlers, deterministic safety evaluator, local ledger deduplication, Eino workflow adapter, and AST architecture boundary enforcement.
 
 ### Running Stage 08 Evaluation Replay Runner
 ```bash
