@@ -6,9 +6,9 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![Monorepo](https://img.shields.io/badge/Monorepo-pnpm%20%7C%20Turbo-orange.svg)](./pnpm-workspace.yaml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](./package.json)
-[![Go Tests](https://img.shields.io/badge/Go%20Tests-17%20passed%20(race%20clean)-brightgreen.svg)](./internal/)
+[![Go Tests](https://img.shields.io/badge/Go%20Tests-43%20passed%20(race%20clean)-brightgreen.svg)](./internal/)
 [![Python Tests](https://img.shields.io/badge/Pytest-82%20passed-brightgreen.svg)](./evals/)
-[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2009%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
+[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2010%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
 
 [English](./README.md) | **Tiếng Việt**
 
@@ -20,7 +20,7 @@
 2. [Bài toán Lâm sàng & Khung An toàn (Safety Envelope)](#2-bài-toán-lâm-sàng--khung-an-toàn-safety-envelope)
 3. [Đường ống Xử lý Dữ liệu Lâm sàng Toàn trình](#3-đường-ống-xử-lý-dữ-liệu-lâm-sàng-toàn-trình)
 4. [Kỷ luật Kiến trúc 16 Giai đoạn (16-Stage Discipline)](#4-kỷ-luật-kiến-trúc-16-giai-đoạn-16-stage-discipline)
-5. [Đào sâu vào các Stage đã hoàn thành (00–09)](#5-đào-sâu-vào-các-stage-đã-hoàn-thành-0009)
+5. [Đào sâu vào các Stage đã hoàn thành (00–10)](#5-đào-sâu-vào-các-stage-đã-hoàn-thành-0010)
    - [Stage 00: Nền tảng Kiến trúc & Quản trị](#stage-00-nền-tảng-kiến-trúc--quản-trị)
    - [Stage 01: Bối cảnh Sản phẩm & Khung An toàn](#stage-01-bối-cảnh-sản-phẩm--khung-an-toàn)
    - [Stage 02: Mô hình Miền Dấu ấn Sinh học](#stage-02-mô-hình-miền-dấu-ấn-sinh-học)
@@ -31,6 +31,7 @@
    - [Stage 07: Lập luận & Cổng An toàn Lâm sàng Tất định (Reasoning & Clinical Safety Engine)](#stage-07-lập-luận--cổng-an-toàn-lâm-sàng-tất-định-reasoning--clinical-safety-engine)
    - [Stage 08: Kiến trúc Đánh giá & Đảm bảo Chất lượng (Evaluation & Quality Architecture)](#stage-08-kiến-trúc-đánh-giá--đảm-bảo-chất-lượng-evaluation--quality-architecture)
    - [Stage 09: Go Runtime Đơn tiến trình & Adapter Eino](#stage-09-go-runtime-đơn-tiến-trình--adapter-eino)
+   - [Stage 10: Quản lý Trạng thái & Kiến trúc Lưu trữ Bền vững](#stage-10-quản-lý-trạng-thái--kiến-trúc-lưu-trữ-bền-vững)
 6. [Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn](#6-các-bất-biến-miền-nghiệp-vụ-cốt-lõi--rào-chắn-an-toàn)
 7. [Bản đồ Cấu trúc Repository](#7-bản-đồ-cấu-trúc-repository)
 8. [Cài đặt & Xác minh Hệ thống](#8-cài-đặt--xác-minh-hệ-thống)
@@ -138,8 +139,8 @@ flowchart TD
 
     subgraph PhaseC["CHẶNG C: Khám phá Runtime & Nền tảng (Stages 9–13)"]
         S8 --> S9["Stage 09: Go Runtime Đơn tiến trình<br/><code>internal/</code>, Clean Architecture<br/><b>[HOÀN THÀNH]</b>"]:::done
-        S9 --> S10["Stage 10: Quản lý Trạng thái & Lưu trữ (PostgreSQL)<br/><b>[TIẾP THEO / SẴN SÀNG]</b>"]:::current
-        S10 --> S11["Stage 11: Xử lý Lỗi, Thử lại & Phục hồi"]:::queued
+        S9 --> S10["Stage 10: Quản lý Trạng thái & Lưu trữ Bền vững<br/>turnstore.Store, fileturn, Durability Baseline<br/><b>[HOÀN THÀNH]</b>"]:::done
+        S10 --> S11["Stage 11: Xử lý Lỗi, Thử lại & Phục hồi<br/><b>[TIẾP THEO / SẴN SÀNG]</b>"]:::current
         S11 --> S12["Stage 12: Quyết định Hạ tầng Phân tán (ADR)"]:::queued
         S12 --> S13["Stage 13: Cấu hình, Đánh phiên bản & Chứng thực"]:::queued
     end
@@ -166,10 +167,10 @@ flowchart TD
 | **04** | Chuẩn hóa Danh pháp Lâm sàng | Mapping LOINC v2.83, chuẩn hóa UCUM, 4 lớp so sánh | **HOÀN THÀNH** | [`docs/04-normalization/`](./docs/04-normalization/) |
 | **05** | Mô hình Chuỗi Thời gian (Longitudinal) | Timeline bệnh nhân, 3 đồng hồ, phân giải trùng lặp, snapshot | **HOÀN THÀNH** | [`docs/05-longitudinal/`](./docs/05-longitudinal/) |
 | **06** | Công cụ Bằng chứng Khoa học | Truy xuất y văn PubMed/Crossref, đóng băng gói bằng chứng, quản lý rút bài & xung đột | **HOÀN THÀNH** | [`docs/06-evidence/`](./docs/06-evidence/) |
-| **07** | Lập luận & Cổng An toàn Lâm sàng | Quy trình suy luận có kiểm soát, cổng kiểm soát rủi ro | Chờ kích hoạt | Stage 7 Roadmap Gate |
-| **08** | Kiến trúc Đánh giá & Chất lượng | Bộ dữ liệu đánh giá vàng, tiêu chí chấm điểm, red-team | Chờ kích hoạt | Stage 8 Roadmap Gate |
-| **09** | Go Runtime Đơn tiến trình | Động cơ Go thuần, Clean Architecture, CLI/API | Chờ kích hoạt | Stage 9 Roadmap Gate |
-| **10** | Quản lý Trạng thái & Lưu trữ | Schema PostgreSQL, tính bất biến ngữ nghĩa, transaction | Chờ kích hoạt | Stage 10 Roadmap Gate |
+| **07** | Lập luận & Cổng An toàn Lâm sàng | Quy trình suy luận có kiểm soát, 9 cổng kiểm soát rủi ro | **HOÀN THÀNH** | [`docs/07-reasoning-safety/`](./docs/07-reasoning-safety/) |
+| **08** | Kiến trúc Đánh giá & Chất lượng | Bộ dữ liệu đánh giá vàng, tiêu chí chấm điểm, red-team | **HOÀN THÀNH** | [`docs/08-evaluation/`](./docs/08-evaluation/) |
+| **09** | Go Runtime Đơn tiến trình | Động cơ Go thuần, Clean Architecture, CLI/API | **HOÀN THÀNH** | [`docs/09-runtime/`](./docs/09-runtime/) |
+| **10** | Quản lý Trạng thái & Lưu trữ | Cổng `turnstore.Store`, phân loại 4 tầng trạng thái, replay sau restart, adapter `fileturn` | **HOÀN THÀNH** | [`docs/10-persistence/`](./docs/10-persistence/) |
 | **11** | Xử lý Lỗi, Thử lại & Phục hồi | Thử nghiệm Chaos, khóa idempotency, phục hồi sự cố | Chờ kích hoạt | Stage 11 Roadmap Gate |
 | **12** | Quyết định Hạ tầng Phân tán (ADR) | Đánh giá worker, hàng đợi, lease & fencing | Chờ kích hoạt | Stage 12 Roadmap Gate |
 | **13** | Cấu hình, Đánh phiên bản & Chứng thực | Hồ sơ canonical RFC 8785, registry artifact bất biến | Chờ kích hoạt | Stage 13 Roadmap Gate |
@@ -559,12 +560,58 @@ Xây dựng runtime thực thi đơn tiến trình tất định, tinh gọn, đ
 - **Kiểm thử Ranh giới AST:** 0 vi phạm import rò rỉ Eino, 0 import hạ tầng phân tán.
 - **Thực nghiệm Đo lường Đồng thời (`experiments/stage-09-runtime`):** 64 requests đồng thời trùng lặp hoàn thành trong 2ms với đúng duy nhất 1 lần gọi luồng ngữ nghĩa (`semantic_workflow_calls: 1`).
 
+### Stage 10: Quản lý Trạng thái & Kiến trúc Lưu trữ Bền vững (State & Persistence Architecture)
+Xác lập nền tảng lưu trữ trạng thái bền vững đơn tiến trình/đơn luồng ghi, đảm bảo danh tính Turn và kết quả phân tích tồn tại qua các lần khởi động lại tiến trình mà không vội vàng đưa vào hạ tầng phân tán:
+
+#### 1. Câu hỏi Kiến trúc Cốt lõi
+> *"Làm thế nào để định danh logic Turn và kết quả kinh điển (canonical outcome) sống sót qua sự cố sập ứng dụng và khởi động lại mà không vội vàng cài đặt các dịch vụ cơ sở dữ liệu phân tán phức tạp?"*
+
+#### 2. Lỗ hổng Sổ cái RAM của Stage 09 Được Giải quyết Triệt để
+Stage 09 đã giải quyết bài toán chống lặp trong nội bộ tiến trình, nhưng sổ cái nằm hoàn toàn trên RAM. Khi tiến trình khởi động lại, RAM bị xóa sạch khiến request gửi lại bị hiểu nhầm là Turn mới và kích hoạt chạy lại quy trình lâm sàng tốn kém. Stage 10 cam kết tính bền vững qua restart và cơ chế phát lại kết quả lũy đạo (idempotent replay).
+
+#### 3. Phân loại Trạng thái 4 Tầng (Four-Tier State Taxonomy)
+1. **Trạng thái Kinh điển Bền vững (Canonical Durable State):** Định danh Turn, khóa idempotency, hàm băm ngữ nghĩa của request (`RequestDigest`), nguồn gốc ngữ cảnh đóng (`Provenance`), trạng thái kinh điển (`ACCEPTED`, `COMPLETED`, `FAILED`, `CANCELLED`, `RECOVERY_REQUIRED`), kết quả kinh điển (`Result`), và phiên bản lưu trữ (`Revision`).
+2. **Tham chiếu Bất biến Thượng nguồn (Durable Immutable Upstream References):** ID snapshot lâm sàng, snapshot dòng thời gian, gói bằng chứng y khoa và mã băm các chính sách an toàn.
+3. **Trạng thái Tạm thời của Tiến trình (Ephemeral Runtime State):** `context.Context`, timer, goroutines, node state của Eino, token buffer, channel trong RAM. Tuyệt đối không lưu bền vững làm thẩm quyền chân lý.
+4. **Trạng thái Phái sinh / Bộ nhớ đệm (Derived / Cache State):** Đồ thị Eino đã biên dịch, schema cache, cache đọc (`Cache ≠ Checkpoint ≠ Canonical State`).
+
+#### 4. Cổng Ngữ nghĩa Lưu trữ Trừu tượng ([`turnstore.Store`](./internal/persistence/turnstore/store.go))
+Định nghĩa thẩm quyền lưu trữ thông qua interface Go thuần khiết (`CreateOrLoad`, `Load`, `CommitTerminal`, `MarkRecoveryRequired`). Hiện thực hóa nguyên tắc **`Canonical state owner ≠ File format ≠ Database vendor`**, giúp tách rời hoàn toàn logic nghiệp vụ lâm sàng khỏi các công nghệ lưu trữ vật lý bên dưới.
+
+#### 5. Kháng lặp Bền vững & Hàm băm Ngữ nghĩa Request (`RequestSemanticDigest`)
+Hàm băm ngữ nghĩa chỉ chọn lọc các trường cốt lõi: `schema_version`, `turn_id`, `idempotency_key`, và `ReasoningInput` đóng. Tuyệt đối bỏ qua `correlation_id` tầng mạng và thời gian `deadline_ms` còn lại, ngăn ngừa báo lỗi xung đột giả khi client retry request qua mạng. Mọi request dùng lại cùng `TurnID` nhưng mang ý đồ nghiệp vụ khác sẽ bị chặn đứng an toàn ngay lập tức (`fail-closed` với lỗi `ErrConflict`).
+
+#### 6. Phát lại sau Khởi động lại & Ranh giới Phục hồi Lỗi (Crash Windows)
+- **Turn đã hoàn thành:** Tự động phát lại kết quả kinh điển có sẵn trên đĩa mà không gọi lại bất kỳ workflow nào (`restart_replay_workflow_calls = 0`).
+- **Turn dở dang bị kẹt sau sự cố (Crash Windows W1 & W2):** Bản ghi ở trạng thái `ACCEPTED` khi khởi động lại sẽ được chuyển thành `RECOVERY_REQUIRED`. Nghiêm cấm tự ý chạy lại mù quáng (`incomplete_reexecution_calls = 0`), bàn giao quyền quyết định chính sách retry/hòa giải an toàn cho Stage 11.
+
+#### 7. Adapter Lưu trữ Tệp Tham chiếu ([`fileturn.Store`](./internal/platform/persistence/fileturn/store.go))
+- Mỗi Turn là một tệp: `sha256(TurnID).json` với phân quyền an toàn `0700` (thư mục) và `0600` (tệp).
+- **Tạo mới nguyên tử (`atomicCreate`):** Ghi tệp tạm $\rightarrow$ `fsync(temp)` $\rightarrow$ hard-link bằng `os.Link` $\rightarrow$ `fsync` thư mục cha.
+- **Cập nhật trạng thái cuối nguyên tử (`atomicReplace`):** Ghi tệp tạm $\rightarrow$ `fsync(temp)` $\rightarrow$ đổi tên nguyên tử bằng `os.Rename` $\rightarrow$ `fsync` thư mục cha.
+- **Phong bì Toàn vẹn Dữ liệu:** Đóng gói bản ghi kèm `record_digest` (SHA-256) giúp phát hiện tức thì lỗi suy biến bit hoặc chỉnh sửa trái phép ngoài ý muốn (`ErrIntegrity`).
+- **Tối thiểu hóa Dữ liệu (Data Minimization):** Không lưu trữ chuỗi câu hỏi thô của người dùng chỉ để tra cứu trùng lặp; chỉ lưu mã băm, ID nguồn gốc và kết quả.
+
+#### 8. Quyết định Chiến lược Công nghệ
+Đóng băng cổng ngữ nghĩa và mô hình bền vững của Turn. Adapter tệp đóng vai trò hiện thực tham chiếu cho môi trường đơn luồng ghi; SQLite là ứng viên sáng giá kế tiếp cho độ bền transactional ACID cục bộ; PostgreSQL và hàng đợi phân tán được tạm hoãn cho đến khi có bằng chứng đòi hỏi từ Stage 12.
+
+#### 9. Kết quả Đo lường Thực tế
+43/43 Go tests vượt qua với cơ chế phát hiện race condition (`go test -race ./...`), 100% kiểm tra monorepo `pnpm check` thành công, và kịch bản thực nghiệm khói xác minh đầy đủ các chỉ số (`completed_survives_restart: true`, `workflow_calls: 0`, `incomplete_requires_recovery: true`).
+
 ---
 
 ## 6. Các Bất biến Miền Nghiệp vụ Cốt lõi & Rào chắn An toàn
 
 | Mã Invariant | Nội dung Quy tắc | Cơ sở Rào chắn An toàn |
 |---|---|---|
+| **STATE-001** | `TurnStore` là thẩm quyền trạng thái kinh điển duy nhất. | Bộ nhớ RAM và flight map chỉ điều phối caller đồng thời; lưu trữ đĩa sở hữu chân lý. |
+| **STATE-002** | `Checkpoint ≠ Cache ≠ Canonical State`. | Xóa cache hay mất checkpoint không bao giờ được làm sai lệch hay xóa mất bản ghi thực thi. |
+| **STATE-003** | `Turn` (định danh logic) ≠ `Attempt` (lần chạy vật lý). | Turn logic tồn tại xuyên suốt các lần restart; số lần thử vật lý không thay đổi định danh Turn. |
+| **STATE-004** | Hàm băm ngữ nghĩa loại bỏ metadata tầng truyền tải. | Thay đổi `correlation_id` hoặc `deadline_ms` không gây ra lỗi xung đột idempotency giả. |
+| **STATE-005** | Phát lại kết quả kinh điển không gọi lại workflow. | Triệt tiêu lãng phí tài nguyên tính toán và chi phí khi gọi lại các Turn đã hoàn tất. |
+| **STATE-006** | Turn chưa hoàn tất bị kẹt sau crash tự động fail-closed về `RECOVERY_REQUIRED`. | Ngăn cấm việc tự chạy lại mù quáng sau sự cố; phòng tránh tác dụng phụ lâm sàng nguy hiểm. |
+| **STATE-007** | Thao tác ghi đĩa bắt buộc tuân thủ kỷ luật double-fsync. | `fsync` trên cả tệp tạm và thư mục cha bảo đảm dữ liệu toàn vẹn khi mất điện đột ngột. |
+| **STATE-008** | Bản ghi kinh điển bắt buộc bọc phong bì kiểm tra toàn vẹn SHA-256. | Hư hỏng bit ngẫu nhiên hoặc can thiệp dữ liệu ngoài ý muốn sẽ bị chặn đứng ngay (`ErrIntegrity`). |
 | **LONG-001** | Timeline là hình chiếu suy dẫn, không phải nguồn thẩm quyền gốc. | Ngăn ngừa việc phép chiếu xu hướng ghi đè dữ liệu quan sát gốc. |
 | **LONG-002** | Một snapshot chỉ chứa duy nhất một đối tượng bệnh nhân (`subject_ref`). | Cách ly tuyệt đối; phát hiện dữ liệu lẫn lộn bệnh nhân sẽ fail-closed ngay lập tức. |
 | **LONG-003** | Cùng giá trị và thời gian không chứng minh đó là dữ liệu trùng lặp. | Hai lần lấy máu hoặc nước tiểu độc lập tại cùng thời điểm vẫn là hai sự kiện riêng biệt. |
@@ -642,12 +689,13 @@ Xây dựng runtime thực thi đơn tiến trình tất định, tinh gọn, đ
 │   ├── api/                     # Composition root Go HTTP của Stage 09 (@biomarker/api)
 │   └── web/                     # Ứng dụng web React / TypeScript cho bác sĩ (Stage 14+)
 ├── contracts/                   # Hợp đồng Máy Thẩm quyền Tối cao
-│   ├── schemas/                 # JSON Schemas (biomarker, timeline, evidence, analysis, evaluation, runtime)
+│   ├── schemas/                 # JSON Schemas (biomarker, timeline, evidence, analysis, evaluation, runtime, persistence)
 │   │   ├── clinical/            # Schema báo cáo xét nghiệm, quan sát, timeline
 │   │   ├── evidence/            # Schema evidence bundle, claim, source, retrieval attempt
 │   │   ├── analysis/            # Schema suy luận, cổng an toàn, phát biểu lâm sàng, đầu ra bác sĩ
 │   │   ├── evaluation/          # Schema ca kiểm chuẩn, kết quả đánh giá, model manifest, hội chẩn lâm sàng
-│   │   └── runtime/             # Schema yêu cầu & kết quả thực thi runtime Stage 09
+│   │   ├── runtime/             # Schema yêu cầu & kết quả thực thi runtime Stage 09
+│   │   └── persistence/         # Schema bản ghi Turn bền vững & phong bì toàn vẹn Stage 10
 │   └── openapi/                 # Đặc tả REST API chuẩn OpenAPI 3.1
 ├── docs/                        # Tài liệu Kiến trúc & Miền Lâm sàng
 │   ├── 00-governance/           # Quy tắc quản trị, lộ trình, văn bản bàn giao stage, giao thức xung đột
@@ -659,7 +707,8 @@ Xây dựng runtime thực thi đơn tiến trình tất định, tinh gọn, đ
 │   ├── 06-evidence/             # Cỗ máy bằng chứng, chính sách truy xuất, rút bài, entailment, xếp hạng
 │   ├── 07-reasoning-safety/     # Kiến trúc suy luận, 9 cổng an toàn tất định, mô hình phát biểu, rào chắn
 │   ├── 08-evaluation/           # Kiến trúc đánh giá, quy chuẩn thống kê, đối kháng, biến hình & hội chẩn
-│   └── 09-runtime/              # Kiến trúc đơn tiến trình, adapter Eino, ledger bộ nhớ, tích hợp an toàn
+│   ├── 09-runtime/              # Kiến trúc đơn tiến trình, adapter Eino, ledger bộ nhớ, tích hợp an toàn
+│   └── 10-persistence/          # Phân loại trạng thái, cổng turnstore, cửa sổ lỗi W0-W3, thiết kế adapter tệp
 ├── evals/                       # Hệ thống Đánh giá Chất lượng Hạng nhất
 │   └── stage-08/                # Động cơ đánh giá Stage 08, ma trận nhầm lẫn, metamorphic & thống kê
 │       ├── results/             # Kết quả đánh giá, lát cắt phân khúc, bản ghi EvaluationRun
@@ -675,17 +724,22 @@ Xây dựng runtime thực thi đơn tiến trình tất định, tinh gọn, đ
 │   ├── stage-05/                # Bộ kiểm thử lineage, trật tự thời gian và snapshot
 │   ├── stage-06/                # Bộ kiểm thử sổ cái bằng chứng, va chạm danh tính và bundle
 │   ├── stage-07/                # Cỗ máy an toàn tất định, đánh giá ứng viên suy luận & benchmark an toàn
-│   └── stage-09-runtime/        # Benchmark đo lường deduplication đồng thời 64 luồng trong cùng tiến trình
+│   ├── stage-09-runtime/        # Benchmark đo lường deduplication đồng thời 64 luồng trong cùng tiến trình
+│   └── stage-10-persistence/    # Thực nghiệm khói kiểm chứng tính bền vững qua restart & phục hồi lỗi
 ├── internal/                    # Triển khai Miền Lõi & Nền tảng bằng Go (Stage 09+)
 │   ├── analysis/                # Mô hình miền, bộ thẩm định request/candidate, và abstract ports
 │   ├── safety/                  # Bộ thẩm định an toàn lâm sàng tất định (quy tắc Stage 07)
+│   ├── persistence/             # Các cổng trừu tượng lưu trữ bền vững (turnstore, artifactstore)
 │   └── platform/                # Các adapters hạ tầng nền tảng (Clean Architecture)
 │       ├── httpapi/             # Trình xử lý HTTP nghiêm ngặt tự động kiểm tra JSON
 │       ├── model/               # Bộ sinh giả lập xác định (Deterministic Generator)
-│       └── runtime/             # Runtime in-memory cục bộ, context scope bridge và Eino workflow adapter
+│       ├── runtime/             # Runtime in-memory cục bộ, context scope bridge, persistentlocal và Eino adapter
+│       └── persistence/         # Adapter tệp bền vững (fileturn với double-fsync, fileartifact)
 ├── tests/                       # Kiểm thử Kiến trúc & Tích hợp Go
 │   ├── architecture/            # Quét ranh giới AST (cô lập Eino & cấm import hạ tầng phân tán)
-│   └── integration/             # Kiểm thử tích hợp toàn trình runtime đơn tiến trình
+│   │   └── stage10/             # Quét AST chặn đứng import hạ tầng phân tán sớm
+│   └── integration/             # Kiểm thử tích hợp toàn trình
+│       └── stage10/             # Kiểm thử phát lại kết quả qua restart và ranh giới phục hồi
 ├── packages/                    # Các thư viện tiện ích TypeScript dùng chung
 ├── testdata/                    # Dữ liệu Kiểm thử Lâm sàng Tổng hợp
 │   └── synthetic/               # Bộ dữ liệu nhân tạo tuyệt đối (KHÔNG CHỨA PHI THẬT)
@@ -696,7 +750,8 @@ Xây dựng runtime thực thi đơn tiến trình tất định, tinh gọn, đ
 │       ├── stage-06/            # Ca kiểm thử truy xuất bằng chứng, rút bài và va chạm
 │       ├── stage-07/            # Ca kiểm thử ứng viên suy luận, vi phạm hành vi cấm & rào chắn
 │       ├── stage-08/            # Ca kiểm chuẩn độc lập (evaluation_cases) & ca biến hình (metamorphic_cases)
-│       └── stage-09/            # Fixture yêu cầu thực thi runtime tổng hợp
+│       ├── stage-09/            # Fixture yêu cầu thực thi runtime tổng hợp
+│       └── stage-10/            # Fixture bản ghi Turn bền vững tổng hợp
 ├── AGENTS.md                    # Hướng dẫn bắt buộc dành cho AI Coding Agents
 ├── BIOMARKER_PROJECT_SKELETON_V0.1.md # Bản thiết kế kiến trúc khung tổng thể
 ├── go.mod                       # Root Go module (Go 1.27+, CloudWeGo Eino v0.9.19)
@@ -733,16 +788,19 @@ pnpm check
 # 1. Thực thi toàn bộ test suite thực nghiệm và kiểm chuẩn Python (Stages 03 - 08)
 pytest experiments/ evals/
 
-# 2. Thực thi kiểm thử đơn vị, tích hợp và quét ranh giới AST Go kèm kiểm tra race (Stage 09)
+# 2. Thực thi kiểm thử đơn vị, tích hợp và quét ranh giới AST Go kèm kiểm tra race (Stages 09 & 10)
 go test -race ./...
 
 # 3. Chạy smoke benchmark đo lường trùng lặp đồng thời 64 requests trong một tiến trình
 go run ./experiments/stage-09-runtime
+
+# 4. Chạy kịch bản thực nghiệm khói độ bền vững lưu trữ và restart của Stage 10
+go run ./experiments/stage-10-persistence/main.go
 ```
 
-Toàn bộ 99 test cases toàn hệ thống hoàn thành với kết quả 100% PASS:
+Toàn bộ 125 test cases toàn hệ thống hoàn thành với kết quả 100% PASS:
 - **82 Python tests:** Ingestion, chuẩn hóa thuật ngữ, timeline diễn tiến, gói bằng chứng, cổng an toàn và harness đánh giá Stage 08.
-- **17 Go tests:** Kiểm định miền, preflight validation cho ứng viên, bộ xử lý HTTP, evaluator an toàn, ledger deduplication, workflow adapter Eino, và kiểm tra tĩnh AST ranh giới kiến trúc.
+- **43 Go tests:** Kiểm định miền, preflight validation cho ứng viên, bộ xử lý HTTP, evaluator an toàn, ledger deduplication, workflow adapter Eino, adapter tệp `turnstore.Store`, thao tác nguyên tử double-fsync, phát lại kết quả qua restart, và kiểm tra tĩnh AST ranh giới kiến trúc.
 
 ### Thực thi Runner Tái lập Đánh giá Stage 08
 ```bash

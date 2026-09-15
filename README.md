@@ -6,9 +6,9 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![Monorepo](https://img.shields.io/badge/Monorepo-pnpm%20%7C%20Turbo-orange.svg)](./pnpm-workspace.yaml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](./package.json)
-[![Go Tests](https://img.shields.io/badge/Go%20Tests-17%20passed%20(race%20clean)-brightgreen.svg)](./internal/)
+[![Go Tests](https://img.shields.io/badge/Go%20Tests-43%20passed%20(race%20clean)-brightgreen.svg)](./internal/)
 [![Python Tests](https://img.shields.io/badge/Pytest-82%20passed-brightgreen.svg)](./evals/)
-[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2009%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
+[![Conformance](https://img.shields.io/badge/Stage%20Gate-Stage%2010%20Complete-green.svg)](./docs/00-governance/MASTER_ROADMAP.md)
 
 **English** | [Tiếng Việt](./README.vi.md)
 
@@ -20,7 +20,7 @@
 2. [Clinical Problem & Safety Envelope](#2-clinical-problem--safety-envelope)
 3. [End-to-End Clinical Processing Pipeline](#3-end-to-end-clinical-processing-pipeline)
 4. [The 16-Stage Architectural Discipline](#4-the-16-stage-architectural-discipline)
-5. [Deep Dive into Completed Stages (00–09)](#5-deep-dive-into-completed-stages-0009)
+5. [Deep Dive into Completed Stages (00–10)](#5-deep-dive-into-completed-stages-0010)
    - [Stage 00: Architecture Foundation & Governance](#stage-00-architecture-foundation--governance)
    - [Stage 01: Product Context & Safety Envelope](#stage-01-product-context--safety-envelope)
    - [Stage 02: Canonical Biomarker Domain Model](#stage-02-canonical-biomarker-domain-model)
@@ -31,6 +31,7 @@
    - [Stage 07: Reasoning & Deterministic Clinical Safety Engine](#stage-07-reasoning--deterministic-clinical-safety-engine)
    - [Stage 08: Evaluation & Quality Architecture](#stage-08-evaluation--quality-architecture)
    - [Stage 09: Single-Process Runtime & Eino Workflow Adapter](#stage-09-single-process-runtime--eino-workflow-adapter)
+   - [Stage 10: State & Persistence Architecture](#stage-10-state--persistence-architecture)
 6. [Core Domain Invariants & Safety Guardrails](#6-core-domain-invariants--safety-guardrails)
 7. [Repository Layout & Navigation Map](#7-repository-layout--navigation-map)
 8. [Getting Started & Verification](#8-getting-started--verification)
@@ -138,8 +139,8 @@ flowchart TD
 
     subgraph PhaseC["PHASE C: Runtime & Platform Discovery (Stages 9–13)"]
         S8 --> S9["Stage 09: Single-Process Go Runtime<br/><code>internal/</code>, Clean Architecture<br/><b>[COMPLETED]</b>"]:::done
-        S9 --> S10["Stage 10: State & Persistence Architecture<br/>PostgreSQL, Immutability, Transactions<br/><b>[NEXT / READY]</b>"]:::current
-        S10 --> S11["Stage 11: Failure, Retry & Idempotency"]:::queued
+        S9 --> S10["Stage 10: State & Persistence Architecture<br/>turnstore.Store, fileturn, Durability Baseline<br/><b>[COMPLETED]</b>"]:::done
+        S10 --> S11["Stage 11: Failure, Retry & Idempotency<br/><b>[NEXT / READY]</b>"]:::current
         S11 --> S12["Stage 12: Distributed Execution Decision (ADR)"]:::queued
         S12 --> S13["Stage 13: Configuration, Versioning & Attestation"]:::queued
     end
@@ -166,12 +167,12 @@ flowchart TD
 | **04** | Terminology Normalization | LOINC v2.83 mapping, UCUM normalization, comparability classes | **COMPLETED** | [`docs/04-normalization/`](./docs/04-normalization/) |
 | **05** | Longitudinal Biomarker Model | Dataset timeline, 3 clocks chronology, deduplication, snapshots | **COMPLETED** | [`docs/05-longitudinal/`](./docs/05-longitudinal/) |
 | **06** | Scientific Evidence Engine | Evidence retrieval, claim citation linkage, guideline bundles | **COMPLETED** | [`docs/06-evidence/`](./docs/06-evidence/) |
-| **07** | Reasoning & Clinical Safety | Bounded reasoning workflow, deterministic risk gates | Queued | Stage 7 Roadmap Gate |
-| **08** | Evaluation Architecture | Clinical benchmark datasets, scoring rubrics, red-team harness | Queued | Stage 8 Roadmap Gate |
-| **09** | Single-Process Go Runtime | Native Go domain engine, clean architecture, unified CLI/API | Queued | Stage 9 Roadmap Gate |
-| **10** | State & Persistence | PostgreSQL schema, semantic immutability, transactional boundaries | Queued | Stage 10 Roadmap Gate |
+| **07** | Reasoning & Clinical Safety | Bounded reasoning workflow, deterministic risk gates | **COMPLETED** | [`docs/07-reasoning-safety/`](./docs/07-reasoning-safety/) |
+| **08** | Evaluation Architecture | Clinical benchmark datasets, scoring rubrics, red-team harness | **COMPLETED** | [`docs/08-evaluation/`](./docs/08-evaluation/) |
+| **09** | Single-Process Go Runtime | Native Go domain engine, clean architecture, unified CLI/API | **COMPLETED** | [`docs/09-runtime/`](./docs/09-runtime/) |
+| **10** | State & Persistence | `turnstore.Store` port, canonical state taxonomy, restart replay, `fileturn` adapter | **COMPLETED** | [`docs/10-persistence/`](./docs/10-persistence/) |
 | **11** | Failure, Retry & Recovery | Chaos experiments, idempotency keys, crash recovery protocols | Queued | Stage 11 Roadmap Gate |
-| **12** | Durable/Distributed ADR | Worker, queue, lease & fencing evaluation | Queued | Stage 12 Roadmap Gate |
+| **12** | Distributed Execution Decision | Worker, queue, lease & fencing evaluation (ADR) | Queued | Stage 12 Roadmap Gate |
 | **13** | Configuration & Attestation | RFC 8785 canonical profile, immutable artifact registry | Queued | Stage 13 Roadmap Gate |
 | **14** | Security, API & Web App | RBAC, patient privacy, React/TypeScript physician dashboard | Queued | Stage 14 Roadmap Gate |
 | **15** | Production Closure | Hardening, cross-platform compatibility, operational sign-off | Queued | Stage 15 Roadmap Gate |
@@ -393,6 +394,35 @@ Establishes the minimal, deterministic single-process execution runtime powering
   - *Important Non-Guarantee (Handoff to Stage 10):* Ledger is memory-only (`CROSS_RESTART_DEDUPE = NOT PROVIDED`). Durability across process restarts is handed off to Stage 10 (State & Persistence).
 - **Measured Results:** 17/17 Go tests passing with `-race` enabled, 0 AST leaks, 100% monorepo `pnpm check` pass rate.
 
+### Stage 10: State & Persistence Architecture
+Establishes the durable single-process/single-writer state persistence foundation ensuring Turn identity and outcomes survive application restarts without premature distributed infrastructure:
+- **Architectural Question Answered:**
+  *"How can logical Turn identity and canonical outcomes survive process crashes and restarts without prematurely introducing distributed database services?"*
+- **The RAM Ledger Vulnerability Closed:**
+  Stage 09 proved in-process deduplication, but its ledger lived exclusively in memory. Process restart wiped that state, allowing retried requests to execute twice. Stage 10 guarantees cross-restart durability and idempotent replay.
+- **Four-Tier State Taxonomy:**
+  1. *Canonical Durable State:* Turn identity, idempotency key, semantic request digest, closed provenance, canonical status (`ACCEPTED`, `COMPLETED`, `FAILED`, `CANCELLED`, `RECOVERY_REQUIRED`), canonical result, and storage revision.
+  2. *Durable Immutable Upstream References:* Snapshot IDs (Clinical, Timeline, Evidence) and policy digests.
+  3. *Ephemeral Runtime State:* `context.Context`, timers, goroutines, node states, token buffers, in-memory channels. Never persisted as authority.
+  4. *Derived / Cache State:* Compiled graphs, parsed schemas, read caches (`Cache ≠ Checkpoint ≠ Canonical State`).
+- **Abstract Semantic Port (`turnstore.Store`):**
+  Defines storage authority via pure Go interfaces ([`turnstore.Store`](./internal/persistence/turnstore/store.go): `CreateOrLoad`, `Load`, `CommitTerminal`, `MarkRecoveryRequired`). Enforces `Canonical state owner ≠ File format ≠ Database vendor`, decoupling domain semantics from underlying storage engines.
+- **Durable Idempotency & Request Semantic Digest:**
+  `RequestSemanticDigest` hashes `schema_version`, `turn_id`, `idempotency_key`, and closed `ReasoningInput`. Strictly ignores transport-level `correlation_id` and remaining `deadline_ms` to prevent false conflict triggers on legitimate network retries. Altered semantic requests fail closed immediately (`ErrConflict`).
+- **Restart Replay & Recovery Boundary:**
+  - *Completed Turns:* Immediate canonical result replay with zero workflow calls (`restart_replay_workflow_calls = 0`).
+  - *Stranded Incomplete Turns (Crash Windows W1 & W2):* Turns persisted as `ACCEPTED` but uncommitted at crash time fail closed to `RECOVERY_REQUIRED`. Zero blind re-executions (`incomplete_reexecution_calls = 0`), handing safe retry/reconcile policies to Stage 11.
+- **Reference Durable File Adapter (`fileturn.Store`):**
+  - Canonical record per Turn: `sha256(TurnID).json` with secure `0700`/`0600` permissions.
+  - *Atomic Reservation (`atomicCreate`):* Temp file write $\rightarrow$ `fsync(temp)` $\rightarrow$ atomic `os.Link` (hard-link) $\rightarrow$ `fsync(parent dir)`.
+  - *Atomic Terminal Commit (`atomicReplace`):* Temp file write $\rightarrow$ `fsync(temp)` $\rightarrow$ atomic `os.Rename` $\rightarrow$ `fsync(parent dir)`.
+  - *Integrity Envelope:* Encapsulates payload with SHA-256 `record_digest` detecting corruption or tampering (`ErrIntegrity`).
+  - *Data Minimization:* Raw clinical question text is never stored just for duplicate lookup; only hashes, provenance IDs, and canonical results are persisted.
+- **Technology Decision:**
+  Semantic port and durability model frozen. File store serves as reference single-writer adapter; SQLite identified as leading embedded transactional candidate; PostgreSQL and distributed queues deferred until Stage 12 multi-process evidence justifies them.
+- **Measured Results:**
+  43/43 Go tests passing with `-race` enabled, 100% monorepo `pnpm check` pass rate, and verified smoke experiment metrics (`completed_survives_restart: true`, `workflow_calls: 0`, `incomplete_requires_recovery: true`).
+
 ---
 
 ## 6. Core Domain Invariants & Safety Guardrails
@@ -401,6 +431,14 @@ The system enforces deterministic domain rules across all processing layers:
 
 | Invariant ID | Rule Statement | Architectural Rationale |
 |---|---|---|
+| **STATE-001** | `TurnStore` is the sole canonical state authority. | Process memory and in-memory flight maps coordinate callers only; storage owns truth. |
+| **STATE-002** | `Checkpoint ≠ Cache ≠ Canonical State`. | Deleting caches or losing checkpoints must never corrupt or erase logical execution records. |
+| **STATE-003** | `Turn` (logical identity) ≠ `Attempt` (physical execution). | A logical Turn survives across restarts; physical attempts do not redefine Turn identity. |
+| **STATE-004** | Semantic digest excludes transport-only metadata. | Changes in `correlation_id` or `deadline_ms` do not cause false idempotency conflicts. |
+| **STATE-005** | Terminal canonical results replay without workflow re-execution. | Guarantees zero redundant computational or financial cost on retried completed turns. |
+| **STATE-006** | Stranded uncommitted turns fail closed to `RECOVERY_REQUIRED`. | Prohibits blind re-execution after crash; prevents unverified clinical side-effects. |
+| **STATE-007** | Storage mutations require double-fsync discipline. | `fsync` on temporary file and parent directory guarantees durability under sudden power loss. |
+| **STATE-008** | Canonical records enforce SHA-256 envelope integrity digests. | Accidental corruption or byte-level tampering fails closed immediately (`ErrIntegrity`). |
 | **LONG-001** | Timeline is a derived projection, not a source of truth. | Prevents downstream projections from overwriting source observation records. |
 | **LONG-002** | One snapshot strictly contains exactly one subject (`subject_ref`). | Zero multi-patient crosstalk; input with mixed subjects fails closed immediately. |
 | **LONG-003** | Identical value and timestamp do not prove a duplicate observation. | Two independent blood or urine draws at the same timestamp remain distinct clinical events. |
@@ -478,12 +516,13 @@ The system enforces deterministic domain rules across all processing layers:
 │   ├── api/                     # Stage 09 Go HTTP composition root (@biomarker/api)
 │   └── web/                     # Physician-facing React / TypeScript web app (Stage 14+)
 ├── contracts/                   # Canonical Machine Contracts
-│   ├── schemas/                 # JSON Schemas (biomarker, timeline, evidence, analysis, evaluation, runtime)
+│   ├── schemas/                 # JSON Schemas (biomarker, timeline, evidence, analysis, evaluation, runtime, persistence)
 │   │   ├── clinical/            # Lab report, observation, timeline schemas
 │   │   ├── evidence/            # Evidence bundle, claim, source, and retrieval schemas
 │   │   ├── analysis/            # Reasoning candidate, safety decision, output schemas
 │   │   ├── evaluation/          # EvaluationCase, EvaluationRun, ModelManifest schemas
-│   │   └── runtime/             # Stage 09 RuntimeExecutionRequest & RuntimeExecutionResult schemas
+│   │   ├── runtime/             # Stage 09 RuntimeExecutionRequest & RuntimeExecutionResult schemas
+│   │   └── persistence/         # Stage 10 DurableTurnRecord & DurableTurnEnvelope schemas
 │   └── openapi/                 # OpenAPI 3.1 REST specifications
 ├── docs/                        # Human & Clinical Architectural Documentation
 │   ├── 00-governance/           # Architecture rules, roadmap, stage handoffs, conflict protocols
@@ -495,7 +534,8 @@ The system enforces deterministic domain rules across all processing layers:
 │   ├── 06-evidence/             # Evidence engine, retrieval policies, retraction, entailment, ranking
 │   ├── 07-reasoning-safety/     # Bounded reasoning, 9 deterministic safety gates, statement model
 │   ├── 08-evaluation/           # Evaluation architecture, statistical policy, metamorphic tests
-│   └── 09-runtime/              # Single-process architecture, Eino adapter, in-memory ledger, safety integration
+│   ├── 09-runtime/              # Single-process architecture, Eino adapter, in-memory ledger, safety integration
+│   └── 10-persistence/          # State taxonomy, turnstore port, crash windows, file adapter design
 ├── evals/                       # Top-Level Evaluation & Quality Harness
 │   └── stage-08/                # Materialized Stage 08 evaluation suite, metrics, metamorphic engine
 │       ├── results/             # Benchmark artifacts, slices, EvaluationRun JSON payloads
@@ -511,17 +551,22 @@ The system enforces deterministic domain rules across all processing layers:
 │   ├── stage-05/                # Longitudinal lineage, chronology, and snapshot tests
 │   ├── stage-06/                # Scientific evidence registry, claim ledger, and bundle tests
 │   ├── stage-07/                # 9 deterministic safety gates, candidate evaluation & benchmark
-│   └── stage-09-runtime/        # Stage 09 in-process deduplication concurrency benchmark (64 threads)
+│   ├── stage-09-runtime/        # Stage 09 in-process deduplication concurrency benchmark (64 threads)
+│   └── stage-10-persistence/    # Stage 10 cross-restart persistence & recovery smoke experiment
 ├── internal/                    # Core Go Domain & Platform Implementations (Stage 09+)
 │   ├── analysis/                # Domain models, request/candidate validators, and abstract ports
 │   ├── safety/                  # Deterministic clinical safety evaluator (Stage 07 core restrictions)
+│   ├── persistence/             # Abstract persistence ports (turnstore, artifactstore)
 │   └── platform/                # Platform adapters (Clean Architecture)
 │       ├── httpapi/             # Lightweight HTTP handler with strict JSON decoding
 │       ├── model/               # Deterministic local model generator
-│       └── runtime/             # In-memory local runtime, scope bridge, and Eino workflow adapter
+│       ├── runtime/             # Local in-memory runtime, scope bridge, persistentlocal, and Eino adapter
+│       └── persistence/         # Durable file adapters (fileturn with double-fsync, fileartifact)
 ├── tests/                       # Go Architecture & Integration Tests
 │   ├── architecture/            # AST boundary scanner (Eino containment & zero distributed infra)
-│   └── integration/             # End-to-end single-process runtime integration tests
+│   │   └── stage10/             # AST enforcement barring premature distributed DB imports
+│   └── integration/             # End-to-end integration tests
+│       └── stage10/             # Cross-restart canonical replay and recovery tests
 ├── packages/                    # Shared TypeScript libraries & utility packages
 ├── testdata/                    # Synthetic & De-identified Clinical Test Fixtures
 │   └── synthetic/               # Fully generated test datasets (ZERO real patient PHI)
@@ -532,7 +577,8 @@ The system enforces deterministic domain rules across all processing layers:
 │       ├── stage-06/            # Evidence retrieval, retraction, and collision cases
 │       ├── stage-07/            # Reasoning candidate fixtures & safety benchmark cases
 │       ├── stage-08/            # Independent evaluation cases & metamorphic cases
-│       └── stage-09/            # Synthetic runtime execution request fixture
+│       ├── stage-09/            # Synthetic runtime execution request fixture
+│       └── stage-10/            # Synthetic durable turn record fixture
 ├── AGENTS.md                    # Strict operational guidelines for AI coding agents
 ├── BIOMARKER_PROJECT_SKELETON_V0.1.md # Master architecture blueprint
 ├── go.mod                       # Root Go module (Go 1.27+, CloudWeGo Eino v0.9.19)
@@ -569,16 +615,19 @@ pnpm check
 # 1. Execute Python domain and evaluation test suites (Stages 03 to 08)
 pytest experiments/ evals/
 
-# 2. Execute Go unit, integration, and AST architecture tests with race detection (Stage 09)
+# 2. Execute Go unit, integration, and AST architecture tests with race detection (Stages 09 & 10)
 go test -race ./...
 
 # 3. Run Stage 09 single-process concurrency smoke test (64 concurrent requests)
 go run ./experiments/stage-09-runtime
+
+# 4. Run Stage 10 persistence & restart durability smoke experiment
+go run ./experiments/stage-10-persistence/main.go
 ```
 
-All 99 stage-gated tests execute with 100% clean passes:
+All 125 stage-gated tests execute with 100% clean passes:
 - **82 Python tests:** Ingestion, normalization, longitudinal chronology, evidence closure, deterministic safety, and Stage 08 evaluation harness.
-- **17 Go tests:** Domain validation, preflight candidate validation, HTTP handlers, deterministic safety evaluator, local ledger deduplication, Eino workflow adapter, and AST architecture boundary enforcement.
+- **43 Go tests:** Domain validation, candidate validation, HTTP handlers, deterministic safety evaluator, local ledger deduplication, Eino workflow adapter, `turnstore.Store` file adapter, double-fsync atomic operations, cross-restart canonical replay, AST boundary scanners barring premature distributed infra.
 
 ### Running Stage 08 Evaluation Replay Runner
 ```bash
